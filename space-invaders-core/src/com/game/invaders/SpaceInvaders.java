@@ -35,10 +35,13 @@ public class SpaceInvaders extends ApplicationAdapter {
 		if(lastTime == 0) elapsedTime = 0;
 		else elapsedTime = (int) ((currentTime - lastTime)/1000000);
 		lastTime = currentTime;
+		
+		player.handleInput();
 		for(Invader enemy : enemies) {
 			enemy.update(elapsedTime);
 		}
-		player.handleInput();
+		player.update(elapsedTime);
+		
 		batch.begin();
 		for(Invader enemy : enemies) {
 			enemy.render(batch);

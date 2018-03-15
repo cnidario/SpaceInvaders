@@ -1,5 +1,10 @@
 package com.game.invaders;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,14 +14,34 @@ public class Player {
 	private final static Texture SHIP_IMAGE =  new Texture("ship.png");
 	private final static int YZERO = 100;
 	private final static int XZERO = 500;
-	private final static int X_MOVE_RESOLUTION = 24;
+	private final static int XMIN = 75;
+	private final static int XMAX = 900;
+	private final static int YSHOOT_MIN = 50;
+	private final static int XSHOOT_ZERO = 42;
+	private final static int YSHOOT_ZERO = 20;
+	private final static int SHOOT_DELAY = 250;
+	private final static int MOVE_SPEED = 500;
+	private static enum MovingState {
+		NO_MOVING,
+		MOVING_LEFT,
+		MOVING_RIGHT
+	}
 	
 	private int xPos;
+	private MovingState moving;
+	private boolean shooting;
+	private Set<Shoot> alive_shoots;
+	private int shoot_timer;
+	
 	public Player() {
-		xPos = 0;
+		xPos = XZERO;
+		shooting = false;
+		moving = MovingState.NO_MOVING;
+		alive_shoots = new HashSet<Shoot>();
+		shoot_timer = 0; 
 	}
 	private float computePositionX() {
-		return xPos*X_MOVE_RESOLUTION + XZERO;
+		return xPos;
 	}
 	private float computePositionY() {
 		return YZERO;
@@ -24,18 +49,51 @@ public class Player {
 	
 	public void handleInput() {
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			xPos--;
-			if(computePositionX() < 0)
-				xPos++;
+			moving = MovingState.MOVING_LEFT;
 		} else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			xPos++;
-			if(computePositionX() > 900)
-				xPos--;
+			moving = MovingState.MOVING_RIGHT;
+		} else {
+			moving = MovingState.NO_MOVING;
 		}
+		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+			shooting = true;
+		}
+	}
+	
+	public void update(float dt) {
+		if(moving != MovingState.NO_MOVING) {
+			int dx = Math.round(MOVE_SPEED * dt/1000);
+			if(moving == MovingState.MOVING_LEFT)
+				dx = -dx;
+			xPos += dx;
+			if(xPos < XMIN)
+				xPos = XMIN;
+			else if(xPos > XMAX)
+				xPos = XMAX;
+		}
+		shoot_timer -= (int) dt;
+		if(shoot_timer < 0)
+			shoot_timer = 0;
+		if(shooting && shoot_timer == 0) {
+			alive_shoots.add(new Shoot((int)computePositionX() + XSHOOT_ZERO, (int)computePositionY() + YSHOOT_ZERO));
+			shooting = false;
+			shoot_timer = SHOOT_DELAY;
+		}
+		List<Shoot> dead_shoots = new ArrayList<Shoot>(); 
+		for(Shoot s : alive_shoots) {
+			s.update(dt);
+			if(s.getyPos() < YSHOOT_MIN)
+				dead_shoots.add(s);
+		}
+		for(Shoot s : dead_shoots)
+			alive_shoots.remove(s);
 	}
 	
 	public void render(SpriteBatch batch) {
 		batch.draw(SHIP_IMAGE, computePositionX(), computePositionY());
+		for(Shoot s : alive_shoots) {
+			s.render(batch);
+		}
 	}
 
 }
