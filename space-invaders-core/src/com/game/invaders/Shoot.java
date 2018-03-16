@@ -7,6 +7,8 @@ public class Shoot {
 	private final static Texture SHOOT = new Texture("shoot.png");
 	private final static int SPEED = 500;
 	
+	public final static BoundingBox BBOX = new BoundingBox(SHOOT.getWidth(), SHOOT.getHeight());
+	
 	private int xPos, yPos;
 	public Shoot(int x, int y) {
 		xPos = x;

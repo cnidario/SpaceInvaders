@@ -1,10 +1,5 @@
 package com.game.invaders;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,7 +11,7 @@ public class Player {
 	private final static int XZERO = 500;
 	private final static int XMIN = 75;
 	private final static int XMAX = 900;
-	private final static int YSHOOT_MIN = 50;
+	public final static int YSHOOT_MIN = 50;
 	private final static int XSHOOT_ZERO = 42;
 	private final static int YSHOOT_ZERO = 20;
 	private final static int SHOOT_DELAY = 250;
@@ -30,15 +25,15 @@ public class Player {
 	private int xPos;
 	private MovingState moving;
 	private boolean shooting;
-	private Set<Shoot> alive_shoots;
 	private int shoot_timer;
+	private SpaceInvaders game;
 	
-	public Player() {
+	public Player(SpaceInvaders game) {
 		xPos = XZERO;
 		shooting = false;
 		moving = MovingState.NO_MOVING;
-		alive_shoots = new HashSet<Shoot>();
 		shoot_timer = 0; 
+		this.game = game;
 	}
 	private float computePositionX() {
 		return xPos;
@@ -75,25 +70,14 @@ public class Player {
 		if(shoot_timer < 0)
 			shoot_timer = 0;
 		if(shooting && shoot_timer == 0) {
-			alive_shoots.add(new Shoot((int)computePositionX() + XSHOOT_ZERO, (int)computePositionY() + YSHOOT_ZERO));
+			game.shoot((int)computePositionX() + XSHOOT_ZERO, (int)computePositionY() + YSHOOT_ZERO);
 			shooting = false;
 			shoot_timer = SHOOT_DELAY;
 		}
-		List<Shoot> dead_shoots = new ArrayList<Shoot>(); 
-		for(Shoot s : alive_shoots) {
-			s.update(dt);
-			if(s.getyPos() < YSHOOT_MIN)
-				dead_shoots.add(s);
-		}
-		for(Shoot s : dead_shoots)
-			alive_shoots.remove(s);
 	}
 	
 	public void render(SpriteBatch batch) {
 		batch.draw(SHIP_IMAGE, computePositionX(), computePositionY());
-		for(Shoot s : alive_shoots) {
-			s.render(batch);
-		}
 	}
 
 }
