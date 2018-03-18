@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.game.invaders.Invader.InvaderState;
+import com.game.invaders.process.ProcessManager;
 
 public class SpaceInvaders extends ApplicationAdapter {
 	private SpriteBatch batch;
@@ -20,6 +21,7 @@ public class SpaceInvaders extends ApplicationAdapter {
 	private List<Invader> enemies;
 	private Player player;
 	private Set<Shoot> alive_shoots;
+	private ProcessManager process_manager = new ProcessManager();
 	
 	@Override
 	public void create () {
@@ -28,7 +30,7 @@ public class SpaceInvaders extends ApplicationAdapter {
 		alive_shoots = new HashSet<Shoot>();
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 8; j++) {
-				enemies.add(new Invader(j*96, -i*76, 0, 0));
+				enemies.add(new Invader(j*96, -i*76));
 			}
 		}
 		player = new Player(this);
@@ -56,6 +58,11 @@ public class SpaceInvaders extends ApplicationAdapter {
 		}
 		return impacts;
 	}
+	
+	private Invader buildInvader(float x, float y) {
+		Invader obj = new Invader(x, y);
+		return obj;
+	}
 
 	@Override
 	public void render () {
@@ -72,6 +79,9 @@ public class SpaceInvaders extends ApplicationAdapter {
 		for(Invader enemy : enemies) {
 			enemy.update(elapsedTime);
 		}
+		
+		process_manager.update(elapsedTime);
+		
 		List<Shoot> dead_shoots = new ArrayList<Shoot>(); 
 		for(Shoot s : alive_shoots) {
 			s.update(elapsedTime);
