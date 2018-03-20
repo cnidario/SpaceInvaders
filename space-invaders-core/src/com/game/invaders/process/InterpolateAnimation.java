@@ -3,7 +3,7 @@ package com.game.invaders.process;
 import java.util.List;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class InterpolateAnimation extends AbstractProcess implements Frameable {
+public class InterpolateAnimation extends AbstractProcess implements FrameSource {
 	private List<TextureRegion> frames;
 	private int time;
 	private int counter;
@@ -33,5 +33,9 @@ public class InterpolateAnimation extends AbstractProcess implements Frameable {
 	public void restart() {
 		super.restart();
 		counter = 0;
+	}
+	
+	public InterpolateAnimation clone() {
+		return new InterpolateAnimation(frames, time);
 	}
 }

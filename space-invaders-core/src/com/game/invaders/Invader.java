@@ -5,6 +5,7 @@ import java.util.Arrays;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.game.invaders.process.FrameSource;
 import com.game.invaders.process.InterpolateAnimation;
 
 public class Invader {
@@ -18,7 +19,7 @@ public class Invader {
 	private final static int GLOBAL_YZERO = 700;
 	private final static int DIE_DELAY = 700;
 	
-	private final static InterpolateAnimation MOVE_ANIMATION = new InterpolateAnimation(Arrays.asList(invaders), TIME_PER_MOVE);
+	public final static InterpolateAnimation MOVE_ANIMATION = new InterpolateAnimation(Arrays.asList(invaders), TIME_PER_MOVE);
 	
 	public static enum InvaderState {
 		ALIVE, DYING, DIED
@@ -30,6 +31,14 @@ public class Invader {
 	private int internalCounter;
 	private float x0, y0;
 	private InvaderState state;
+	private FrameSource frameSource;
+	
+	public FrameSource getFrameSource() {
+		return frameSource;
+	}
+	public void setFrameSource(FrameSource frameSource) {
+		this.frameSource = frameSource;
+	}
 	
 	public InvaderState getState() {
 		return state;
@@ -56,7 +65,7 @@ public class Invader {
 	 * En cada movimiento se cambia alterna entre dos frames para la animación del invasor
 	 */
 	private TextureRegion currentFrame() {
-		return internalCounter > timePerMove()/2? invaders[1]: invaders[0];
+		return frameSource.currentFrame();
 	}
 	private float computePositionX() {
 		return horizontal_pos*MOVE_RESOLUTION_IN_PIXELS + GLOBAL_XZERO + x0;

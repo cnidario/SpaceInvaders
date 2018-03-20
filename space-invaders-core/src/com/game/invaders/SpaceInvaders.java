@@ -30,7 +30,7 @@ public class SpaceInvaders extends ApplicationAdapter {
 		alive_shoots = new HashSet<Shoot>();
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 8; j++) {
-				enemies.add(new Invader(j*96, -i*76));
+				enemies.add(buildInvader(j*96, -i*76));
 			}
 		}
 		player = new Player(this);
@@ -61,6 +61,7 @@ public class SpaceInvaders extends ApplicationAdapter {
 	
 	private Invader buildInvader(float x, float y) {
 		Invader obj = new Invader(x, y);
+		obj.setFrameSource(Invader.MOVE_ANIMATION.clone());
 		return obj;
 	}
 
