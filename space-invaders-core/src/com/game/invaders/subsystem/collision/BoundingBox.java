@@ -1,4 +1,4 @@
-package com.game.invaders;
+package com.game.invaders.subsystem.collision;
 
 public class BoundingBox {
 	private int width, height;

@@ -1,11 +1,13 @@
-package com.game.invaders;
+package com.game.invaders.actor.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.game.invaders.SpaceInvaders;
+import com.game.invaders.actor.Actor;
 
-public class Player {
+public class Player extends Actor {
 	private final static Texture SHIP_IMAGE =  new Texture("ship.png");
 	private final static int YZERO = 100;
 	private final static int XZERO = 500;
@@ -40,19 +42,6 @@ public class Player {
 	}
 	private float computePositionY() {
 		return YZERO;
-	}
-	
-	public void handleInput() {
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			moving = MovingState.MOVING_LEFT;
-		} else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			moving = MovingState.MOVING_RIGHT;
-		} else {
-			moving = MovingState.NO_MOVING;
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-			shooting = true;
-		}
 	}
 	
 	public void update(float dt) {

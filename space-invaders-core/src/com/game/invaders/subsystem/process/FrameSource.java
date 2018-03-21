@@ -1,4 +1,4 @@
-package com.game.invaders.process;
+package com.game.invaders.subsystem.process;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 

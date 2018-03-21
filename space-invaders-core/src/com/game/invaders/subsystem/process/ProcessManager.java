@@ -1,12 +1,16 @@
-package com.game.invaders.process;
+package com.game.invaders.subsystem.process;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.game.invaders.subsystem.event.EventManager;
+
 public class ProcessManager {
 	private List<Process> processes;
-	public ProcessManager() {
+	private EventManager event_manager;
+	public ProcessManager(EventManager event_manager) {
 		processes = new ArrayList<Process>();
+		this.event_manager = event_manager;
 	}
 	public void addProcess(Process p) {
 		processes.add(p);
@@ -22,5 +26,7 @@ public class ProcessManager {
 		for (Process process : clean_list) {
 			processes.remove(process);
 		}
+	}
+	public void init() {
 	}
 }

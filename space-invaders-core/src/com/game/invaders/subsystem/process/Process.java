@@ -1,4 +1,4 @@
-package com.game.invaders.process;
+package com.game.invaders.subsystem.process;
 
 public interface Process {
 	void kill();

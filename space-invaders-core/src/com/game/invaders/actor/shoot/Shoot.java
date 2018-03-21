@@ -1,7 +1,8 @@
-package com.game.invaders;
+package com.game.invaders.actor.shoot;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.game.invaders.subsystem.collision.BoundingBox;
 
 public class Shoot {
 	private final static Texture SHOOT = new Texture("shoot.png");
