@@ -2,9 +2,10 @@ package com.game.invaders;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.game.invaders.actor.Actor;
-import com.game.invaders.actor.invader.Invader;
+import com.game.invaders.actor.components.StateMachineActorC;
+import com.game.invaders.actor.invader.InvaderState;
+import com.game.invaders.actor.invader.InvaderStateMachine;
 import com.game.invaders.actor.player.Player;
 import com.game.invaders.subsystem.event.Event;
 import com.game.invaders.subsystem.event.EventManager;
@@ -27,15 +28,21 @@ public class GameWorld {
 	private void createInvaders() {
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 8; j++) {
-				Invader invader = buildInvader(j*96, -i*76);
+				Actor invader = createInvader(j*96, -i*76);
 				actors.add(invader);
 				event_manager.queueEvent(new ActorLifeCycleEvent(Event.EventType.ACTOR_CREATED, invader));
 			}
 		}
 	}
-	private Invader buildInvader(float x, float y) {
-		Invader obj = new Invader(x, y);
-		return obj;
+	private Actor createInvader(float x, float y) {
+		Actor invader = new Actor();
+		invader.addComponent(GameResources.INVADER.ANIM_COMPO);
+		invader.addComponent(GameResources.INVADER.COLLISION_COMPO);
+		InvaderStateMachine stm = new InvaderStateMachine();
+		invader.addComponent(new StateMachineActorC<InvaderState>(stm));
+		invader.getPos().x = x;
+		invader.getPos().y = y;
+		return invader;
 	}
 	
 	public void update(float dt) {

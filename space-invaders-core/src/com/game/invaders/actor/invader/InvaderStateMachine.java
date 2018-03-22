@@ -1,6 +1,9 @@
 package com.game.invaders.actor.invader;
 
-public class InvaderStateMachine {
+import com.game.invaders.actor.Actor;
+import com.game.invaders.statemachine.StateMachine;
+
+public class InvaderStateMachine implements StateMachine<InvaderState> {
 	public enum InvaderStateID {
 		ALIVE, DYING, DIED
 	}
@@ -12,11 +15,11 @@ public class InvaderStateMachine {
 	public void setState(InvaderState state) {
 		this.state = state;
 	}
-	public void requestChangeState(InvaderState state) {
+	public void requestStateChange(InvaderState state) {
 		//chequea validez de cambios de estado, aquí trivial
 		setState(state);
 	}
-	public void update(float dt, Invader self) {
+	public void update(float dt, Actor self) {
 		state.update(dt, self);
 	}
 }

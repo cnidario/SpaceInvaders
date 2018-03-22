@@ -1,12 +1,16 @@
 package com.game.invaders.actor;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import java.util.HashMap;
+import java.util.Map;
 import com.badlogic.gdx.math.Vector2;
+import com.game.invaders.actor.ActorComponent.ActorComponentID;
 
-public abstract class Actor {
+public class Actor {
 	private Vector2 pos = new Vector2();
 	private boolean active = true;
 	private boolean visible = true;
+	private Map<ActorComponent.ActorComponentID, ActorComponent> components = new HashMap<ActorComponent.ActorComponentID, ActorComponent>();
+	
 	public boolean isActive() {
 		return active;
 	}
@@ -25,6 +29,10 @@ public abstract class Actor {
 	public void setPos(Vector2 pos) {
 		this.pos = pos;
 	}
-	public abstract void update(float dt);
-	public abstract void render(SpriteBatch batch);
+	public ActorComponent getComponent(ActorComponentID componentID) {
+		return components.get(componentID);
+	}
+	public void addComponent(ActorComponent component) {
+		components.put(component.getID(), component);
+	}
 }

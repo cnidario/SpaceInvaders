@@ -1,6 +1,6 @@
 package com.game.invaders.actor.invader;
 
-import com.game.invaders.animation.AnimationPlayer;
+import com.game.invaders.actor.Actor;
 
 public class DyingInvaderState implements InvaderState {
 	private InvaderStateMachine stateMachine;
@@ -16,9 +16,15 @@ public class DyingInvaderState implements InvaderState {
 		throw new UnsupportedOperationException("shoot registrado en invader que se muere");
 	}
 	@Override
-	public AnimationPlayer getAnimation() { return AliveInvaderState.MOVING_ANIM_PLAYER; }
+	public void update(float dt, Actor actor) {
+		// TODO Auto-generated method stub
+	}
 	@Override
-	public void update(float dt, Invader self) {
-		//FIXME
+	public void enter() {
+		// TODO Auto-generated method stub
+	}
+	@Override
+	public void exit() {
+		// TODO Auto-generated method stub
 	}
 }

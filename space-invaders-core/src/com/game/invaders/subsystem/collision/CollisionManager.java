@@ -6,6 +6,8 @@ import java.util.List;
 
 import com.badlogic.gdx.math.Vector2;
 import com.game.invaders.actor.Actor;
+import com.game.invaders.actor.ActorComponent.ActorComponentID;
+import com.game.invaders.actor.components.CollisionActorC;
 import com.game.invaders.subsystem.event.Event;
 import com.game.invaders.subsystem.event.EventManager;
 import com.game.invaders.subsystem.event.EventManager.EventListener;
@@ -112,7 +114,9 @@ public class CollisionManager implements EventListener {
 		if(e.getType() == Event.EventType.ACTOR_CREATED) {
 			ActorLifeCycleEvent event = (ActorLifeCycleEvent)e;
 			Actor actor = event.getActor();
-			registerEntity(actor, AliveInvaderState.BBOX, CollisionManager.INVADER_STRATEGY);
-		}
+			CollisionActorC collisionComponent = (CollisionActorC) actor.getComponent(ActorComponentID.COLLISION);
+			if(collisionComponent != null)
+				registerEntity(actor, collisionComponent.getBoundingBox(), collisionComponent.getCollisionStrategy());
+		}///TODO ACTOR_DELETED
 	}
 }

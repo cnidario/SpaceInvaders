@@ -1,11 +1,8 @@
 package com.game.invaders.actor.invader;
 
-import com.game.invaders.animation.AnimationPlayer;
+import com.game.invaders.statemachine.State;
 
-public interface InvaderState {
+public interface InvaderState extends State {
 	void hit();
 	void shoot();
-	void update(float dt, Invader self);
-	
-	AnimationPlayer getAnimation();
 }

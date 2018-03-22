@@ -8,7 +8,6 @@ import com.game.invaders.SpaceInvaders;
 import com.game.invaders.actor.Actor;
 
 public class Player extends Actor {
-	private final static Texture SHIP_IMAGE =  new Texture("ship.png");
 	private final static int YZERO = 100;
 	private final static int XZERO = 500;
 	private final static int XMIN = 75;
@@ -64,9 +63,4 @@ public class Player extends Actor {
 			shoot_timer = SHOOT_DELAY;
 		}
 	}
-	
-	public void render(SpriteBatch batch) {
-		batch.draw(SHIP_IMAGE, computePositionX(), computePositionY());
-	}
-
 }
