@@ -36,13 +36,18 @@ public class GameWorld {
 	}
 	private Actor createInvader(float x, float y) {
 		Actor invader = new Actor();
-		invader.addComponent(GameResources.INVADER.ANIM_COMPO);
+		invader.addComponent(GameResources.INVADER.RENDER_COMPO);
 		invader.addComponent(GameResources.INVADER.COLLISION_COMPO);
 		InvaderStateMachine stm = new InvaderStateMachine();
 		invader.addComponent(new StateMachineActorC<InvaderState>(stm));
 		invader.getPos().x = x;
 		invader.getPos().y = y;
 		return invader;
+	}
+	private Actor createPlayer() {
+		Actor player = new Actor();
+		player.addComponent(GameResources.PLAYER.RENDER_COMPO);
+		return player;
 	}
 	
 	public void update(float dt) {

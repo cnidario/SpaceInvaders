@@ -33,3 +33,15 @@ Otros sistemas:
 Quizá sistemizar y meter en processmanager
 
 Desgranar una a una funcionalidades, asignar responsabilidades, exponer soluciones y decisiones técnicas
+
+
+
+----
+RenderStrategy dentro de component? no me convence del todo. Quizá acabar migrando a ECS completo
+StateMachines más sencillas? devolver id de estado. Una clase por movimiento de la nave???
+quizá moving, normal, shooting
+Estados más sencillos? Máquinas más sencillas? de sólo el estado en que está, o estado y parámetros, sin funcionalidad??
+quizá no va ahí ninguna funcionalidad sólo transiciones
+
+Sistemas, refactorizaer: extraer interfaz común, agrupar entidades, registrar por sistema de observers las entidades, escuchar por el cambio de los componentes. Cada sistema escucha, gestiona sus listas, quizá una clase especial que agrupe por ID's, y registre/borre. Sirve el mismo eventmanager
+COMPONENT_ADDED([actor,]compo), COMPONENT_REMOVED([actor,]compo), COMPONENT_CHANGED(compo) [entre corchetes pq actor se puede obtener del compo (?)]  
