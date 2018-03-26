@@ -3,7 +3,6 @@ package com.game.invaders.subsystem.collision;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
-
 import com.badlogic.gdx.math.Vector2;
 import com.game.invaders.scene.actor.Actor;
 import com.game.invaders.scene.actor.ActorComponent.ActorComponentID;
@@ -12,8 +11,10 @@ import com.game.invaders.subsystem.event.Event;
 import com.game.invaders.subsystem.event.EventManager;
 import com.game.invaders.subsystem.event.EventManager.EventListener;
 import com.game.invaders.subsystem.event.types.ActorLifeCycleEvent;
+import com.game.invaders.subsystem.event.types.CollisionEvent;
+import com.game.invaders.subsystem.process.AbstractProcess;
 
-public class CollisionManager implements EventListener {
+public class CollisionManager extends AbstractProcess implements EventListener {
 	public enum CollisionGroup {
 		INVADER,
 		PLAYER,
@@ -84,14 +85,14 @@ public class CollisionManager implements EventListener {
 	public CollisionManager(EventManager event_manager) {
 		this.event_manager = event_manager;
 	}
-	public void registerEntity(Actor object, BoundingBox bbox, CollisionStrategy st) {
+	private void registerEntity(Actor object, BoundingBox bbox, CollisionStrategy st) {
 		CollisionEntity ent = new CollisionEntity(object, bbox, st);
 		entities.add(ent);
 	}
-	public void unregisterEntity(CollisionEntity ent) {
+	private void unregisterEntity(CollisionEntity ent) {
 		entities.remove(ent);
 	}
-	public void processCollisions() {
+	private void processCollisions() {
 		for(int i = 0; i < entities.size(); i++) {
 			CollisionEntity e1 = entities.get(i);
 			for(int j = i; j < entities.size(); j++) {
@@ -103,11 +104,8 @@ public class CollisionManager implements EventListener {
 			}
 		}
 	}
-	public void emitCollision(CollisionEntity e1, CollisionEntity e2) {
-		
-	}
-	public void init() {
-		event_manager.registerHandler(this, EnumSet.of(Event.EventType.ACTOR_CREATED, Event.EventType.ACTOR_DELETED));
+	private void emitCollision(CollisionEntity e1, CollisionEntity e2) {
+		event_manager.queueEvent(new CollisionEvent(e1, e2));
 	}
 	@Override
 	public void handle(Event e) {
@@ -118,5 +116,13 @@ public class CollisionManager implements EventListener {
 			if(collisionComponent != null)
 				registerEntity(actor, collisionComponent.getBoundingBox(), collisionComponent.getCollisionStrategy());
 		}///TODO ACTOR_DELETED
+	}
+	@Override
+	public void init() {
+		event_manager.registerHandler(this, EnumSet.of(Event.EventType.ACTOR_CREATED, Event.EventType.ACTOR_DELETED));
+	}
+	@Override
+	public void update(float dt) {
+		processCollisions();
 	}
 }

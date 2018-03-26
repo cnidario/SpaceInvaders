@@ -6,7 +6,9 @@ public class Event {
 		INPUT_CONTROL,
 		GAME_ACTION,
 		ACTOR_CREATED,
-		ACTOR_DELETED
+		ACTOR_DELETED,
+		COMPONENT_ADDED,
+		COMPONENT_REMOVED
 	}
 	private EventType type;
 	public Event(EventType type) {

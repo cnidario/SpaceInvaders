@@ -10,6 +10,22 @@ public class PlayerStateMachine implements StateMachine<PlayerState> {
 		MOVING_RIGHT,
 		SHOOT
 	}
+	
+	public class PlayerMovingState implements PlayerState {
+		@Override
+		public void update(float dt, Actor actor) {
+			// TODO Auto-generated method stub
+		}
+		@Override
+		public void enter() {
+			// TODO Auto-generated method stub
+		}
+		@Override
+		public void exit() {
+			// TODO Auto-generated method stub
+		}
+	}
+	
 	private PlayerState state;
 
 	public PlayerState getState() {

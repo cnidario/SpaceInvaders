@@ -31,5 +31,7 @@ public class SequenceProcess extends AbstractProcess {
 			}
 		}
 	}
-	
+	@Override
+	public void init() {
+	}
 }

@@ -1,7 +1,6 @@
 package com.game.invaders.subsystem.event.types;
 
 import com.game.invaders.subsystem.event.Event;
-import com.game.invaders.subsystem.event.Event.EventType;
 
 public class InputControlEvent extends Event {
 	public enum InputControlType {

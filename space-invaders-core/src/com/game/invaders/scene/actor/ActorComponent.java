@@ -7,7 +7,8 @@ public interface ActorComponent extends SceneNode {
 		RENDERABLE,
 		COLLISION,
 		STATE_MACHINE,
-		CONTROLLER
+		CONTROLLER,
+		PHYSICS
 	}
 	ActorComponentID getID();
 }

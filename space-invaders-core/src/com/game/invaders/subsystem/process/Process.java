@@ -5,4 +5,5 @@ public interface Process {
 	boolean isAlive();
 	void restart();
 	void update(float dt);
+	void init();
 }

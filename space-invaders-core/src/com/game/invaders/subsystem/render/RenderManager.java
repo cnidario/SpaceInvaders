@@ -6,8 +6,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.game.invaders.scene.actor.Actor;
+import com.game.invaders.subsystem.process.AbstractProcess;
 
-public class RenderManager {
+public class RenderManager extends AbstractProcess {
 	private SpriteBatch batch = new SpriteBatch();
 	private List<Actor> actors = new ArrayList<Actor>();
 	
@@ -24,5 +25,9 @@ public class RenderManager {
 			}
 		}
 		batch.end();
+	}
+	@Override
+	public void update(float dt) {
+		render();
 	}
 }

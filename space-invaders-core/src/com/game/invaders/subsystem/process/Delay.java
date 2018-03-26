@@ -19,4 +19,7 @@ public class Delay extends AbstractProcess {
 		super.restart();
 		counter = 0;
 	}
+	@Override
+	public void init() {
+	}
 }

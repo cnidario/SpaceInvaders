@@ -3,14 +3,14 @@ package com.game.invaders.subsystem.event;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
-
 import com.game.invaders.subsystem.event.Event.EventType;
+import com.game.invaders.subsystem.process.AbstractProcess;
 
-public class EventManager {
+public class EventManager extends AbstractProcess {
 	public interface EventListener {
 		void handle(Event e);
 	}
-	class HandlerRegistration {
+	private class HandlerRegistration {
 		EventListener handler;
 		EnumSet<EventType> types;
 		public HandlerRegistration(EventListener handler, EnumSet<EventType> types) {
@@ -22,8 +22,6 @@ public class EventManager {
 	private List<HandlerRegistration> handlers = new ArrayList<HandlerRegistration>();
 	private List<Event> queue = new ArrayList<Event>();
 	
-	public EventManager() {
-	}
 	public void registerHandler(EventListener handler, EnumSet<EventType> types) {
 		handlers.add(new HandlerRegistration(handler, types));
 	}
@@ -41,7 +39,7 @@ public class EventManager {
 	public void queueEvent(Event e) {
 		queue.add(e);
 	}
-	public void processEvents() {
+	private void processEvents() {
 		for(Event e : queue) {
 			for(HandlerRegistration handler_reg : handlers) {
 				if(handler_reg.types.contains(e.getType()))
@@ -52,6 +50,11 @@ public class EventManager {
 	public void cleanEvents() {
 		queue.clear();
 	}
+	@Override
 	public void init() {
+	}
+	@Override
+	public void update(float dt) {
+		processEvents();
 	}
 }

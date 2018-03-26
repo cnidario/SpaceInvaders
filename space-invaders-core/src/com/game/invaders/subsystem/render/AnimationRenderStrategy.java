@@ -1,4 +1,4 @@
-package com.game.invaders.scene.actor.components;
+package com.game.invaders.subsystem.render;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.game.invaders.animation.AnimationPlayer;
@@ -20,5 +20,4 @@ public class AnimationRenderStrategy implements RenderStrategy {
 	public void render(Actor actor, SpriteBatch batch) {
 		batch.draw(animationPlayer.getFrame(), actor.getPos().x, actor.getPos().y);
 	}
-
 }

@@ -2,7 +2,6 @@ package com.game.invaders.subsystem.process;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.game.invaders.subsystem.event.EventManager;
 
 public class ProcessManager {
@@ -28,5 +27,8 @@ public class ProcessManager {
 		}
 	}
 	public void init() {
+		for (Process process : processes) {
+			process.init();
+		}
 	}
 }

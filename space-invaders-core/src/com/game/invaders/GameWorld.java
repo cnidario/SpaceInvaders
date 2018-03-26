@@ -6,14 +6,13 @@ import com.game.invaders.scene.actor.Actor;
 import com.game.invaders.scene.actor.components.StateMachineActorC;
 import com.game.invaders.scene.actor.invader.InvaderState;
 import com.game.invaders.scene.actor.invader.InvaderStateMachine;
-import com.game.invaders.scene.actor.player.Player;
 import com.game.invaders.subsystem.event.Event;
 import com.game.invaders.subsystem.event.EventManager;
 import com.game.invaders.subsystem.event.types.ActorLifeCycleEvent;
 
 public class GameWorld {
 	private SceneGraph scene;
-	private Player player;
+	private Actor player;
 	private EventManager event_manager;
 	
 	public GameWorld(EventManager event_manager) {
@@ -27,6 +26,7 @@ public class GameWorld {
 	
 	public void create() {
 		createInvaders();
+		player = createPlayer();
 		scene.getRoot().children().add(player);
 	}
 	
@@ -41,8 +41,8 @@ public class GameWorld {
 	}
 	private Actor createInvader(float x, float y) {
 		Actor invader = new Actor();
-		invader.addComponent(GameResources.INVADER.RENDER_COMPO);
-		invader.addComponent(GameResources.INVADER.COLLISION_COMPO);
+		invader.addComponent(GameResources.INVADER.RENDER_COMPO(invader));
+		invader.addComponent(GameResources.INVADER.COLLISION_COMPO(invader));
 		InvaderStateMachine stm = new InvaderStateMachine();
 		invader.addComponent(new StateMachineActorC<InvaderState>(invader, stm));
 		invader.getPos().x = x;
@@ -51,12 +51,11 @@ public class GameWorld {
 	}
 	private Actor createPlayer() {
 		Actor player = new Actor();
-		player.addComponent(GameResources.PLAYER.RENDER_COMPO);
+		player.addComponent(GameResources.PLAYER.RENDER_COMPO(player));
+		player.addComponent(GameResources.PLAYER.CONTROLLER_COMPO(player));
 		return player;
 	}
-	
 	public void update(float dt) {
-		
 	}
 	public void init() {
 	}

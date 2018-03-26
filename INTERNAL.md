@@ -49,3 +49,10 @@ Apuntar alto: pensar en anotaciones y framework IoC
 Componentes, entidades -> árbol de escena, componente es un nodo cuyo padre es la entidad. El padre de una entidad(actor) puede considerarse un contenedor, o grupo. De este modo es un scene-graph
 ----
 Problema: en constructor de componentes el valor de id es estático, debería instanciarse a la hora de declarar la clase
+
+----
+Un scene graph es para algo: relación jerárquica con posibles transformaciones que aplican a subjerarquías, algo más? quizá aquí está de más.
+Tiene algunos inconvenientes, multiplicación excesiva de referencias. Quizá puede aislarse. Objetos "proxy". En panda3d NodePointer? referencias, instancing? Eso también desacoplaría completamente el sistema ECS, los componentes por otro lado no necesitarían referencia a su dueño. Supongo que para esto lo estaba usando yo, para definir inequívocamente la propiedad.
+
+----
+Documentar clases y sistemas para entender mejor y establecer y definir mejor los objetivos, responsabilidades claras.

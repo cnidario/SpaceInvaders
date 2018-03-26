@@ -9,5 +9,7 @@ public abstract class AbstractProcess implements Process {
 	@Override
 	public void restart() { alive = true; }
 	@Override
+	public void init() {}
+	@Override
 	public abstract void update(float dt);
 }

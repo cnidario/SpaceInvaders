@@ -38,4 +38,7 @@ public class InterpolateAnimation extends AbstractProcess implements FrameSource
 	public InterpolateAnimation clone() {
 		return new InterpolateAnimation(frames, time);
 	}
+	@Override
+	public void init() {
+	}
 }
