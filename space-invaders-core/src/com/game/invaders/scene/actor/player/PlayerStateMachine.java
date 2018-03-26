@@ -1,6 +1,6 @@
-package com.game.invaders.actor.player;
+package com.game.invaders.scene.actor.player;
 
-import com.game.invaders.actor.Actor;
+import com.game.invaders.scene.actor.Actor;
 import com.game.invaders.statemachine.StateMachine;
 
 public class PlayerStateMachine implements StateMachine<PlayerState> {

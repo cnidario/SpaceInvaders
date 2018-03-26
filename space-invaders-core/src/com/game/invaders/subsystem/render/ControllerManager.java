@@ -2,7 +2,7 @@ package com.game.invaders.subsystem.render;
 
 import java.util.EnumSet;
 
-import com.game.invaders.actor.Actor;
+import com.game.invaders.scene.actor.Actor;
 import com.game.invaders.subsystem.event.Event;
 import com.game.invaders.subsystem.event.EventManager;
 import com.game.invaders.subsystem.event.EventManager.EventListener;

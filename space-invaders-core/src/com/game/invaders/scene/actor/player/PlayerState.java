@@ -1,4 +1,4 @@
-package com.game.invaders.actor.player;
+package com.game.invaders.scene.actor.player;
 
 import com.game.invaders.statemachine.State;
 

@@ -5,9 +5,9 @@ import java.util.EnumSet;
 import java.util.List;
 
 import com.badlogic.gdx.math.Vector2;
-import com.game.invaders.actor.Actor;
-import com.game.invaders.actor.ActorComponent.ActorComponentID;
-import com.game.invaders.actor.components.CollisionActorC;
+import com.game.invaders.scene.actor.Actor;
+import com.game.invaders.scene.actor.ActorComponent.ActorComponentID;
+import com.game.invaders.scene.actor.components.CollisionActorC;
 import com.game.invaders.subsystem.event.Event;
 import com.game.invaders.subsystem.event.EventManager;
 import com.game.invaders.subsystem.event.EventManager.EventListener;

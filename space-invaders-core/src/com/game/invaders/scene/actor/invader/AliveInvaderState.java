@@ -1,8 +1,8 @@
-package com.game.invaders.actor.invader;
+package com.game.invaders.scene.actor.invader;
 
 import com.game.invaders.GameConfigData;
 import com.game.invaders.GameResources;
-import com.game.invaders.actor.Actor;
+import com.game.invaders.scene.actor.Actor;
 
 public class AliveInvaderState implements InvaderState {
 	

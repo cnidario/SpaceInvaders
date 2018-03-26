@@ -1,8 +1,8 @@
-package com.game.invaders.actor.components;
+package com.game.invaders.scene.actor.components;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.game.invaders.actor.Actor;
 import com.game.invaders.animation.AnimationPlayer;
+import com.game.invaders.scene.actor.Actor;
 
 public class AnimationRenderStrategy implements RenderStrategy {
 	private AnimationPlayer animationPlayer;

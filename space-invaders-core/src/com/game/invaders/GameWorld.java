@@ -1,35 +1,40 @@
 package com.game.invaders;
 
-import java.util.ArrayList;
-import java.util.List;
-import com.game.invaders.actor.Actor;
-import com.game.invaders.actor.components.StateMachineActorC;
-import com.game.invaders.actor.invader.InvaderState;
-import com.game.invaders.actor.invader.InvaderStateMachine;
-import com.game.invaders.actor.player.Player;
+import com.game.invaders.scene.NodeGroup;
+import com.game.invaders.scene.SceneGraph;
+import com.game.invaders.scene.actor.Actor;
+import com.game.invaders.scene.actor.components.StateMachineActorC;
+import com.game.invaders.scene.actor.invader.InvaderState;
+import com.game.invaders.scene.actor.invader.InvaderStateMachine;
+import com.game.invaders.scene.actor.player.Player;
 import com.game.invaders.subsystem.event.Event;
 import com.game.invaders.subsystem.event.EventManager;
 import com.game.invaders.subsystem.event.types.ActorLifeCycleEvent;
 
 public class GameWorld {
-	private List<Actor> actors = new ArrayList<Actor>();
+	private SceneGraph scene;
 	private Player player;
 	private EventManager event_manager;
 	
 	public GameWorld(EventManager event_manager) {
 		this.event_manager = event_manager;
+		setupSceneGraph();
+	}
+	private void setupSceneGraph() {
+		NodeGroup root = new NodeGroup(NodeGroup.ROOT_PARENT);
+		scene = new SceneGraph(root);
 	}
 	
 	public void create() {
 		createInvaders();
-		actors.add(player);
+		scene.getRoot().children().add(player);
 	}
 	
 	private void createInvaders() {
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 8; j++) {
 				Actor invader = createInvader(j*96, -i*76);
-				actors.add(invader);
+				scene.getRoot().children().add(invader);
 				event_manager.queueEvent(new ActorLifeCycleEvent(Event.EventType.ACTOR_CREATED, invader));
 			}
 		}
@@ -39,7 +44,7 @@ public class GameWorld {
 		invader.addComponent(GameResources.INVADER.RENDER_COMPO);
 		invader.addComponent(GameResources.INVADER.COLLISION_COMPO);
 		InvaderStateMachine stm = new InvaderStateMachine();
-		invader.addComponent(new StateMachineActorC<InvaderState>(stm));
+		invader.addComponent(new StateMachineActorC<InvaderState>(invader, stm));
 		invader.getPos().x = x;
 		invader.getPos().y = y;
 		return invader;

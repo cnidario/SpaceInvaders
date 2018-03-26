@@ -4,14 +4,14 @@ import java.util.Arrays;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.game.invaders.actor.components.AnimationRenderStrategy;
-import com.game.invaders.actor.components.CollisionActorC;
-import com.game.invaders.actor.components.ControllerC;
-import com.game.invaders.actor.components.RenderStrategy;
-import com.game.invaders.actor.components.RenderableActorC;
-import com.game.invaders.actor.components.SpriteRenderStrategy;
 import com.game.invaders.animation.Animation;
 import com.game.invaders.animation.AnimationPlayer;
+import com.game.invaders.scene.actor.components.AnimationRenderStrategy;
+import com.game.invaders.scene.actor.components.CollisionActorC;
+import com.game.invaders.scene.actor.components.ControllerC;
+import com.game.invaders.scene.actor.components.RenderStrategy;
+import com.game.invaders.scene.actor.components.RenderableActorC;
+import com.game.invaders.scene.actor.components.SpriteRenderStrategy;
 import com.game.invaders.subsystem.collision.BoundingBox;
 import com.game.invaders.subsystem.collision.CollisionManager;
 

@@ -1,10 +1,10 @@
-package com.game.invaders.actor.components;
+package com.game.invaders.scene.actor.components;
 
-import com.game.invaders.actor.ActorComponent;
+import com.game.invaders.scene.actor.Actor;
 import com.game.invaders.subsystem.collision.BoundingBox;
 import com.game.invaders.subsystem.collision.CollisionManager.CollisionStrategy;
 
-public class CollisionActorC implements ActorComponent {
+public class CollisionActorC extends AbstractActorComponent {
 	private BoundingBox boundingBox;
 	private CollisionStrategy collisionStrategy;
 	public BoundingBox getBoundingBox() {
@@ -19,12 +19,9 @@ public class CollisionActorC implements ActorComponent {
 	public void setCollisionStrategy(CollisionStrategy collisionStrategy) {
 		this.collisionStrategy = collisionStrategy;
 	}
-	public CollisionActorC(BoundingBox boundingBox, CollisionStrategy collisionStrategy) {
-		super();
+	public CollisionActorC(Actor parent, BoundingBox boundingBox, CollisionStrategy collisionStrategy) {
+		super(parent, ActorComponentID.COLLISION);
 		this.boundingBox = boundingBox;
 		this.collisionStrategy = collisionStrategy;
 	}
-	@Override
-	public ActorComponentID getID() { return ActorComponentID.COLLISION; }
-
 }

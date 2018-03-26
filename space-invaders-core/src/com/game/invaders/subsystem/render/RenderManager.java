@@ -5,7 +5,7 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.game.invaders.actor.Actor;
+import com.game.invaders.scene.actor.Actor;
 
 public class RenderManager {
 	private SpriteBatch batch = new SpriteBatch();

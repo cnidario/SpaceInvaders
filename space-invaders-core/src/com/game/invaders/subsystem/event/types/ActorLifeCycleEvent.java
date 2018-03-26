@@ -1,6 +1,6 @@
 package com.game.invaders.subsystem.event.types;
 
-import com.game.invaders.actor.Actor;
+import com.game.invaders.scene.actor.Actor;
 import com.game.invaders.subsystem.event.Event;
 
 public class ActorLifeCycleEvent extends Event {

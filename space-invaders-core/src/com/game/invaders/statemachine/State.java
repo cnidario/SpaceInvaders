@@ -1,6 +1,6 @@
 package com.game.invaders.statemachine;
 
-import com.game.invaders.actor.Actor;
+import com.game.invaders.scene.actor.Actor;
 
 public interface State {
 	void update(float dt, Actor actor);

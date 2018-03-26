@@ -1,10 +1,10 @@
-package com.game.invaders.actor.components;
+package com.game.invaders.scene.actor.components;
 
-import com.game.invaders.actor.ActorComponent;
+import com.game.invaders.scene.actor.Actor;
 import com.game.invaders.statemachine.State;
 import com.game.invaders.statemachine.StateMachine;
 
-public class StateMachineActorC<S extends State> implements ActorComponent {
+public class StateMachineActorC<S extends State> extends AbstractActorComponent {
 	private StateMachine<S> stateMachine;
 	public StateMachine<S> getStateMachine() {
 		return stateMachine;
@@ -12,10 +12,8 @@ public class StateMachineActorC<S extends State> implements ActorComponent {
 	public void setStateMachine(StateMachine<S> stateMachine) {
 		this.stateMachine = stateMachine;
 	}
-	public StateMachineActorC(StateMachine<S> stateMachine) {
-		super();
+	public StateMachineActorC(Actor parent, StateMachine<S> stateMachine) {
+		super(parent, ActorComponentID.STATE_MACHINE);
 		this.stateMachine = stateMachine;
 	}
-	@Override
-	public ActorComponentID getID() { return ActorComponentID.STATE_MACHINE; }
 }

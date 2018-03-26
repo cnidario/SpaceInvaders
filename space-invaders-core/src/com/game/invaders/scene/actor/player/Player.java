@@ -1,11 +1,11 @@
-package com.game.invaders.actor.player;
+package com.game.invaders.scene.actor.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.game.invaders.SpaceInvaders;
-import com.game.invaders.actor.Actor;
+import com.game.invaders.scene.actor.Actor;
 
 public class Player extends Actor {
 	private final static int YZERO = 100;
