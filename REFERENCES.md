@@ -1,0 +1,1 @@
+[Action list vs Finite State machines](https://gamedev.stackexchange.com/questions/24603/how-to-wire-finite-state-machine-into-component-based-architecture)
