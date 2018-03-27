@@ -1,8 +1,8 @@
 package com.game.invaders.scene.actor;
 
 import com.game.invaders.scene.NodeGroup;
-import com.game.invaders.subsystem.event.EventManager;
-import com.game.invaders.subsystem.event.types.ComponentAddedEvent;
+import com.game.invaders.system.event.EventManager;
+import com.game.invaders.system.event.types.ComponentAddedEvent;
 
 /**
  * Crear un actor es complicado:

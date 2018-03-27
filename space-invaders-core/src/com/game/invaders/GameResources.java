@@ -10,11 +10,11 @@ import com.game.invaders.scene.actor.Actor;
 import com.game.invaders.scene.actor.components.CollisionActorC;
 import com.game.invaders.scene.actor.components.ControllerC;
 import com.game.invaders.scene.actor.components.RenderableActorC;
-import com.game.invaders.subsystem.collision.BoundingBox;
-import com.game.invaders.subsystem.collision.CollisionManager;
-import com.game.invaders.subsystem.render.AnimationRenderStrategy;
-import com.game.invaders.subsystem.render.RenderStrategy;
-import com.game.invaders.subsystem.render.SpriteRenderStrategy;
+import com.game.invaders.system.collision.BoundingBox;
+import com.game.invaders.system.collision.CollisionManager;
+import com.game.invaders.system.render.AnimationRenderStrategy;
+import com.game.invaders.system.render.RenderStrategy;
+import com.game.invaders.system.render.SpriteRenderStrategy;
 
 public class GameResources {
 	public static class PLAYER {

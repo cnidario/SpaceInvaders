@@ -1,8 +1,8 @@
 package com.game.invaders.scene.actor.components;
 
 import com.game.invaders.scene.actor.Actor;
-import com.game.invaders.subsystem.collision.BoundingBox;
-import com.game.invaders.subsystem.collision.CollisionManager.CollisionStrategy;
+import com.game.invaders.system.collision.BoundingBox;
+import com.game.invaders.system.collision.CollisionManager.CollisionStrategy;
 
 public class CollisionActorC extends AbstractActorComponent {
 	private BoundingBox boundingBox;

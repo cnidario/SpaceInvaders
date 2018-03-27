@@ -1,7 +1,7 @@
 package com.game.invaders.scene.actor.components;
 
 import com.game.invaders.scene.actor.Actor;
-import com.game.invaders.subsystem.render.RenderStrategy;
+import com.game.invaders.system.render.RenderStrategy;
 
 public class RenderableActorC extends AbstractActorComponent {
 	private RenderStrategy renderStrategy;

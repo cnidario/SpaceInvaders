@@ -37,3 +37,9 @@ Principios directores
 ---------------------
 *SOLID*
 
+Principios importantes sistemas ECS (Entidad - Componente - Sistema)
+--------------------------------------------------------------------
+- Entidad es agregación de componentes sin datos (bueno quizá pueda tener alguno propio, nombre?)
+- Componentes son datos puros, no funcionalidad (aspectos de las entidades)
+- Sistema incluye la funcionalidad
+- La relación no es 1:1 entre Componentes y Sistemas, sino n:m, puede haber un sistema para una combinación determinada de componentes

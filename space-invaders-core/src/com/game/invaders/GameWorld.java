@@ -6,9 +6,9 @@ import com.game.invaders.scene.actor.Actor;
 import com.game.invaders.scene.actor.components.StateMachineActorC;
 import com.game.invaders.scene.actor.invader.InvaderState;
 import com.game.invaders.scene.actor.invader.InvaderStateMachine;
-import com.game.invaders.subsystem.event.Event;
-import com.game.invaders.subsystem.event.EventManager;
-import com.game.invaders.subsystem.event.types.ActorLifeCycleEvent;
+import com.game.invaders.system.event.Event;
+import com.game.invaders.system.event.EventManager;
+import com.game.invaders.system.event.types.ActorLifeCycleEvent;
 
 public class GameWorld {
 	private SceneGraph scene;
