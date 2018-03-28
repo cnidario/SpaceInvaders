@@ -6,9 +6,9 @@ public interface ActorComponent extends SceneNode {
 	public enum ActorComponentID {
 		RENDERABLE,
 		COLLISION,
-		STATE_MACHINE,
 		CONTROLLER,
-		PHYSICS
+		PHYSICS,
+		INVADER_STATE
 	}
 	ActorComponentID getID();
 }
