@@ -3,7 +3,6 @@ package com.game.invaders.system.event;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
-
 import com.game.invaders.system.event.Event.EventType;
 import com.game.invaders.system.process.AbstractProcess;
 

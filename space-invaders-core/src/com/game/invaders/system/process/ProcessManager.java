@@ -3,14 +3,11 @@ package com.game.invaders.system.process;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.game.invaders.system.event.EventManager;
-
 public class ProcessManager {
 	private List<Process> processes;
-	private EventManager event_manager;
-	public ProcessManager(EventManager event_manager) {
+	
+	public ProcessManager() {
 		processes = new ArrayList<Process>();
-		this.event_manager = event_manager;
 	}
 	public void addProcess(Process p) {
 		processes.add(p);

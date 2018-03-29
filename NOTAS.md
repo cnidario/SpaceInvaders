@@ -43,3 +43,46 @@ Principios importantes sistemas ECS (Entidad - Componente - Sistema)
 - Componentes son datos puros, no funcionalidad (aspectos de las entidades)
 - Sistema incluye la funcionalidad
 - La relación no es 1:1 entre Componentes y Sistemas, sino n:m, puede haber un sistema para una combinación determinada de componentes
+
+### Responsabilidades. CRC
+
+#### EntityManager
+CRUD sobre entidades, gestiona todo el acceso a las entidades
+
+- Crea/elimina entidades
+- Crea componentes
+- Asigna/elimina componentes a entidades
+- Busca entidades/componentes
+----
+EventManager para notificar operaciones a otros sistemas
+
+#### EventManager
+- Notifica de eventos ocurridos en diversas partes a otras interesadas
+- Permite suscribirse/desuscribirse a ciertos tipos de notificaciones
+- Define los diversos tipos de eventos posibles
+- Recibe eventos
+----
+No colabora, desacoplado. Aunque define/conoce Eventos y Listeners 
+
+#### SceneGraph
+- Mantiene relación jerárquica entre entidades
+- Uso aún no especificado
+----
+No colabora, desacoplado. Aunque tiene un *Iterator* que es el ScenNodePointer, a través del cual se accede a él
+
+#### ProcessManager
+- Organiza la ejecución de diversas tareas que duran más de un ciclo del bucle de juego
+- Permite añadir/eliminar/controlar tareas a ser ejecutadas
+----
+No colabora, en principio desacoplado. Aunque podría usar EventManager para notificar eventos? Exporta interfaz Process
+
+#### GameResources
+- Encargada de obtener los recursos (audio, imagen, animación, etc) del juego
+----
+No colabora. Datos estáticos, globales, constantes. Salvo con entidades básicas del framework por debajo (Texture, etc.)
+
+#### GameConfigData
+- Datos constantes del juego que no son recursos, configuración
+----
+No colabora
+

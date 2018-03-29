@@ -1,76 +1,61 @@
 package com.game.invaders.scene;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Stack;
 
 public class SceneNodePointer {
-	private SceneGraph tree;
-	private Object data;
-	private SceneNodePointer parent;
-	private List<SceneNodePointer> children;
+	private SceneNode node;
+	private Stack<SceneNode> parents;
 	
-	public SceneNodePointer(SceneGraph tree, Object data, SceneNodePointer parent, List<SceneNodePointer> children) {
+	public SceneNodePointer(SceneNode node, Stack<SceneNode> parents) {
 		super();
-		this.tree = tree;
-		this.data = data;
-		this.parent = parent;
-		this.children = children;
+		this.node = node;
+		this.parents = parents;
 	}
-	public SceneNodePointer(SceneGraph tree, Object data, SceneNodePointer parent) {
-		this(tree, data, parent, new ArrayList<SceneNodePointer>());
+	public SceneNodePointer(SceneGraph tree) {
+		this(tree.getRoot(), new Stack<SceneNode>());
 	}
-	public SceneGraph getTree() {
-		return tree;
+	public SceneNode getNode() {
+		return node;
 	}
-	public void setTree(SceneGraph tree) {
-		this.tree = tree;
-	}
-	public Object getData() {
-		return data;
-	}
-	public void setData(Object data) {
-		this.data = data;
-	}
-	public SceneNodePointer getParent() {
-		return parent;
-	}
-	public void setParent(SceneNodePointer parent) {
-		this.parent = parent;
-	}
-	public List<SceneNodePointer> getChildren() {
-		return children;
-	}
-	public void setChildren(List<SceneNodePointer> children) {
-		this.children = children;
-	}
-	
+
 	public boolean isRoot() {
-		return tree.getRoot() == this;
+		return node.getData() == null;
 	}
+	@SuppressWarnings("unchecked")
 	public SceneNodePointer duplicate() {
-		return new SceneNodePointer(tree, data, parent, children);
+		return new SceneNodePointer(node, (Stack<SceneNode>)parents.clone());
 	}
+	/**
+	 * Modifica anterior como en Iterator
+	 */
 	public SceneNodePointer addChild(Object data) {
-		SceneNodePointer child = new SceneNodePointer(tree, data, this);
-		children.add(child);
-		return child;
+		SceneNode child = new SceneNode(data);
+		node.getChildren().add(child);
+		parents.push(node);
+		node = child;
+		return this;
 	}
 	/**
 	 * Borra un nodo del scene graph, devuelve el padre
 	 * @return El padre del nodo borrado.
 	 */
 	public SceneNodePointer remove() {
-		parent.getChildren().remove(this);
-		return parent;
+		SceneNode to_remove = node;
+		node = parents.pop();
+		node.getChildren().remove(to_remove);
+		return this;
 	}
 	public SceneNodePointer find(Object data) {
-		if(data == this.data)
+		if(data == this.node.getData())
 			return this;
 		else {
-			for (SceneNodePointer child : children) {
-				SceneNodePointer result = child.find(data);
-				if(result != null)
-					return result;
+			SceneNodePointer childPointer = duplicate();
+			childPointer.parents.push(node);
+			for (SceneNode childNode : node.getChildren()) {
+				childPointer.node = childNode;
+				SceneNodePointer resultPointer = childPointer.find(data);
+				if(resultPointer != null)
+					return resultPointer;
 			}
 			return null;
 		}
