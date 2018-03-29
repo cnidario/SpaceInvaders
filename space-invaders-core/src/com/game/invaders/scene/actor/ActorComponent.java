@@ -1,8 +1,7 @@
 package com.game.invaders.scene.actor;
 
-import com.game.invaders.scene.SceneNode;
 
-public interface ActorComponent extends SceneNode {
+public interface ActorComponent  {
 	public enum ActorComponentID {
 		RENDERABLE,
 		COLLISION,

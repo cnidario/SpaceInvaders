@@ -1,19 +1,15 @@
 package com.game.invaders.scene.actor;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import com.badlogic.gdx.math.Vector2;
-import com.game.invaders.scene.SceneNode;
 import com.game.invaders.scene.actor.ActorComponent.ActorComponentID;
 
-public class Actor implements SceneNode {
+public class Actor {
 	private Vector2 pos = new Vector2();
 	private boolean active = true;
 	private boolean visible = true;
 	private Map<ActorComponent.ActorComponentID, ActorComponent> components = new HashMap<ActorComponent.ActorComponentID, ActorComponent>();
-	private SceneNode parent;
 	
 	public boolean isActive() {
 		return active;
@@ -38,21 +34,5 @@ public class Actor implements SceneNode {
 	}
 	public void addComponent(ActorComponent component) {
 		components.put(component.getID(), component);
-	}
-	@Override
-	public void setParent(SceneNode parent) {
-		this.parent = parent;
-	}
-	@Override
-	public SceneNode parent() {
-		return parent;
-	}
-	@Override
-	public boolean isRoot() {
-		return false;
-	}
-	@Override
-	public List<SceneNode> children() {
-		return new ArrayList<SceneNode>(components.values());
 	}
 }

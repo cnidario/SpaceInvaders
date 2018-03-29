@@ -1,16 +1,16 @@
 package com.game.invaders.scene;
 
 public class SceneGraph {
-	private SceneNode root;
+	private SceneNodePointer root;
 
-	public SceneGraph(SceneNode root) {
+	public SceneGraph() {
 		super();
-		this.root = root;
+		root = new SceneNodePointer(this, null, null);
 	}
-	public SceneNode getRoot() {
+	public SceneNodePointer getRoot() {
 		return root;
 	}
-	public void setRoot(SceneNode root) {
-		this.root = root;
+	public boolean isEmpty() {
+		return root.getData() == null;
 	}
 }

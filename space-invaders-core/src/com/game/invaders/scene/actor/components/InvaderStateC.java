@@ -1,13 +1,12 @@
 package com.game.invaders.scene.actor.components;
 
-import com.game.invaders.scene.actor.Actor;
 import com.game.invaders.system.logic.invader.InvaderBehaviourSystem.InvaderStateID;
 
 public class InvaderStateC extends AbstractActorComponent {
 	private InvaderStateID stateID;
 	
-	public InvaderStateC(Actor parent) {
-		super(parent, ActorComponentID.INVADER_STATE);
+	public InvaderStateC() {
+		super(ActorComponentID.INVADER_STATE);
 	}
 	public InvaderStateID getStateID() {
 		return stateID;
