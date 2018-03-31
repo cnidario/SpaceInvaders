@@ -1,54 +1,35 @@
 package com.game.invaders.system.physics;
 
-import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.List;
-
 import com.badlogic.gdx.math.Vector2;
-import com.game.invaders.scene.actor.Actor;
+import com.badlogic.gdx.utils.IntSet.IntSetIterator;
+import com.game.invaders.scene.actor.EntityManager;
 import com.game.invaders.scene.actor.ActorComponent.ActorComponentID;
 import com.game.invaders.scene.actor.components.PhysicsActorC;
-import com.game.invaders.system.event.Event;
+import com.game.invaders.scene.actor.components.PositionActorC;
+import com.game.invaders.system.engine.EntityMapper;
 import com.game.invaders.system.event.EventManager;
-import com.game.invaders.system.event.EventManager.EventListener;
-import com.game.invaders.system.event.types.ComponentAddedEvent;
-import com.game.invaders.system.event.types.ComponentRemovedEvent;
 import com.game.invaders.system.process.AbstractProcess;
 
-public class PhysicsManager extends AbstractProcess implements EventListener {
-	private EventManager event_manager;
-	private List<Actor> actors = new ArrayList<Actor>();
+public class PhysicsManager extends AbstractProcess {
+	private EventManager eventManager;
+	private EntityMapper managedEntities;
+	private EntityManager manager;
 	
-	public PhysicsManager(EventManager event_manager) {
+	public PhysicsManager(EntityManager manager, EventManager eventManager) {
 		super();
-		this.event_manager = event_manager;
+		this.manager = manager;
+		this.eventManager = eventManager;
+		managedEntities = new EntityMapper(manager, eventManager, EnumSet.of(ActorComponentID.PHYSICS, ActorComponentID.POSITION));
 	}
+	@Override
 	public void update(float dt) {
-		for (Actor actor : actors) {
-			PhysicsActorC c = (PhysicsActorC) actor.getComponent(ActorComponentID.PHYSICS);
-			Vector2 speed = c.getSpeed();
-			actor.getPos().mulAdd(speed, dt);
+		for (IntSetIterator iter = managedEntities.getGroup().iterator(); iter.hasNext; ) {
+			int e = iter.next();
+			PhysicsActorC physics_c = (PhysicsActorC) manager.componentFor(e, ActorComponentID.PHYSICS);
+			PositionActorC position_c = (PositionActorC) manager.componentFor(e, ActorComponentID.POSITION);
+			Vector2 speed = physics_c.getSpeed();
+			position_c.getPos().mulAdd(speed, dt/1000);
 		}
-	}
-	@Override
-	public void handle(Event e) {
-		switch(e.getType()) {
-			case COMPONENT_ADDED:
-				ComponentAddedEvent ev = (ComponentAddedEvent) e;
-				if(ev.getComponent().getID() == ActorComponentID.PHYSICS)
-					actors.add((Actor)ev.getComponent().parent());
-				break;
-			case COMPONENT_REMOVED:
-				ComponentRemovedEvent eev = (ComponentRemovedEvent) e;
-				if(eev.getComponent().getID() == ActorComponentID.PHYSICS)
-					actors.remove((Actor)eev.getComponent().parent());
-				break;
-		default:
-			break;
-		}
-	}
-	@Override
-	public void init() {
-		event_manager.registerHandler(this, EnumSet.of(Event.EventType.COMPONENT_ADDED, Event.EventType.COMPONENT_REMOVED));
 	}
 }

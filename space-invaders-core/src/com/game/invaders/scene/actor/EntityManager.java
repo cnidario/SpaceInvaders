@@ -8,42 +8,46 @@ import java.util.Set;
 import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.IntSet;
 import com.game.invaders.scene.actor.ActorComponent.ActorComponentID;
+import com.game.invaders.system.event.Event.EventType;
 import com.game.invaders.system.event.EventManager;
+import com.game.invaders.system.event.types.ActorLifeCycleEvent;
+import com.game.invaders.system.event.types.ComponentAddedEvent;
+import com.game.invaders.system.event.types.ComponentRemovedEvent;
 
 public class EntityManager {
-	private EventManager event_manager; //XXX debería desacoplar ambas? SRP?
+	private EventManager eventManager; //XXX debería desacoplar ambas? SRP?
 	private int lastId;
 	private IntSet entities;
 	private IntMap<Map<ActorComponentID, ActorComponent>> components;
 
-	public EntityManager(EventManager event_manager) {
+	public EntityManager(EventManager eventManager) {
 		super();
 		lastId = 0;
 		entities = new IntSet();
 		components = new IntMap<Map<ActorComponentID, ActorComponent>>();
-		this.event_manager = event_manager;
+		this.eventManager = eventManager;
 	}
 	
 	public int createEntity() {
 		entities.add(++lastId);
 		components.put(lastId, new HashMap<ActorComponent.ActorComponentID, ActorComponent>());
-		//TODO enviar evento
+		eventManager.queueEvent(new ActorLifeCycleEvent(EventType.ACTOR_CREATED, lastId));
 		return lastId;
 	}
 	public void removeEntity(int entity) {
 		entities.remove(entity);
 		components.remove(entity);
-		//TODO eventos
+		eventManager.queueEvent(new ActorLifeCycleEvent(EventType.ACTOR_DELETED, entity));
 	}
 	public void addComponent(int entity, ActorComponent component) {
 		Map<ActorComponentID, ActorComponent> entityComps = components.get(entity);
 		entityComps.put(component.getID(), component);
-		//TODO eventos
+		eventManager.queueEvent(new ComponentAddedEvent(entity, component));
 	}
 	public void removeComponent(int entity, ActorComponent component) {
 		Map<ActorComponentID, ActorComponent> entityComps = components.get(entity);
 		entityComps.remove(component.getID());
-		//TODO eventos
+		eventManager.queueEvent(new ComponentRemovedEvent(entity, component));
 	}
 	public IntSet getEntities() {
 		return entities;

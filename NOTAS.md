@@ -37,12 +37,13 @@ Principios directores
 ---------------------
 *SOLID*
 
-Principios importantes sistemas ECS (Entidad - Componente - Sistema)
+Principios importantes y consideraciones sobre sistemas ECS (Entidad - Componente - Sistema)
 --------------------------------------------------------------------
 - Entidad es agregación de componentes sin datos (bueno quizá pueda tener alguno propio, nombre?)
 - Componentes son datos puros, no funcionalidad (aspectos de las entidades)
 - Sistema incluye la funcionalidad
 - La relación no es 1:1 entre Componentes y Sistemas, sino n:m, puede haber un sistema para una combinación determinada de componentes
+- Los componentes son la única fuente de verdad acerca del estado de las entidades, no hay datos fuera de ahí.
 
 ### Responsabilidades. CRC
 
@@ -85,4 +86,9 @@ No colabora. Datos estáticos, globales, constantes. Salvo con entidades básica
 - Datos constantes del juego que no son recursos, configuración
 ----
 No colabora
+
+#### EntityMapper
+- Gestiona colección de entidades que tienen una lista de componentes.
+----
+Se sirve de EventManager para controlar cambios en entidades y componentes.
 

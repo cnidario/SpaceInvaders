@@ -1,15 +1,21 @@
 package com.game.invaders;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.game.invaders.scene.actor.EntityManager;
 import com.game.invaders.system.collision.CollisionManager;
+import com.game.invaders.system.controller.ControllerManager;
 import com.game.invaders.system.event.EventManager;
 import com.game.invaders.system.input.InputManager;
+import com.game.invaders.system.logic.invader.InvaderBehaviourSystem;
+import com.game.invaders.system.logic.invader.InvaderGroupMovementSystem;
+import com.game.invaders.system.logic.player.PlayerBehaviourSystem;
 import com.game.invaders.system.physics.PhysicsManager;
 import com.game.invaders.system.process.ProcessManager;
 import com.game.invaders.system.render.RenderManager;
 
 public class SpaceInvaders extends ApplicationAdapter {
-	private EventManager event_manager;
+	private EntityManager entityManager;
+	private EventManager eventManager;
 	private ProcessManager process_manager;
 	private RenderManager render_manager;
 	private GameWorld game_world;
@@ -19,15 +25,20 @@ public class SpaceInvaders extends ApplicationAdapter {
 	public void create () {
 		lastTime = 0;
 		
-		event_manager = new EventManager();
-		process_manager = new ProcessManager(event_manager);
-		game_world = new GameWorld(event_manager);
-		render_manager = new RenderManager();
+		eventManager = new EventManager();
+		entityManager = new EntityManager(eventManager);
+		process_manager = new ProcessManager();
+		game_world = new GameWorld(eventManager, entityManager);
+		render_manager = new RenderManager(entityManager, eventManager);
 		
-		process_manager.addProcess(new InputManager(event_manager));
-		process_manager.addProcess(new CollisionManager(event_manager));
-		process_manager.addProcess(new PhysicsManager(event_manager));
-		process_manager.addProcess(event_manager);
+		process_manager.addProcess(new InputManager(eventManager));
+		process_manager.addProcess(new ControllerManager(entityManager, eventManager));
+		process_manager.addProcess(new PlayerBehaviourSystem(entityManager, eventManager));
+		process_manager.addProcess(new InvaderBehaviourSystem(entityManager, eventManager));
+		process_manager.addProcess(new InvaderGroupMovementSystem(entityManager, eventManager));
+		process_manager.addProcess(new PhysicsManager(entityManager, eventManager));
+		process_manager.addProcess(new CollisionManager(entityManager, eventManager));
+		process_manager.addProcess(eventManager);
 		
 		process_manager.init();
 		game_world.init();
@@ -41,7 +52,6 @@ public class SpaceInvaders extends ApplicationAdapter {
 		lastTime = currentTime;
 		
 		process_manager.update(elapsedTime);
-		game_world.update(elapsedTime);
 	}
 	@Override
 	public void render () {

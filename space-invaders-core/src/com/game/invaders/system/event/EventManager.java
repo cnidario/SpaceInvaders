@@ -37,7 +37,11 @@ public class EventManager extends AbstractProcess {
 			handlers.remove(found);
 	}
 	public void queueEvent(Event e) {
-		queue.add(e);
+		//queue.add(e);
+		for(HandlerRegistration handler_reg : handlers) {
+			if(handler_reg.types.contains(e.getType()))
+				handler_reg.handler.handle(e);
+		}
 	}
 	private void processEvents() {
 		for(Event e : queue) {

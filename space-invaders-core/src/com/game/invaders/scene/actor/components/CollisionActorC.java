@@ -1,26 +1,43 @@
 package com.game.invaders.scene.actor.components;
 
+import java.util.EnumSet;
+
 import com.game.invaders.system.collision.BoundingBox;
-import com.game.invaders.system.collision.CollisionManager.CollisionStrategy;
 
 public class CollisionActorC extends AbstractActorComponent {
+	public enum CollisionGroup {
+		INVADER,
+		PLAYER,
+		PLAYER_SHOOT
+	}
+	
 	private BoundingBox boundingBox;
-	private CollisionStrategy collisionStrategy;
+	private EnumSet<CollisionGroup> collidesWith;
+	EnumSet<CollisionGroup> collisionCategories;
+	
+	public CollisionActorC(BoundingBox boundingBox, EnumSet<CollisionGroup> collidesWith,
+			EnumSet<CollisionGroup> collisionCategories) {
+		super(ActorComponentID.COLLISION);
+		this.boundingBox = boundingBox;
+		this.collidesWith = collidesWith;
+		this.collisionCategories = collisionCategories;
+	}
 	public BoundingBox getBoundingBox() {
 		return boundingBox;
 	}
 	public void setBoundingBox(BoundingBox boundingBox) {
 		this.boundingBox = boundingBox;
 	}
-	public CollisionStrategy getCollisionStrategy() {
-		return collisionStrategy;
+	public EnumSet<CollisionGroup> getCollidesWith() {
+		return collidesWith;
 	}
-	public void setCollisionStrategy(CollisionStrategy collisionStrategy) {
-		this.collisionStrategy = collisionStrategy;
+	public void setCollidesWith(EnumSet<CollisionGroup> collidesWith) {
+		this.collidesWith = collidesWith;
 	}
-	public CollisionActorC(BoundingBox boundingBox, CollisionStrategy collisionStrategy) {
-		super(ActorComponentID.COLLISION);
-		this.boundingBox = boundingBox;
-		this.collisionStrategy = collisionStrategy;
+	public EnumSet<CollisionGroup> getCollisionCategories() {
+		return collisionCategories;
+	}
+	public void setCollisionCategories(EnumSet<CollisionGroup> collisionCategories) {
+		this.collisionCategories = collisionCategories;
 	}
 }

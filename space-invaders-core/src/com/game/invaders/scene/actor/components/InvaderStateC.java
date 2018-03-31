@@ -1,12 +1,15 @@
 package com.game.invaders.scene.actor.components;
 
-import com.game.invaders.system.logic.invader.InvaderBehaviourSystem.InvaderStateID;
-
 public class InvaderStateC extends AbstractActorComponent {
+	public enum InvaderStateID {
+		ALIVE, DYING, DIED
+	}
+	
 	private InvaderStateID stateID;
 	
-	public InvaderStateC() {
+	public InvaderStateC(InvaderStateID stateID) {
 		super(ActorComponentID.INVADER_STATE);
+		this.stateID = stateID;
 	}
 	public InvaderStateID getStateID() {
 		return stateID;

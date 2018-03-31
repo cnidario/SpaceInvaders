@@ -5,9 +5,9 @@ import com.badlogic.gdx.math.Vector2;
 public class PhysicsActorC extends AbstractActorComponent {
 	private Vector2 speed;
 
-	public PhysicsActorC() {
+	public PhysicsActorC(Vector2 speed) {
 		super(ActorComponentID.PHYSICS);
-		speed = new Vector2();
+		this.speed = speed;
 	}
 	public Vector2 getSpeed() {
 		return speed;

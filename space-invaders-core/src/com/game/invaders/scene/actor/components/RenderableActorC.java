@@ -1,17 +1,18 @@
 package com.game.invaders.scene.actor.components;
 
-import com.game.invaders.system.render.RenderStrategy;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class RenderableActorC extends AbstractActorComponent {
-	private RenderStrategy renderStrategy;
-	public RenderableActorC(RenderStrategy renderStrategy) {
+	private TextureRegion tex;
+	
+	public RenderableActorC(TextureRegion tex) {
 		super(ActorComponentID.RENDERABLE);
-		this.renderStrategy = renderStrategy;
+		this.tex = tex;
 	}
-	public RenderStrategy getRenderStrategy() {
-		return renderStrategy;
+	public TextureRegion getTex() {
+		return tex;
 	}
-	public void setRenderStrategy(RenderStrategy renderStrategy) {
-		this.renderStrategy = renderStrategy;
+	public void setTex(TextureRegion tex) {
+		this.tex = tex;
 	}
 }
