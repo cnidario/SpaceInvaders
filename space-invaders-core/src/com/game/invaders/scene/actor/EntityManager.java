@@ -1,7 +1,10 @@
 package com.game.invaders.scene.actor;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+
 import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.IntSet;
 import com.game.invaders.scene.actor.ActorComponent.ActorComponentID;
@@ -41,5 +44,14 @@ public class EntityManager {
 		Map<ActorComponentID, ActorComponent> entityComps = components.get(entity);
 		entityComps.remove(component.getID());
 		//TODO eventos
+	}
+	public IntSet getEntities() {
+		return entities;
+	}
+	public Set<ActorComponent> componentsFor(int entity) {
+		return new HashSet<ActorComponent>(components.get(entity).values());
+	}
+	public ActorComponent componentFor(int entity, ActorComponentID cid) {
+		return components.get(entity).get(cid);
 	}
 }

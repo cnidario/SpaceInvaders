@@ -3,9 +3,11 @@ package com.game.invaders.system.logic.invader;
 import com.badlogic.gdx.math.Vector2;
 import com.game.invaders.GameConfigData;
 import com.game.invaders.GameResources;
-import com.game.invaders.scene.actor.Actor;
+import com.game.invaders.scene.actor.EntityManager;
+import com.game.invaders.scene.actor.ActorComponent;
 import com.game.invaders.scene.actor.ActorComponent.ActorComponentID;
 import com.game.invaders.scene.actor.components.PhysicsActorC;
+import com.game.invaders.scene.actor.components.PositionActorC;
 import com.game.invaders.statemachine.StateMachine;
 import com.game.invaders.system.process.AbstractProcess;
 
@@ -21,14 +23,15 @@ public class InvaderBehaviourSystem extends AbstractProcess implements StateMach
 			super();
 			this.self = self;
 		}
-		private PhysicsActorC retrieveSpeedComponent(Actor actor) {
-			return (PhysicsActorC) actor.getComponent(ActorComponentID.PHYSICS);
+		private ActorComponent retrieveComponent(ActorComponentID cid) {
+			return self.getEntityManager().componentFor(self.getInvader(), cid);
 		}
 		@Override
-		public void update(float dt, Actor actor) {
-			PhysicsActorC physics_comp = retrieveSpeedComponent(actor);
-			Vector2 pos = actor.getPos();
+		public void update(float dt, int entity) {
+			PhysicsActorC physics_comp = (PhysicsActorC) retrieveComponent(ActorComponentID.PHYSICS);
+			PositionActorC position_comp = (PositionActorC) retrieveComponent(ActorComponentID.POSITION);
 			Vector2 speed = physics_comp.getSpeed();
+			Vector2 pos = position_comp.getPos();
 			if(pos.x > GameConfigData.INVADER.DISTANCE_TO_FLIP_DIRECTION) {
 				speed.x = -speed.x;
 				pos.x = pos.x - (pos.x - GameConfigData.INVADER.DISTANCE_TO_FLIP_DIRECTION);
@@ -61,7 +64,7 @@ public class InvaderBehaviourSystem extends AbstractProcess implements StateMach
 			this.self = self;
 		}
 		@Override
-		public void update(float dt, Actor actor) {
+		public void update(float dt, int entity) {
 			time -= dt;
 			if(time < 0)
 				self.requestStateChange(this);
@@ -86,7 +89,7 @@ public class InvaderBehaviourSystem extends AbstractProcess implements StateMach
 			this.self = self;
 		}
 		@Override
-		public void update(float dt, Actor actor) {
+		public void update(float dt, int entity) {
 		}
 		@Override
 		public void enter() {
@@ -99,19 +102,27 @@ public class InvaderBehaviourSystem extends AbstractProcess implements StateMach
 		}
 	}
 	
+	private EntityManager entityManager;
 	private InvaderState state = new InvaderAliveState(this);
-	private Actor invader;
+	private int invader;
 	
 	
-	public InvaderBehaviourSystem(Actor invader) {
+	public InvaderBehaviourSystem(int invader, EntityManager entityManager) {
 		super();
 		this.invader = invader;
+		this.entityManager = entityManager;
 	}
 	public InvaderState getState() {
 		return state;
 	}
 	public void setState(InvaderState state) {
 		this.state = state;
+	}
+	public EntityManager getEntityManager() {
+		return entityManager;
+	}
+	public int getInvader() {
+		return invader;
 	}
 	@Override
 	public void update(float dt) {
@@ -122,7 +133,7 @@ public class InvaderBehaviourSystem extends AbstractProcess implements StateMach
 		setState(state);
 	}
 	@Override
-	public void update(float dt, Actor actor) {
-		state.update(dt, actor);
+	public void update(float dt, int entity) {
+		state.update(dt, entity);
 	}
 }

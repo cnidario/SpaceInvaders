@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import com.badlogic.gdx.math.Vector2;
-import com.game.invaders.scene.actor.Actor;
 import com.game.invaders.scene.actor.ActorComponent.ActorComponentID;
 import com.game.invaders.scene.actor.components.CollisionActorC;
 import com.game.invaders.system.event.Event;
@@ -44,25 +43,25 @@ public class CollisionManager extends AbstractProcess implements EventListener {
 			assert a.collisionStrategy == b.collisionStrategy;
 			for(CollisionGroup with : collidesWith) {
 				if(b.getCollisionCategories().contains(with)) {
-					return test(a.getObj().getPos(), a.getBbox(), b.getObj().getPos(), b.getBbox());
+					return test(a.getEntity().getPos(), a.getBbox(), b.getObj().getPos(), b.getBbox());
 				}
 			}
 			return false;
 		}
 	}
 	public static class CollisionEntity {
-		private Actor obj; //objeto original al que referencia
+		private int entity; //objeto original al que referencia
 		private BoundingBox bbox;
 		private CollisionStrategy collisionStrategy;
 		
-		public CollisionEntity(Actor obj, BoundingBox bbox, CollisionStrategy collisionStrategy) {
+		public CollisionEntity(int entity, BoundingBox bbox, CollisionStrategy collisionStrategy) {
 			super();
-			this.obj = obj;
+			this.entity = entity;
 			this.bbox = bbox;
 			this.collisionStrategy = collisionStrategy;
 		}
-		public Actor getObj() {
-			return obj;
+		public int getEntity() {
+			return entity;
 		}
 		public BoundingBox getBbox() {
 			return bbox;
@@ -85,8 +84,8 @@ public class CollisionManager extends AbstractProcess implements EventListener {
 	public CollisionManager(EventManager event_manager) {
 		this.event_manager = event_manager;
 	}
-	private void registerEntity(Actor object, BoundingBox bbox, CollisionStrategy st) {
-		CollisionEntity ent = new CollisionEntity(object, bbox, st);
+	private void registerEntity(int entity, BoundingBox bbox, CollisionStrategy st) {
+		CollisionEntity ent = new CollisionEntity(entity, bbox, st);
 		entities.add(ent);
 	}
 	private void unregisterEntity(CollisionEntity ent) {
@@ -111,10 +110,10 @@ public class CollisionManager extends AbstractProcess implements EventListener {
 	public void handle(Event e) {
 		if(e.getType() == Event.EventType.ACTOR_CREATED) {
 			ActorLifeCycleEvent event = (ActorLifeCycleEvent)e;
-			Actor actor = event.getActor();
-			CollisionActorC collisionComponent = (CollisionActorC) actor.getComponent(ActorComponentID.COLLISION);
+			int entity = event.getEntity();
+			CollisionActorC collisionComponent = (CollisionActorC) entity.getComponent(ActorComponentID.COLLISION);
 			if(collisionComponent != null)
-				registerEntity(actor, collisionComponent.getBoundingBox(), collisionComponent.getCollisionStrategy());
+				registerEntity(entity, collisionComponent.getBoundingBox(), collisionComponent.getCollisionStrategy());
 		}///TODO ACTOR_DELETED
 	}
 	@Override

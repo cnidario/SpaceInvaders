@@ -24,5 +24,6 @@ Expresiones:
 - <expresión> ::= <expresión> and <expresión>
 - <expresión> ::= <expresión> or <expresión>
 - <expresión> ::= not <expresión>
-ComponentMatcher -> Mantiene caché con colaboración del EventManager de entidades que cumplen cierto predicado
+EntityGroup, EntityPredicateGroup -> Mantiene caché con colaboración del EventManager de entidades que cumplen cierto predicado
+
 ComponentMapper -> Extrae componentes de una entidad, problema de disyunciones
