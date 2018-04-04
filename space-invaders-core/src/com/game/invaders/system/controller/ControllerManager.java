@@ -2,9 +2,9 @@ package com.game.invaders.system.controller;
 
 import java.util.EnumSet;
 import com.game.invaders.scene.actor.ActorComponent.ActorComponentID;
+import com.game.invaders.scene.actor.component.PlayerShipStateC;
+import com.game.invaders.scene.actor.component.PlayerShipStateC.PlayerState;
 import com.game.invaders.scene.actor.EntityManager;
-import com.game.invaders.scene.actor.components.PlayerShipStateC;
-import com.game.invaders.scene.actor.components.PlayerShipStateC.PlayerState;
 import com.game.invaders.system.engine.EntityMapper;
 import com.game.invaders.system.event.Event;
 import com.game.invaders.system.event.EventManager;
@@ -27,6 +27,7 @@ public class ControllerManager extends AbstractProcess implements EventListener 
 		InputControlEvent ev = (InputControlEvent) e;
 		int entity = managedEntities.getGroup().first();
 		PlayerShipStateC state_c = (PlayerShipStateC) manager.componentFor(entity, ActorComponentID.PLAYER_STATE);
+		
 		switch(ev.getControlType()) {
 			case MOVE_LEFT:
 				state_c.setState(PlayerState.MOVING_LEFT);

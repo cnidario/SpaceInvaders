@@ -56,3 +56,15 @@ Tiene algunos inconvenientes, multiplicación excesiva de referencias. Quizá pu
 
 ----
 Documentar clases y sistemas para entender mejor y establecer y definir mejor los objetivos, responsabilidades claras.
+
+----
+
+Comunicaciones:
+Eventos
+Input -> Controller -> PlayerBehaviour
+
+procesar 
+	en el manejador mismo o
+	stackear estado o eventos y esperar a procesarlos en el update del system
+	
+Collision -hit! e1,e2-> ShootImpact -impactado invader 3-> InvaderLifeCycleSystem -invader 3 muriendo-> ...tiempo... -invader 3 muerto-> alguien tiene que retirarlo, quizá el mismo InvaderLifeCycleSystem, progresivos updates cambia estado y retira, ni hace falta estado DEAD

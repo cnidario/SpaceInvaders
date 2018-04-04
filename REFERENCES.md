@@ -1,2 +1,5 @@
 - [Action list vs Finite State machines](https://gamedev.stackexchange.com/questions/24603/how-to-wire-finite-state-machine-into-component-based-architecture)
 - [State pattern no funciona con ECS](http://www.richardlord.net/blog/ecs/finite-state-machines-with-ash.html) y [2](https://stackoverflow.com/questions/39185133/finite-state-machine-implementation-in-an-entity-component-system)
+- [Ejemplo con bomberman](https://www.gamedev.net/articles/programming/general-and-gameplay-programming/case-study-bomberman-mechanics-in-an-entity-component-system-r3159)
+- [Ejemplo lua](https://bitbucket.org/uheartbeast/ecs/src/f22314b4bbd84418396ad56f57142a1d29231ed3/system.lua?at=master&fileviewer=file-view-default)
+- [Integrar scene node en ECS](https://www.reddit.com/r/gamedev/comments/806hl5/hierarchy_based_update_order_in_entity_component/)

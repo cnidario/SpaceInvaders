@@ -8,5 +8,12 @@ public class GameConfigData {
 		public final static int MAXX = 250;
 		public final static int MINX = 50;
 		public final static int DESCEND_DISTANCE = 30;
+		public final static int EXPLOSION_DELAY = 700;
+		public final static int ANIM_TIME = 350;
+	}
+	public static class PLAYER {
+		public final static int MOVEMENT_SPEED = 300;
+		public final static int SHOOT_SPEED = 450;
+		public final static int SHOOT_DELAY = 50;
 	}
 }

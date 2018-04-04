@@ -3,14 +3,19 @@ package com.game.invaders.system.logic.invader;
 import java.util.EnumSet;
 
 import com.game.invaders.scene.actor.ActorComponent.ActorComponentID;
+import com.game.invaders.scene.actor.component.ChildOfGroupC;
+import com.game.invaders.scene.actor.component.PositionActorC;
 import com.badlogic.gdx.utils.IntSet.IntSetIterator;
 import com.game.invaders.scene.actor.EntityManager;
-import com.game.invaders.scene.actor.components.ChildOfGroupC;
-import com.game.invaders.scene.actor.components.PositionActorC;
 import com.game.invaders.system.engine.EntityMapper;
 import com.game.invaders.system.event.EventManager;
 import com.game.invaders.system.process.AbstractProcess;
 
+/**
+ * Controla el movimiento individual respecto al grupo
+ * Es decir, actualiza la posición en función de su posición dentro del grupo y la posición de la caja del grupo
+ * Simplemente un movimiento relativo
+ */
 public class InvaderGroupMovementSystem extends AbstractProcess {
 	private EventManager eventManager;
 	private EntityMapper managedEntities;

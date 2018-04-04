@@ -6,11 +6,14 @@ import com.game.invaders.system.collision.CollisionManager;
 import com.game.invaders.system.controller.ControllerManager;
 import com.game.invaders.system.event.EventManager;
 import com.game.invaders.system.input.InputManager;
+import com.game.invaders.system.logic.ShootImpactManager;
 import com.game.invaders.system.logic.invader.InvaderBehaviourSystem;
 import com.game.invaders.system.logic.invader.InvaderGroupMovementSystem;
+import com.game.invaders.system.logic.invader.InvaderStateSystem;
 import com.game.invaders.system.logic.player.PlayerBehaviourSystem;
 import com.game.invaders.system.physics.PhysicsManager;
 import com.game.invaders.system.process.ProcessManager;
+import com.game.invaders.system.render.AnimationManager;
 import com.game.invaders.system.render.RenderManager;
 
 public class SpaceInvaders extends ApplicationAdapter {
@@ -36,8 +39,11 @@ public class SpaceInvaders extends ApplicationAdapter {
 		process_manager.addProcess(new PlayerBehaviourSystem(entityManager, eventManager));
 		process_manager.addProcess(new InvaderBehaviourSystem(entityManager, eventManager));
 		process_manager.addProcess(new InvaderGroupMovementSystem(entityManager, eventManager));
+		process_manager.addProcess(new InvaderStateSystem(entityManager, eventManager));
 		process_manager.addProcess(new PhysicsManager(entityManager, eventManager));
 		process_manager.addProcess(new CollisionManager(entityManager, eventManager));
+		process_manager.addProcess(new ShootImpactManager(entityManager, eventManager));
+		process_manager.addProcess(new AnimationManager(entityManager, eventManager));
 		process_manager.addProcess(eventManager);
 		
 		process_manager.init();

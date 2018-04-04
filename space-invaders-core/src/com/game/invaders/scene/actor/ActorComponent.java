@@ -3,15 +3,15 @@ package com.game.invaders.scene.actor;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.game.invaders.scene.actor.components.ChildOfGroupC;
-import com.game.invaders.scene.actor.components.CollisionActorC;
-import com.game.invaders.scene.actor.components.ControllerC;
-import com.game.invaders.scene.actor.components.GroupC;
-import com.game.invaders.scene.actor.components.InvaderStateC;
-import com.game.invaders.scene.actor.components.PhysicsActorC;
-import com.game.invaders.scene.actor.components.PlayerShipStateC;
-import com.game.invaders.scene.actor.components.PositionActorC;
-import com.game.invaders.scene.actor.components.RenderableActorC;
+import com.game.invaders.scene.actor.component.ChildOfGroupC;
+import com.game.invaders.scene.actor.component.CollisionActorC;
+import com.game.invaders.scene.actor.component.ControllerC;
+import com.game.invaders.scene.actor.component.GroupC;
+import com.game.invaders.scene.actor.component.InvaderStateC;
+import com.game.invaders.scene.actor.component.PhysicsActorC;
+import com.game.invaders.scene.actor.component.PlayerShipStateC;
+import com.game.invaders.scene.actor.component.PositionActorC;
+import com.game.invaders.scene.actor.component.RenderableActorC;
 
 public abstract class ActorComponent  {
 	public enum ActorComponentID {
@@ -23,7 +23,8 @@ public abstract class ActorComponent  {
 		INVADER_STATE,
 		PLAYER_STATE,
 		GROUP_CHILD,
-		GROUP
+		GROUP,
+		ANIMATION
 	}
 	public static final Map<ActorComponentID, Class<? extends ActorComponent>> COMPONENTS_MAP = createComponentsMap();
 	private static Map<ActorComponentID, Class<? extends ActorComponent>> createComponentsMap() {

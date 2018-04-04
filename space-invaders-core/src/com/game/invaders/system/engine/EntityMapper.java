@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.IntSet.IntSetIterator;
 import com.game.invaders.scene.actor.ActorComponent.ActorComponentID;
 import com.game.invaders.scene.actor.EntityManager;
 import com.game.invaders.system.event.Event.EventType;
+import com.game.invaders.system.event.types.ActorLifeCycleEvent;
 import com.game.invaders.system.event.types.ComponentAddedEvent;
 import com.game.invaders.system.event.types.ComponentRemovedEvent;
 import com.game.invaders.system.event.Event;
@@ -64,6 +65,14 @@ public class EntityMapper {
 					group.remove(entity);
 			}
 		}, EnumSet.of(EventType.COMPONENT_REMOVED));
+		eventManager.registerHandler(new EventListener() {
+			@Override
+			public void handle(Event e) {
+				int entity = ((ActorLifeCycleEvent)e).getEntity();
+				group.remove(entity);
+				System.out.println("removed from mapper: " + entity);
+			}
+		}, EnumSet.of(EventType.ACTOR_DELETED));
 	}
 	public IntSet getGroup() {
 		return group;

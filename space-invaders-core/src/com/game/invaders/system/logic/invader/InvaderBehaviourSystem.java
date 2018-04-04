@@ -4,15 +4,17 @@ import java.util.EnumSet;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.IntSet.IntSetIterator;
 import com.game.invaders.GameConfigData;
-import com.game.invaders.GameResources;
 import com.game.invaders.scene.actor.EntityManager;
 import com.game.invaders.scene.actor.ActorComponent.ActorComponentID;
-import com.game.invaders.scene.actor.components.PhysicsActorC;
-import com.game.invaders.scene.actor.components.PositionActorC;
+import com.game.invaders.scene.actor.component.PhysicsActorC;
+import com.game.invaders.scene.actor.component.PositionActorC;
 import com.game.invaders.system.engine.EntityMapper;
 import com.game.invaders.system.event.EventManager;
 import com.game.invaders.system.process.AbstractProcess;
 
+/**
+ * Controla el movimiento en grupo de la caja de invaders
+ */
 public class InvaderBehaviourSystem extends AbstractProcess {
 	private EntityManager manager;
 	private EntityMapper managedEntities;

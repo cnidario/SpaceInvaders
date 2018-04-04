@@ -4,9 +4,9 @@ import java.util.EnumSet;
 import com.badlogic.gdx.math.Vector2;
 import com.game.invaders.scene.actor.EntityManager;
 import com.game.invaders.scene.actor.ActorComponent.ActorComponentID;
-import com.game.invaders.scene.actor.components.CollisionActorC;
-import com.game.invaders.scene.actor.components.CollisionActorC.CollisionGroup;
-import com.game.invaders.scene.actor.components.PositionActorC;
+import com.game.invaders.scene.actor.component.CollisionActorC;
+import com.game.invaders.scene.actor.component.PositionActorC;
+import com.game.invaders.scene.actor.component.CollisionActorC.CollisionGroup;
 import com.game.invaders.system.engine.EntityMapper;
 import com.game.invaders.system.event.EventManager;
 import com.game.invaders.system.event.types.CollisionEvent;
@@ -37,6 +37,7 @@ public class CollisionManager extends AbstractProcess {
 		return false;
 	}
 	private boolean collides(int e1, int e2) {
+		System.out.println("checking collision " + e1 + ", " + e2);
 		CollisionActorC col1 = (CollisionActorC) manager.componentFor(e1, ActorComponentID.COLLISION);
 		CollisionActorC col2 = (CollisionActorC) manager.componentFor(e2, ActorComponentID.COLLISION);
 		PositionActorC p1 = (PositionActorC) manager.componentFor(e1, ActorComponentID.POSITION);
@@ -57,7 +58,7 @@ public class CollisionManager extends AbstractProcess {
 		}
 	}
 	private void emitCollision(int e1, int e2) {
-		eventManager.queueEvent(new CollisionEvent(e1, e2));
+		eventManager.queueEvent(new CollisionEvent(e1, e2)); //FIXME PROBLEM HERE, borrado inmediato, propagación instantánea evento
 	}
 	@Override
 	public void update(float dt) {

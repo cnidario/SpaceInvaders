@@ -3,18 +3,19 @@ package com.game.invaders;
 import java.util.EnumSet;
 import com.badlogic.gdx.math.Vector2;
 import com.game.invaders.scene.actor.EntityManager;
-import com.game.invaders.scene.actor.components.ChildOfGroupC;
-import com.game.invaders.scene.actor.components.CollisionActorC;
-import com.game.invaders.scene.actor.components.ControllerC;
-import com.game.invaders.scene.actor.components.RenderableActorC;
-import com.game.invaders.scene.actor.components.CollisionActorC.CollisionGroup;
-import com.game.invaders.scene.actor.components.GroupC;
-import com.game.invaders.scene.actor.components.InvaderStateC;
-import com.game.invaders.scene.actor.components.InvaderStateC.InvaderStateID;
-import com.game.invaders.scene.actor.components.PhysicsActorC;
-import com.game.invaders.scene.actor.components.PlayerShipStateC;
-import com.game.invaders.scene.actor.components.PlayerShipStateC.PlayerState;
-import com.game.invaders.scene.actor.components.PositionActorC;
+import com.game.invaders.scene.actor.component.AnimationSpriteC;
+import com.game.invaders.scene.actor.component.ChildOfGroupC;
+import com.game.invaders.scene.actor.component.CollisionActorC;
+import com.game.invaders.scene.actor.component.ControllerC;
+import com.game.invaders.scene.actor.component.GroupC;
+import com.game.invaders.scene.actor.component.InvaderStateC;
+import com.game.invaders.scene.actor.component.PhysicsActorC;
+import com.game.invaders.scene.actor.component.PlayerShipStateC;
+import com.game.invaders.scene.actor.component.PositionActorC;
+import com.game.invaders.scene.actor.component.RenderableActorC;
+import com.game.invaders.scene.actor.component.CollisionActorC.CollisionGroup;
+import com.game.invaders.scene.actor.component.InvaderStateC.InvaderStateID;
+import com.game.invaders.scene.actor.component.PlayerShipStateC.PlayerState;
 import com.game.invaders.system.event.Event;
 import com.game.invaders.system.event.EventManager;
 import com.game.invaders.system.event.types.ActorLifeCycleEvent;
@@ -52,8 +53,8 @@ public class GameWorld {
 				new CollisionActorC(GameResources.INVADER.BBOX, 
 						EnumSet.of(CollisionGroup.PLAYER_SHOOT), EnumSet.of(CollisionGroup.INVADER)));
 		entityManager.addComponent(invader, new PositionActorC(new Vector2()));
-		//entityManager.addComponent(invader, new PhysicsActorC(new Vector2()));
 		entityManager.addComponent(invader, new InvaderStateC(InvaderStateID.ALIVE));
+		entityManager.addComponent(invader, new AnimationSpriteC(GameResources.INVADER.INVADERS, GameConfigData.INVADER.ANIM_TIME, true));
 		return invader;
 	}
 	private int createPlayer() {
@@ -61,7 +62,7 @@ public class GameWorld {
 		entityManager.addComponent(player, new PositionActorC(new Vector2()));
 		entityManager.addComponent(player, new PhysicsActorC(new Vector2()));
 		entityManager.addComponent(player, new ControllerC());
-		entityManager.addComponent(player, new PlayerShipStateC(PlayerState.STOPPED));
+		entityManager.addComponent(player, new PlayerShipStateC(PlayerState.STOPPED, GameConfigData.PLAYER.SHOOT_DELAY));
 		entityManager.addComponent(player, new RenderableActorC(GameResources.PLAYER.PLAYER));
 		eventManager.queueEvent(new ActorLifeCycleEvent(Event.EventType.ACTOR_CREATED, player));
 		return player;

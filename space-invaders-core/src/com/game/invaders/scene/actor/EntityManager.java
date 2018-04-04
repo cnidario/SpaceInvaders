@@ -35,6 +35,7 @@ public class EntityManager {
 		return lastId;
 	}
 	public void removeEntity(int entity) {
+		System.out.println("removed " + entity);
 		entities.remove(entity);
 		components.remove(entity);
 		eventManager.queueEvent(new ActorLifeCycleEvent(EventType.ACTOR_DELETED, entity));

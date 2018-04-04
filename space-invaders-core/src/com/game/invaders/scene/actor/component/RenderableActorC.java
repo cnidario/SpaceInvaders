@@ -1,4 +1,4 @@
-package com.game.invaders.scene.actor.components;
+package com.game.invaders.scene.actor.component;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
