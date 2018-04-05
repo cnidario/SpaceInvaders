@@ -11,7 +11,7 @@ public class InvaderStateC extends AbstractActorComponent {
 	public InvaderStateC(InvaderStateID stateID) {
 		super(ActorComponentID.INVADER_STATE);
 		this.stateID = stateID;
-		dyingTime = 0;
+		dyingTime = 0; //XXX?
 	}
 	public InvaderStateID getStateID() {
 		return stateID;

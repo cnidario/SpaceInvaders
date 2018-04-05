@@ -18,11 +18,11 @@ public class InputManager extends AbstractProcess {
 			event_manager.queueEvent(new InputControlEvent(InputControlEvent.InputControlType.MOVE_LEFT));
 		} else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 			event_manager.queueEvent(new InputControlEvent(InputControlEvent.InputControlType.MOVE_RIGHT));
-		} else if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-			event_manager.queueEvent(new InputControlEvent(InputControlEvent.InputControlType.SHOOT));
 		} else {
 			event_manager.queueEvent(new InputControlEvent(InputControlEvent.InputControlType.STOP_MOVE));
 		}
+		if(Gdx.input.isKeyPressed(Input.Keys.SPACE))
+			event_manager.queueEvent(new InputControlEvent(InputControlEvent.InputControlType.SHOOT));
 	}
 	@Override
 	public void init() {

@@ -34,11 +34,12 @@ public class EntityManager {
 		eventManager.queueEvent(new ActorLifeCycleEvent(EventType.ACTOR_CREATED, lastId));
 		return lastId;
 	}
+	public void markEntityForRemove(int entity) {
+		eventManager.queueEvent(new ActorLifeCycleEvent(EventType.ACTOR_DELETED, entity));
+	}
 	public void removeEntity(int entity) {
-		System.out.println("removed " + entity);
 		entities.remove(entity);
 		components.remove(entity);
-		eventManager.queueEvent(new ActorLifeCycleEvent(EventType.ACTOR_DELETED, entity));
 	}
 	public void addComponent(int entity, ActorComponent component) {
 		Map<ActorComponentID, ActorComponent> entityComps = components.get(entity);

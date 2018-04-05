@@ -21,6 +21,9 @@ public class EventManager extends AbstractProcess {
 	
 	private List<HandlerRegistration> handlers = new ArrayList<HandlerRegistration>();
 	private List<Event> queue = new ArrayList<Event>();
+	private List<Event> queue2 = new ArrayList<Event>();
+	private boolean processing;
+	
 	
 	public void registerHandler(EventListener handler, EnumSet<EventType> types) {
 		handlers.add(new HandlerRegistration(handler, types));
@@ -37,25 +40,39 @@ public class EventManager extends AbstractProcess {
 			handlers.remove(found);
 	}
 	public void queueEvent(Event e) {
-		//queue.add(e);
-		for(HandlerRegistration handler_reg : handlers) {
-			if(handler_reg.types.contains(e.getType()))
-				handler_reg.handler.handle(e);
+		if(processing)
+			queue2.add(e);
+		else
+			queue.add(e);
+	}
+	private void swapQueues() {
+		if(!queue2.isEmpty()) {
+			List<Event> tmp = queue;
+			queue = queue2;
+			queue2 = tmp;
 		}
 	}
 	private void processEvents() {
-		for(Event e : queue) {
-			for(HandlerRegistration handler_reg : handlers) {
-				if(handler_reg.types.contains(e.getType()))
-					handler_reg.handler.handle(e);
+		processing = true;
+		while(!queue.isEmpty() || !queue2.isEmpty()) {
+			for(Event e : queue) {
+				for(HandlerRegistration handler_reg : handlers) {
+					if(handler_reg.types.contains(e.getType()))
+						handler_reg.handler.handle(e);
+				}
 			}
+			queue.clear();
+			swapQueues();
 		}
+		processing = false;
 	}
 	public void cleanEvents() {
 		queue.clear();
+		queue2.clear();
 	}
 	@Override
 	public void init() {
+		processing = false;
 	}
 	@Override
 	public void update(float dt) {

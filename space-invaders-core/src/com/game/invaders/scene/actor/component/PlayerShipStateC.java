@@ -4,17 +4,18 @@ public class PlayerShipStateC extends AbstractActorComponent {
 	public enum PlayerState {
 		STOPPED,
 		MOVING_LEFT,
-		MOVING_RIGHT,
-		FIRING
+		MOVING_RIGHT
 	}
 	
 	private PlayerState state;
+	private boolean firing;
 	private float shootDelay;
 
 	public PlayerShipStateC(PlayerState state, float shootDelay) {
 		super(ActorComponentID.PLAYER_STATE);
 		this.state = state;
-		this.shootDelay = shootDelay; 
+		this.shootDelay = shootDelay;
+		firing = false;
 	}
 	public PlayerState getState() {
 		return state;
@@ -27,5 +28,11 @@ public class PlayerShipStateC extends AbstractActorComponent {
 	}
 	public void setShootDelay(float shootDelay) {
 		this.shootDelay = shootDelay;
+	}
+	public boolean isFiring() {
+		return firing;
+	}
+	public void setFiring(boolean firing) {
+		this.firing = firing;
 	}
 }

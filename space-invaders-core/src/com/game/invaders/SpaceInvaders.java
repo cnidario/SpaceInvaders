@@ -2,6 +2,7 @@ package com.game.invaders;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.game.invaders.scene.actor.EntityManager;
+import com.game.invaders.system.EntityLifeCycleSystem;
 import com.game.invaders.system.collision.CollisionManager;
 import com.game.invaders.system.controller.ControllerManager;
 import com.game.invaders.system.event.EventManager;
@@ -44,6 +45,7 @@ public class SpaceInvaders extends ApplicationAdapter {
 		process_manager.addProcess(new CollisionManager(entityManager, eventManager));
 		process_manager.addProcess(new ShootImpactManager(entityManager, eventManager));
 		process_manager.addProcess(new AnimationManager(entityManager, eventManager));
+		process_manager.addProcess(new EntityLifeCycleSystem(entityManager, eventManager));
 		process_manager.addProcess(eventManager);
 		
 		process_manager.init();

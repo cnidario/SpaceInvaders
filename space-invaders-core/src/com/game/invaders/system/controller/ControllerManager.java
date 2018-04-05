@@ -36,7 +36,7 @@ public class ControllerManager extends AbstractProcess implements EventListener 
 				state_c.setState(PlayerState.MOVING_RIGHT);
 				break;
 			case SHOOT:
-				state_c.setState(PlayerState.FIRING);
+				state_c.setFiring(true);
 				break;
 			case STOP_MOVE:
 				state_c.setState(PlayerState.STOPPED);

@@ -3,7 +3,6 @@ package com.game.invaders.system.logic;
 import java.util.EnumSet;
 
 import com.game.invaders.GameConfigData;
-import com.game.invaders.GameResources;
 import com.game.invaders.scene.actor.EntityManager;
 import com.game.invaders.scene.actor.ActorComponent.ActorComponentID;
 import com.game.invaders.scene.actor.component.AnimationSpriteC;
@@ -41,12 +40,12 @@ public class ShootImpactManager extends AbstractProcess {
 					shoot = e1;
 				}
 				invader_c.setStateID(InvaderStateID.DYING);
-				invader_c.setDyingTime(0);
+				invader_c.setDyingTime(GameConfigData.INVADER.EXPLOSION_DELAY);
 				AnimationSpriteC anim_c = (AnimationSpriteC) manager.componentFor(invader, ActorComponentID.ANIMATION);
 				if(anim_c != null)
 					manager.removeComponent(invader, anim_c);
 				//manager.addComponent(invader, new AnimationSpriteC(GameResources.INVADER.EXPLOSION, GameConfigData.INVADER.EXPLOSION_DELAY));
-				manager.removeEntity(shoot);
+				manager.markEntityForRemove(shoot);
 			}
 		}, EnumSet.of(EventType.COLLISION));
 	}

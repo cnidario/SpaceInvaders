@@ -70,11 +70,16 @@ public class EntityMapper {
 			public void handle(Event e) {
 				int entity = ((ActorLifeCycleEvent)e).getEntity();
 				group.remove(entity);
-				System.out.println("removed from mapper: " + entity);
 			}
 		}, EnumSet.of(EventType.ACTOR_DELETED));
 	}
 	public IntSet getGroup() {
 		return group;
+	}
+	public int one() {
+		if(group.size == 0)
+			return -1;
+		else
+			return group.first();
 	}
 }
