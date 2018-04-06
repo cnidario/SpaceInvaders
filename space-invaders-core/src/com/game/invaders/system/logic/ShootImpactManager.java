@@ -6,6 +6,7 @@ import com.game.invaders.GameConfigData;
 import com.game.invaders.scene.actor.EntityManager;
 import com.game.invaders.scene.actor.ActorComponent.ActorComponentID;
 import com.game.invaders.scene.actor.component.AnimationSpriteC;
+import com.game.invaders.scene.actor.component.ExplodingInvaderC;
 import com.game.invaders.scene.actor.component.InvaderStateC;
 import com.game.invaders.scene.actor.component.InvaderStateC.InvaderStateID;
 import com.game.invaders.system.event.Event;
@@ -41,6 +42,8 @@ public class ShootImpactManager extends AbstractProcess {
 				}
 				invader_c.setStateID(InvaderStateID.DYING);
 				invader_c.setDyingTime(GameConfigData.INVADER.EXPLOSION_DELAY);
+				ExplodingInvaderC explo_c = new ExplodingInvaderC(6, GameConfigData.INVADER.EXPLOSION_DELAY/5);
+				manager.addComponent(invader, explo_c);
 				AnimationSpriteC anim_c = (AnimationSpriteC) manager.componentFor(invader, ActorComponentID.ANIMATION);
 				if(anim_c != null)
 					manager.removeComponent(invader, anim_c);

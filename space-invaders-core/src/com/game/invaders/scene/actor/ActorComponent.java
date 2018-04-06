@@ -24,7 +24,8 @@ public abstract class ActorComponent  {
 		PLAYER_STATE,
 		GROUP_CHILD,
 		GROUP,
-		ANIMATION
+		ANIMATION,
+		EXPLODING_INVADER
 	}
 	public static final Map<ActorComponentID, Class<? extends ActorComponent>> COMPONENTS_MAP = createComponentsMap();
 	private static Map<ActorComponentID, Class<? extends ActorComponent>> createComponentsMap() {

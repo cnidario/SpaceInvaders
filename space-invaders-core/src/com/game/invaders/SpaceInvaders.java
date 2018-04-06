@@ -8,6 +8,7 @@ import com.game.invaders.system.controller.ControllerManager;
 import com.game.invaders.system.event.EventManager;
 import com.game.invaders.system.input.InputManager;
 import com.game.invaders.system.logic.ShootImpactManager;
+import com.game.invaders.system.logic.invader.ExplodingTiltSystem;
 import com.game.invaders.system.logic.invader.InvaderBehaviourSystem;
 import com.game.invaders.system.logic.invader.InvaderGroupMovementSystem;
 import com.game.invaders.system.logic.invader.InvaderStateSystem;
@@ -45,6 +46,7 @@ public class SpaceInvaders extends ApplicationAdapter {
 		process_manager.addProcess(new CollisionManager(entityManager, eventManager));
 		process_manager.addProcess(new ShootImpactManager(entityManager, eventManager));
 		process_manager.addProcess(new AnimationManager(entityManager, eventManager));
+		process_manager.addProcess(new ExplodingTiltSystem(entityManager, eventManager));
 		process_manager.addProcess(new EntityLifeCycleSystem(entityManager, eventManager));
 		process_manager.addProcess(eventManager);
 		

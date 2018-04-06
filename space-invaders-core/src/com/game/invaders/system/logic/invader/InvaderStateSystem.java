@@ -1,9 +1,13 @@
 package com.game.invaders.system.logic.invader;
 
 import java.util.EnumSet;
+import java.util.Random;
+
 import com.game.invaders.scene.actor.ActorComponent.ActorComponentID;
 import com.game.invaders.scene.actor.component.InvaderStateC;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.IntSet.IntSetIterator;
+import com.game.invaders.GameResources;
 import com.game.invaders.scene.actor.EntityManager;
 import com.game.invaders.system.engine.EntityMapper;
 import com.game.invaders.system.event.EventManager;
@@ -33,6 +37,8 @@ public class InvaderStateSystem extends AbstractProcess {
 					state_c.setDyingTime(dtime);
 					if(dtime <= 0) {
 						manager.markEntityForRemove(e);
+						Sound sound = GameResources.GAME.HITS[new Random().nextInt(GameResources.GAME.HITS.length)];
+						sound.play(1.0f);
 					}
 					break;
 			}

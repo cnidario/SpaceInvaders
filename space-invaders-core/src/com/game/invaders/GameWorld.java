@@ -7,6 +7,7 @@ import com.game.invaders.scene.actor.component.AnimationSpriteC;
 import com.game.invaders.scene.actor.component.ChildOfGroupC;
 import com.game.invaders.scene.actor.component.CollisionActorC;
 import com.game.invaders.scene.actor.component.ControllerC;
+import com.game.invaders.scene.actor.component.ExplodingInvaderC;
 import com.game.invaders.scene.actor.component.GroupC;
 import com.game.invaders.scene.actor.component.InvaderStateC;
 import com.game.invaders.scene.actor.component.PhysicsActorC;
@@ -40,21 +41,21 @@ public class GameWorld {
 		entityManager.addComponent(invaderGroup, new PhysicsActorC(new Vector2(GameConfigData.INVADER.MINSPEED, 0)));
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 8; j++) {
-				int invader = createInvader();
+				int invader = createInvader(i % GameResources.INVADER.INVADERS.length);
 				entityManager.addComponent(invader, new ChildOfGroupC(new Vector2(j*96, -i*76), invaderGroup));
 				eventManager.queueEvent(new ActorLifeCycleEvent(Event.EventType.ACTOR_CREATED, invader));
 			}
 		}
 	}
-	private int createInvader() {
+	private int createInvader(int num) {
 		int invader = entityManager.createEntity();
-		entityManager.addComponent(invader, new RenderableActorC(GameResources.INVADER.INVADERS[0]));
+		entityManager.addComponent(invader, new RenderableActorC(GameResources.INVADER.INVADERS[0][0]));
 		entityManager.addComponent(invader, 
 				new CollisionActorC(GameResources.INVADER.BBOX, 
 						EnumSet.of(CollisionGroup.PLAYER_SHOOT), EnumSet.of(CollisionGroup.INVADER)));
 		entityManager.addComponent(invader, new PositionActorC(new Vector2()));
 		entityManager.addComponent(invader, new InvaderStateC(InvaderStateID.ALIVE));
-		entityManager.addComponent(invader, new AnimationSpriteC(GameResources.INVADER.INVADERS, GameConfigData.INVADER.ANIM_TIME, true));
+		entityManager.addComponent(invader, new AnimationSpriteC(GameResources.INVADER.INVADERS[num], GameConfigData.INVADER.ANIM_TIME, true));
 		return invader;
 	}
 	private int createPlayer() {
