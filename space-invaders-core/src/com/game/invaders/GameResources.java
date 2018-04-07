@@ -1,6 +1,7 @@
 package com.game.invaders;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -33,5 +34,15 @@ public class GameResources {
 				Gdx.audio.newSound(Gdx.files.internal("sound/hit2.wav")),
 				Gdx.audio.newSound(Gdx.files.internal("sound/hit3.wav"))
 		};
+		public final static Sound[] EXPLOSIONS = {
+				Gdx.audio.newSound(Gdx.files.internal("sound/explosion1.wav")),
+				Gdx.audio.newSound(Gdx.files.internal("sound/explosion2.wav")),
+				Gdx.audio.newSound(Gdx.files.internal("sound/explosion3.wav"))
+		};
+		public final static Sound[] SHOOTS = {
+				Gdx.audio.newSound(Gdx.files.internal("sound/shoot1.wav")),
+				Gdx.audio.newSound(Gdx.files.internal("sound/shoot2.wav"))
+		};
+		public final static Music MAIN_SONG = Gdx.audio.newMusic(Gdx.files.internal("sound/main-song.wav"));
 	}
 }

@@ -1,6 +1,7 @@
 package com.game.invaders.system.logic.player;
 
 import java.util.EnumSet;
+import java.util.Random;
 
 import com.game.invaders.GameConfigData;
 import com.game.invaders.GameResources;
@@ -11,6 +12,7 @@ import com.game.invaders.scene.actor.component.PlayerShipStateC;
 import com.game.invaders.scene.actor.component.PositionActorC;
 import com.game.invaders.scene.actor.component.RenderableActorC;
 import com.game.invaders.scene.actor.component.CollisionActorC.CollisionGroup;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.game.invaders.scene.actor.EntityManager;
 import com.game.invaders.system.engine.EntityMapper;
@@ -40,6 +42,8 @@ public class PlayerBehaviourSystem extends AbstractProcess {
 		manager.addComponent(shoot, new CollisionActorC(GameResources.PLAYER.SHOOT_BBOX, EnumSet.of(CollisionGroup.INVADER), EnumSet.of(CollisionGroup.PLAYER_SHOOT)));
 		manager.addComponent(shoot, new RenderableActorC(GameResources.PLAYER.SHOOT));
 		manager.addComponent(shoot, new PhysicsActorC(new Vector2(0, GameConfigData.PLAYER.SHOOT_SPEED)));
+		Sound sound = GameResources.GAME.SHOOTS[new Random().nextInt(GameResources.GAME.SHOOTS.length)];
+		sound.play(1f);
 	}
 	@Override
 	public void update(float dt) {

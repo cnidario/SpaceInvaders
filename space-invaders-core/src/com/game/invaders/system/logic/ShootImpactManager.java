@@ -1,8 +1,11 @@
 package com.game.invaders.system.logic;
 
 import java.util.EnumSet;
+import java.util.Random;
 
+import com.badlogic.gdx.audio.Sound;
 import com.game.invaders.GameConfigData;
+import com.game.invaders.GameResources;
 import com.game.invaders.scene.actor.EntityManager;
 import com.game.invaders.scene.actor.ActorComponent.ActorComponentID;
 import com.game.invaders.scene.actor.component.AnimationSpriteC;
@@ -49,6 +52,8 @@ public class ShootImpactManager extends AbstractProcess {
 					manager.removeComponent(invader, anim_c);
 				//manager.addComponent(invader, new AnimationSpriteC(GameResources.INVADER.EXPLOSION, GameConfigData.INVADER.EXPLOSION_DELAY));
 				manager.markEntityForRemove(shoot);
+				Sound sound = GameResources.GAME.HITS[new Random().nextInt(GameResources.GAME.HITS.length)];
+				sound.play(1f);
 			}
 		}, EnumSet.of(EventType.COLLISION));
 	}

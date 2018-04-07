@@ -53,6 +53,7 @@ public class SpaceInvaders extends ApplicationAdapter {
 		process_manager.init();
 		game_world.init();
 		render_manager.init();
+		GameResources.GAME.MAIN_SONG.play();
 	}
 	private void updatePhase() {
 		int elapsedTime;

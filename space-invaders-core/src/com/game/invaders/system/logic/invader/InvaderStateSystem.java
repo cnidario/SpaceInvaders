@@ -37,8 +37,8 @@ public class InvaderStateSystem extends AbstractProcess {
 					state_c.setDyingTime(dtime);
 					if(dtime <= 0) {
 						manager.markEntityForRemove(e);
-						Sound sound = GameResources.GAME.HITS[new Random().nextInt(GameResources.GAME.HITS.length)];
-						sound.play(1.0f);
+						Sound sound = GameResources.GAME.EXPLOSIONS[new Random().nextInt(GameResources.GAME.EXPLOSIONS.length)];
+						sound.play(.3f);
 					}
 					break;
 			}
