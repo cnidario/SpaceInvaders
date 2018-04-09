@@ -1,0 +1,66 @@
+package com.game.engine.system.collision;
+
+import java.util.EnumSet;
+import com.badlogic.gdx.math.Vector2;
+import com.game.engine.entity.EntityManager;
+import com.game.engine.entity.Component.ComponentID;
+import com.game.engine.entity.component.Collision;
+import com.game.engine.entity.component.Position;
+import com.game.engine.entity.component.Collision.CollisionGroup;
+import com.game.engine.system.EntityMapper;
+import com.game.engine.system.event.EventSystem;
+import com.game.engine.system.event.types.CollisionEvent;
+import com.game.engine.system.process.AbstractProcess;
+
+public class CollisionSystem extends AbstractProcess {
+	private EntityMapper managedEntities;
+	private EntityManager manager;
+	private EventSystem eventManager;
+	
+	public CollisionSystem(EntityManager manager, EventSystem eventManager) {
+		this.manager = manager;
+		this.eventManager = eventManager;
+		managedEntities = new EntityMapper(manager, eventManager, EnumSet.of(ComponentID.COLLISION, ComponentID.POSITION));
+	}
+	public static boolean test(Vector2 aPos, BoundingBox a, Vector2 bPos, BoundingBox b) {
+		boolean horizontal_overlap = (aPos.x > bPos.x && aPos.x < bPos.x + b.getWidth()) ||
+				(bPos.x > aPos.x && bPos.x < aPos.x + a.getWidth());
+		boolean vertical_overlap = (aPos.y > bPos.y && aPos.y < bPos.y + b.getHeight()) ||
+				(bPos.y > aPos.y && bPos.y < aPos.y + a.getHeight());
+		return horizontal_overlap && vertical_overlap;
+	}
+	private static boolean collides(Vector2 p1, Vector2 p2, BoundingBox bb1, BoundingBox bb2, EnumSet<CollisionGroup> cwith, EnumSet<CollisionGroup> ccategories) {
+		for(CollisionGroup with : cwith) {
+			if(ccategories.contains(with))
+				return test(p1, bb1, p2, bb2);
+		}
+		return false;
+	}
+	private boolean collides(int e1, int e2) {
+		Collision col1 = (Collision) manager.componentFor(e1, ComponentID.COLLISION);
+		Collision col2 = (Collision) manager.componentFor(e2, ComponentID.COLLISION);
+		Position p1 = (Position) manager.componentFor(e1, ComponentID.POSITION);
+		Position p2 = (Position) manager.componentFor(e2, ComponentID.POSITION);
+		return collides(p1.getPos(), p2.getPos(), col1.getBoundingBox(), col2.getBoundingBox(), col1.getCollidesWith(), col2.getCollisionCategories());
+	}
+	private void processCollisions() {
+		int[] entities = managedEntities.getGroup().iterator().toArray().items;
+		for(int i = 0; i < entities.length; i++) {
+			int e1 = entities[i];
+			for(int j = i; j < entities.length; j++) {
+				int e2 = entities[j];
+				if(collides(e1, e2)) {
+					emitCollision(e1, e2);
+					break;
+				}
+			}
+		}
+	}
+	private void emitCollision(int e1, int e2) {
+		eventManager.queueEvent(new CollisionEvent(e1, e2));
+	}
+	@Override
+	public void update(float dt) {
+		processCollisions();
+	}
+}

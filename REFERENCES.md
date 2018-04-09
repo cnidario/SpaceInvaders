@@ -5,3 +5,6 @@
 - [Integrar scene node en ECS](https://www.reddit.com/r/gamedev/comments/806hl5/hierarchy_based_update_order_in_entity_component/)
 - [Song composer html5](https://www.beepbox.co/)
 - [SFX maker html5](https://www.leshylabs.com/apps/sfMaker/)
+- [Superb responses](https://www.reddit.com/r/gamedev/comments/5afw8x/entity_component_system_ecs_engine_structure/)
+- [State / Screen managment & ECS](https://gamedev.stackexchange.com/questions/35972/state-screen-management-in-entity-component-systems)
+- [Game mode managment & ECS, Spaces](https://gamedev.stackexchange.com/questions/48704/how-does-component-entity-system-manages-game-mode)

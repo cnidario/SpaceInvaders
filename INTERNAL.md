@@ -68,3 +68,6 @@ procesar
 	stackear estado o eventos y esperar a procesarlos en el update del system
 	
 Collision -hit! e1,e2-> ShootImpact -impactado invader 3-> InvaderLifeCycleSystem -invader 3 muriendo-> ...tiempo... -invader 3 muerto-> alguien tiene que retirarlo, quizá el mismo InvaderLifeCycleSystem, progresivos updates cambia estado y retira, ni hace falta estado DEAD
+
+----
+Crash idea: EventManager es inyectado en todos los systems, ortogonal, puede ser otro sistema común y un componente UIEventHandler (!) Aplana la arquitectura.
