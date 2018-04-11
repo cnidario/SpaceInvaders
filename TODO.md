@@ -17,3 +17,4 @@ Leyenda:
 - `[IDE, ARQ]` La idea de instancias, instanciación dentro de las entidades, una entidad que sea un arquetipo instanciable con datos extra. Componente InstanceOf, resultado: la entidad se compone de los componentes del padre y también de los componentes del padre del padre si es que este es otra instancia. Encadenamiento a lo prototipo.
 **Más allá incluso**: EntityManager es un sistema
 Spaces? 'GameObject' pertenece a un space. 'SystemObject' pertenece a un space. Sistemas estáticos sólo está el SpaceSystem, que extrae los sistemas y ejecuta. Otra vuelta de tuerca. Más versátil, como siempre.  
+- `[IDE]` - Abstracción que sistemas procesen nodos, no componentes ni entidades directamente.

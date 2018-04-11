@@ -4,13 +4,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
 import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.IntSet;
 import com.game.engine.system.event.EventSystem;
 import com.game.engine.entity.Component.ComponentID;
-import com.game.engine.system.event.Event.EventType;
-import com.game.engine.system.event.types.ActorLifeCycleEvent;
+import com.game.engine.system.event.types.ActorDeletedEvent;
 import com.game.engine.system.event.types.ComponentAddedEvent;
 import com.game.engine.system.event.types.ComponentRemovedEvent;
 
@@ -31,11 +29,11 @@ public class EntityManager {
 	public int createEntity() {
 		entities.add(++lastId);
 		components.put(lastId, new HashMap<Component.ComponentID, Component>());
-		eventManager.queueEvent(new ActorLifeCycleEvent(EventType.ACTOR_CREATED, lastId));
+		// XXX eventManager.queueEvent(new ActorAddedEvent(lastId)); <- ahora mismo en builder
 		return lastId;
 	}
 	public void markEntityForRemove(int entity) {
-		eventManager.queueEvent(new ActorLifeCycleEvent(EventType.ACTOR_DELETED, entity));
+		eventManager.queueEvent(new ActorDeletedEvent(entity));
 	}
 	public void removeEntity(int entity) {
 		entities.remove(entity);

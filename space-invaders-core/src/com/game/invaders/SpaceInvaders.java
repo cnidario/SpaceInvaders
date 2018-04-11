@@ -7,7 +7,7 @@ import com.game.engine.system.collision.CollisionSystem;
 import com.game.engine.system.controller.ControllerSystem;
 import com.game.engine.system.event.EventSystem;
 import com.game.engine.system.input.InputSystem;
-import com.game.engine.system.physics.MotionSystem;
+import com.game.engine.system.motion.MotionSystem;
 import com.game.engine.system.process.ProcessManager;
 import com.game.engine.system.render.AnimationSystem;
 import com.game.engine.system.render.RenderSystem;

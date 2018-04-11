@@ -2,7 +2,7 @@ package com.game.engine.system.event.types;
 
 import com.game.engine.system.event.Event;
 
-public class InputControlEvent extends Event {
+public class InputControlEvent implements Event {
 	public enum InputControlType {
 		STOP_MOVE,
 		MOVE_LEFT,
@@ -11,8 +11,8 @@ public class InputControlEvent extends Event {
 	}
 	
 	private InputControlType controlType;
+	
 	public InputControlEvent(InputControlType controlType) {
-		super(Event.EventType.INPUT_CONTROL);
 		this.controlType = controlType;
 	}
 	public InputControlType getControlType() {

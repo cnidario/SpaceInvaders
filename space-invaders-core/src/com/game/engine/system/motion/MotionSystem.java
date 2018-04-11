@@ -1,4 +1,4 @@
-package com.game.engine.system.physics;
+package com.game.engine.system.motion;
 
 import java.util.EnumSet;
 import com.badlogic.gdx.math.Vector2;

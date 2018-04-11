@@ -2,10 +2,9 @@ package com.game.engine.system.event.types;
 
 import com.game.engine.system.event.Event;
 
-public class ActorLifeCycleEvent extends Event {
+public class ActorDeletedEvent implements Event {
 	private int entity;
-	public ActorLifeCycleEvent(EventType type, int entity) {
-		super(type);
+	public ActorDeletedEvent(int entity) {
 		this.entity = entity;
 	}
 	public int getEntity() {

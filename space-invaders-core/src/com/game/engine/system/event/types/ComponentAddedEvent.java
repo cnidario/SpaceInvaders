@@ -3,12 +3,11 @@ package com.game.engine.system.event.types;
 import com.game.engine.entity.Component;
 import com.game.engine.system.event.Event;
 
-public class ComponentAddedEvent extends Event {
+public class ComponentAddedEvent implements Event {
 	private int entity;
 	private Component component;
 	
 	public ComponentAddedEvent(int entity, Component component) {
-		super(Event.EventType.COMPONENT_ADDED);
 		this.entity = entity;
 		this.component = component;
 	}

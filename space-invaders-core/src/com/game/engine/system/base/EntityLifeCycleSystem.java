@@ -1,13 +1,10 @@
 package com.game.engine.system.base;
 
-import java.util.EnumSet;
 import com.badlogic.gdx.utils.IntArray;
 import com.game.engine.entity.EntityManager;
-import com.game.engine.system.event.Event;
 import com.game.engine.system.event.EventSystem;
-import com.game.engine.system.event.Event.EventType;
 import com.game.engine.system.event.EventSystem.EventListener;
-import com.game.engine.system.event.types.ActorLifeCycleEvent;
+import com.game.engine.system.event.types.ActorDeletedEvent;
 import com.game.engine.system.process.AbstractProcess;
 
 public class EntityLifeCycleSystem extends AbstractProcess {
@@ -29,12 +26,11 @@ public class EntityLifeCycleSystem extends AbstractProcess {
 	}
 	@Override
 	public void init() {
-		eventManager.registerHandler(new EventListener() {
+		eventManager.registerHandler(new EventListener<ActorDeletedEvent>() {
 			@Override
-			public void handle(Event e) {
-				ActorLifeCycleEvent ev = (ActorLifeCycleEvent) e;
+			public void handle(ActorDeletedEvent ev) {
 				toDelete.add(ev.getEntity());
 			}
-		}, EnumSet.of(EventType.ACTOR_DELETED));
+		}, ActorDeletedEvent.class);
 	}
 }

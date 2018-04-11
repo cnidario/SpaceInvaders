@@ -5,11 +5,9 @@ import com.badlogic.gdx.utils.IntSet;
 import com.badlogic.gdx.utils.IntSet.IntSetIterator;
 import com.game.engine.entity.EntityManager;
 import com.game.engine.entity.Component.ComponentID;
-import com.game.engine.system.event.Event;
 import com.game.engine.system.event.EventSystem;
-import com.game.engine.system.event.Event.EventType;
 import com.game.engine.system.event.EventSystem.EventListener;
-import com.game.engine.system.event.types.ActorLifeCycleEvent;
+import com.game.engine.system.event.types.ActorDeletedEvent;
 import com.game.engine.system.event.types.ComponentAddedEvent;
 import com.game.engine.system.event.types.ComponentRemovedEvent;
 
@@ -45,33 +43,33 @@ public class EntityMapper {
 	}
 	private void init() {
 		load();
-		eventManager.registerHandler(new EventListener() {
+		eventManager.registerHandler(new EventListener<ComponentAddedEvent>() {
 			@Override
-			public void handle(Event e) {
-				int entity = ((ComponentAddedEvent)e).getEntity();
+			public void handle(ComponentAddedEvent e) {
+				int entity = e.getEntity();
 				if(checkEntity(entity))
 					group.add(entity);
 				else
 					group.remove(entity);
 			}
-		}, EnumSet.of(EventType.COMPONENT_ADDED));
-		eventManager.registerHandler(new EventListener() {
+		}, ComponentAddedEvent.class);
+		eventManager.registerHandler(new EventListener<ComponentRemovedEvent>() {
 			@Override
-			public void handle(Event e) {
-				int entity = ((ComponentRemovedEvent)e).getEntity();
+			public void handle(ComponentRemovedEvent e) {
+				int entity = e.getEntity();
 				if(checkEntity(entity))
 					group.add(entity);
 				else
 					group.remove(entity);
 			}
-		}, EnumSet.of(EventType.COMPONENT_REMOVED));
-		eventManager.registerHandler(new EventListener() {
+		}, ComponentRemovedEvent.class);
+		eventManager.registerHandler(new EventListener<ActorDeletedEvent>() {
 			@Override
-			public void handle(Event e) {
-				int entity = ((ActorLifeCycleEvent)e).getEntity();
+			public void handle(ActorDeletedEvent e) {
+				int entity = e.getEntity();
 				group.remove(entity);
 			}
-		}, EnumSet.of(EventType.ACTOR_DELETED));
+		}, ActorDeletedEvent.class);
 	}
 	public IntSet getGroup() {
 		return group;

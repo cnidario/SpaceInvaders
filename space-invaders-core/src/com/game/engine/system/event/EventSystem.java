@@ -1,79 +1,59 @@
 package com.game.engine.system.event;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.List;
-
-import com.game.engine.system.event.Event.EventType;
+import java.util.Map;
 import com.game.engine.system.process.AbstractProcess;
 
 public class EventSystem extends AbstractProcess {
-	public interface EventListener {
-		void handle(Event e);
-	}
-	private class HandlerRegistration {
-		EventListener handler;
-		EnumSet<EventType> types;
-		public HandlerRegistration(EventListener handler, EnumSet<EventType> types) {
-			this.handler = handler;
-			this.types = types;
-		}
+	public interface EventListener<T extends Event> {
+		void handle(T e);
 	}
 	
-	private List<HandlerRegistration> handlers = new ArrayList<HandlerRegistration>();
-	private List<Event> queue = new ArrayList<Event>();
-	private List<Event> queue2 = new ArrayList<Event>();
-	private boolean processing;
+	@SuppressWarnings("rawtypes")
+	private Map<Class<? extends Event>, List<EventListener>> handlers;
+	private List<Event> queue;
 	
-	
-	public void registerHandler(EventListener handler, EnumSet<EventType> types) {
-		handlers.add(new HandlerRegistration(handler, types));
+	@SuppressWarnings("rawtypes")
+	public EventSystem() {
+		this.handlers = new HashMap<Class<? extends Event>, List<EventListener>>();
+		this.queue = new ArrayList<Event>();
 	}
-	public void removeHandler(EventListener handler) {
-		HandlerRegistration found = null;
-		for(HandlerRegistration handler_reg : handlers) {
-			if(handler_reg.handler == handler) {
-				found = handler_reg;
-				break;
-			}
-		}
-		if(found != null)
-			handlers.remove(found);
+	@SuppressWarnings("rawtypes")
+	public <T extends Event> void registerHandler(EventListener<T> handler, Class<T> clazz) {
+		List<EventListener> listeners = handlers.get(clazz);
+		if(listeners == null)
+			listeners = new ArrayList<EventSystem.EventListener>();
+		listeners.add(handler);
+		handlers.put(clazz, listeners);
+	}
+	@SuppressWarnings("rawtypes")
+	public <T extends Event> void removeHandler(EventListener<T> handler, Class<T> clazz) {
+		List<EventListener> listeners = handlers.get(clazz);
+		if(listeners != null)
+			listeners.remove(handler);
 	}
 	public void queueEvent(Event e) {
-		if(processing)
-			queue2.add(e);
-		else
-			queue.add(e);
+		queue.add(e);
 	}
-	private void swapQueues() {
-		if(!queue2.isEmpty()) {
-			List<Event> tmp = queue;
-			queue = queue2;
-			queue2 = tmp;
-		}
-	}
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void processEvents() {
-		processing = true;
-		while(!queue.isEmpty() || !queue2.isEmpty()) {
-			for(Event e : queue) {
-				for(HandlerRegistration handler_reg : handlers) {
-					if(handler_reg.types.contains(e.getType()))
-						handler_reg.handler.handle(e);
+		List<Event> queueCopy = queue;
+		queue = new ArrayList<Event>();
+		for(Event e : queueCopy) {
+			List<EventListener> listeners = handlers.get(e.getClass());
+			if(listeners != null)
+				for(EventListener listener : listeners) {
+					listener.handle(e);
 				}
-			}
-			queue.clear();
-			swapQueues();
 		}
-		processing = false;
 	}
 	public void cleanEvents() {
 		queue.clear();
-		queue2.clear();
 	}
 	@Override
 	public void init() {
-		processing = false;
 	}
 	@Override
 	public void update(float dt) {

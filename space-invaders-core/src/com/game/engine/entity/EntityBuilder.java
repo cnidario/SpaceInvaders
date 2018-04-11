@@ -16,9 +16,8 @@ import com.game.engine.entity.component.Renderable;
 import com.game.engine.entity.component.UserControlled;
 import com.game.engine.entity.component.Collision.CollisionGroup;
 import com.game.engine.system.collision.BoundingBox;
-import com.game.engine.system.event.Event;
 import com.game.engine.system.event.EventSystem;
-import com.game.engine.system.event.types.ActorLifeCycleEvent;
+import com.game.engine.system.event.types.ActorAddedEvent;
 import com.game.invaders.component.Invader;
 import com.game.invaders.component.PlayerShip;
 import com.game.invaders.component.TiltExploding;
@@ -97,7 +96,7 @@ public class EntityBuilder {
 		for (Component c : comps.values()) {
 			manager.addComponent(entity, c);
 		}
-		eventManager.queueEvent(new ActorLifeCycleEvent(Event.EventType.ACTOR_CREATED, entity));
+		eventManager.queueEvent(new ActorAddedEvent(entity));
 		return entity;
 	}
 }

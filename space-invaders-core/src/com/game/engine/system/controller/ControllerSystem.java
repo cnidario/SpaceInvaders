@@ -1,11 +1,9 @@
 package com.game.engine.system.controller;
 
 import java.util.EnumSet;
-
 import com.game.engine.entity.EntityManager;
 import com.game.engine.entity.Component.ComponentID;
 import com.game.engine.system.EntityMapper;
-import com.game.engine.system.event.Event;
 import com.game.engine.system.event.EventSystem;
 import com.game.engine.system.event.EventSystem.EventListener;
 import com.game.engine.system.event.types.InputControlEvent;
@@ -13,7 +11,7 @@ import com.game.engine.system.process.AbstractProcess;
 import com.game.invaders.component.PlayerShip;
 import com.game.invaders.component.PlayerShip.PlayerState;
 
-public class ControllerSystem extends AbstractProcess implements EventListener {
+public class ControllerSystem extends AbstractProcess implements EventListener<InputControlEvent> {
 	private EntityManager manager;
 	private EventSystem eventManager;
 	private EntityMapper managedEntities;
@@ -24,8 +22,7 @@ public class ControllerSystem extends AbstractProcess implements EventListener {
 		managedEntities = new EntityMapper(manager, eventManager, EnumSet.of(ComponentID.USER_CONTROLLED, ComponentID.PLAYER_SHIP));
 	}
 	@Override
-	public void handle(Event e) {
-		InputControlEvent ev = (InputControlEvent) e;
+	public void handle(InputControlEvent ev) {
 		int entity = managedEntities.getGroup().first();
 		PlayerShip state_c = (PlayerShip) manager.componentFor(entity, ComponentID.PLAYER_SHIP);
 		
@@ -46,7 +43,7 @@ public class ControllerSystem extends AbstractProcess implements EventListener {
 	}
 	@Override
 	public void init() {
-		eventManager.registerHandler(this, EnumSet.of(Event.EventType.INPUT_CONTROL));
+		eventManager.registerHandler(this, InputControlEvent.class);
 	}
 	@Override
 	public void update(float dt) {
