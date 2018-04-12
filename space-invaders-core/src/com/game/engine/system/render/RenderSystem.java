@@ -1,13 +1,14 @@
 package com.game.engine.system.render;
 
-import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.Set;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.IntSet.IntSetIterator;
+import com.game.engine.entity.Component;
 import com.game.engine.entity.EntityManager;
-import com.game.engine.entity.Component.ComponentID;
 import com.game.engine.entity.component.Position;
 import com.game.engine.entity.component.Renderable;
 import com.game.engine.system.EntityMapper;
@@ -25,7 +26,10 @@ public class RenderSystem extends AbstractProcess {
 		batch = new SpriteBatch();
 		this.manager = manager;
 		this.eventManager = eventManager;
-		this.managedEntities = new EntityMapper(manager, eventManager, EnumSet.of(ComponentID.RENDERABLE, ComponentID.POSITION));
+		Set<Class<? extends Component>> cs = new HashSet<Class<? extends Component>>();
+		cs.add(Renderable.class);
+		cs.add(Position.class);
+		this.managedEntities = new EntityMapper(manager, eventManager, cs);
 	}
 	
 	public void render() {
@@ -34,8 +38,8 @@ public class RenderSystem extends AbstractProcess {
 		batch.begin();
 		for (IntSetIterator iter = managedEntities.getGroup().iterator(); iter.hasNext; ) {
 			int e = iter.next();
-			Renderable render_c = (Renderable) manager.componentFor(e, ComponentID.RENDERABLE);
-			Position pos_c = (Position) manager.componentFor(e, ComponentID.POSITION);
+			Renderable render_c = (Renderable) manager.componentFor(e, Renderable.class);
+			Position pos_c = (Position) manager.componentFor(e, Position.class);
 			Vector2 pos = pos_c.getPos();
 			batch.draw(render_c.getTex(), pos.x, pos.y);
 		}

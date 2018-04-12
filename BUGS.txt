@@ -1,0 +1,4 @@
+ - Hay algunas condiciones en que AnimationSystem coge el componente Animation a null
+   Necesito una especificación más precisa del ciclo de vida de componentes y entidades
+   Dónde y cuando se crean y destruyen, quien posee y modifica (leer todos), cómo se propagan los cambios
+   

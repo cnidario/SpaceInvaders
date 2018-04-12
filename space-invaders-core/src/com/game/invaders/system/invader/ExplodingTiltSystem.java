@@ -1,10 +1,10 @@
 package com.game.invaders.system.invader;
 
-import java.util.EnumSet;
-
+import java.util.HashSet;
+import java.util.Set;
 import com.badlogic.gdx.utils.IntSet.IntSetIterator;
+import com.game.engine.entity.Component;
 import com.game.engine.entity.EntityManager;
-import com.game.engine.entity.Component.ComponentID;
 import com.game.engine.entity.component.Position;
 import com.game.engine.system.EntityMapper;
 import com.game.engine.system.event.EventSystem;
@@ -20,16 +20,18 @@ public class ExplodingTiltSystem extends AbstractProcess {
 		super();
 		this.manager = manager;
 		this.eventManager = eventManager;
-		managedEntities = new EntityMapper(manager, eventManager,
-				EnumSet.of(ComponentID.TILT_EXPLODING, ComponentID.POSITION));
+		Set<Class<? extends Component>> cs = new HashSet<Class<? extends Component>>();
+		cs.add(TiltExploding.class);
+		cs.add(Position.class);
+		managedEntities = new EntityMapper(manager, eventManager, cs);
 	}
 
 	@Override
 	public void update(float dt) {
 		for (IntSetIterator iter = managedEntities.getGroup().iterator(); iter.hasNext;) {
 			int e = iter.next();
-			Position pos_c = (Position) manager.componentFor(e, ComponentID.POSITION);
-			TiltExploding explo_c = (TiltExploding) manager.componentFor(e, ComponentID.TILT_EXPLODING);
+			Position pos_c = (Position) manager.componentFor(e, Position.class);
+			TiltExploding explo_c = (TiltExploding) manager.componentFor(e, TiltExploding.class);
 			float elapsed = explo_c.getElapsed() + dt;
 			elapsed %= explo_c.getPeriod();
 			explo_c.setElapsed(elapsed);

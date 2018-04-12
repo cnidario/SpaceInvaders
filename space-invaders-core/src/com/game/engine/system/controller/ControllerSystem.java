@@ -1,8 +1,10 @@
 package com.game.engine.system.controller;
 
-import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.Set;
+import com.game.engine.entity.Component;
 import com.game.engine.entity.EntityManager;
-import com.game.engine.entity.Component.ComponentID;
+import com.game.engine.entity.component.UserControlled;
 import com.game.engine.system.EntityMapper;
 import com.game.engine.system.event.EventSystem;
 import com.game.engine.system.event.EventSystem.EventListener;
@@ -19,12 +21,15 @@ public class ControllerSystem extends AbstractProcess implements EventListener<I
 	public ControllerSystem(EntityManager manager, EventSystem eventManager) { 
 		this.eventManager = eventManager;
 		this.manager = manager;
-		managedEntities = new EntityMapper(manager, eventManager, EnumSet.of(ComponentID.USER_CONTROLLED, ComponentID.PLAYER_SHIP));
+		Set<Class<? extends Component>> cs = new HashSet<Class<? extends Component>>();
+		cs.add(UserControlled.class);
+		cs.add(PlayerShip.class);
+		managedEntities = new EntityMapper(manager, eventManager, cs);
 	}
 	@Override
 	public void handle(InputControlEvent ev) {
 		int entity = managedEntities.getGroup().first();
-		PlayerShip state_c = (PlayerShip) manager.componentFor(entity, ComponentID.PLAYER_SHIP);
+		PlayerShip state_c = (PlayerShip) manager.componentFor(entity, PlayerShip.class);
 		
 		switch(ev.getControlType()) {
 			case MOVE_LEFT:

@@ -33,6 +33,9 @@ Patrón Cadena de responsabilidad?
 Y el mapeo ha de construirse. A nivel más purista quizá algo como:
 control.addControlHandler( new MoveLeftControl(new MovingLeftPlayerState()) )
 
+2 patrones de comunicacion: Eventos - donde el evento sigue notificandose al resto de suscriptores
+							Controles ¿? - donde el control muere una vez procesado?
+
 La arquitectura de sistemas tampoco está abierta.
 Quizá algo más del estilo. Registrador de sistemas. Al notificarse la añadición de uno se puede inyectar las dependencias.
 Con IoC
@@ -40,3 +43,5 @@ Con IoC
 CollisionSystem no cumple OCP, SRP
 EntityBuilder no SRP, OCP, DI
 EntityMapper - caso clave
+
+EntityMapper viola DIP en los systems, debería ser inyectado (quizá como factory)

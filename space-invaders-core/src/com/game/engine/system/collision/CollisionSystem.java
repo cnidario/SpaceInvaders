@@ -1,12 +1,14 @@
 package com.game.engine.system.collision;
 
 import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.Set;
 import com.badlogic.gdx.math.Vector2;
+import com.game.engine.entity.Component;
 import com.game.engine.entity.EntityManager;
-import com.game.engine.entity.Component.ComponentID;
 import com.game.engine.entity.component.Collision;
-import com.game.engine.entity.component.Position;
 import com.game.engine.entity.component.Collision.CollisionGroup;
+import com.game.engine.entity.component.Position;
 import com.game.engine.system.EntityMapper;
 import com.game.engine.system.event.EventSystem;
 import com.game.engine.system.event.types.CollisionEvent;
@@ -20,7 +22,10 @@ public class CollisionSystem extends AbstractProcess {
 	public CollisionSystem(EntityManager manager, EventSystem eventManager) {
 		this.manager = manager;
 		this.eventManager = eventManager;
-		managedEntities = new EntityMapper(manager, eventManager, EnumSet.of(ComponentID.COLLISION, ComponentID.POSITION));
+		Set<Class<? extends Component>> cs = new HashSet<Class<? extends Component>>();
+		cs.add(Collision.class);
+		cs.add(Position.class);
+		managedEntities = new EntityMapper(manager, eventManager, cs);
 	}
 	public static boolean test(Vector2 aPos, BoundingBox a, Vector2 bPos, BoundingBox b) {
 		boolean horizontal_overlap = (aPos.x > bPos.x && aPos.x < bPos.x + b.getWidth()) ||
@@ -37,10 +42,10 @@ public class CollisionSystem extends AbstractProcess {
 		return false;
 	}
 	private boolean collides(int e1, int e2) {
-		Collision col1 = (Collision) manager.componentFor(e1, ComponentID.COLLISION);
-		Collision col2 = (Collision) manager.componentFor(e2, ComponentID.COLLISION);
-		Position p1 = (Position) manager.componentFor(e1, ComponentID.POSITION);
-		Position p2 = (Position) manager.componentFor(e2, ComponentID.POSITION);
+		Collision col1 = (Collision) manager.componentFor(e1, Collision.class);
+		Collision col2 = (Collision) manager.componentFor(e2, Collision.class);
+		Position p1 = (Position) manager.componentFor(e1, Position.class);
+		Position p2 = (Position) manager.componentFor(e2, Position.class);
 		return collides(p1.getPos(), p2.getPos(), col1.getBoundingBox(), col2.getBoundingBox(), col1.getCollidesWith(), col2.getCollisionCategories());
 	}
 	private void processCollisions() {

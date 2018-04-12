@@ -1,10 +1,10 @@
 package com.game.invaders.system.invader;
 
-import java.util.EnumSet;
-
+import java.util.HashSet;
+import java.util.Set;
 import com.badlogic.gdx.utils.IntSet.IntSetIterator;
+import com.game.engine.entity.Component;
 import com.game.engine.entity.EntityManager;
-import com.game.engine.entity.Component.ComponentID;
 import com.game.engine.entity.component.GroupParent;
 import com.game.engine.entity.component.Position;
 import com.game.engine.system.EntityMapper;
@@ -25,8 +25,10 @@ public class InvaderGroupMovementSystem extends AbstractProcess {
 		super();
 		this.manager = manager;
 		this.eventManager = eventManager;
-		managedEntities = new EntityMapper(manager, eventManager,
-				EnumSet.of(ComponentID.GROUP_PARENT, ComponentID.POSITION));
+		Set<Class<? extends Component>> cs = new HashSet<Class<? extends Component>>();
+		cs.add(GroupParent.class);
+		cs.add(Position.class);
+		managedEntities = new EntityMapper(manager, eventManager, cs);
 	}
 
 	@Override
@@ -34,10 +36,10 @@ public class InvaderGroupMovementSystem extends AbstractProcess {
 		for (IntSetIterator iter = managedEntities.getGroup().iterator(); iter.hasNext;) {
 			int e = iter.next();
 			// FIXME problema en esta estructura de árbol que no actualiza en orden de árbol
-			GroupParent child_c = (GroupParent) manager.componentFor(e, ComponentID.GROUP_PARENT);
-			Position pos_c = (Position) manager.componentFor(e, ComponentID.POSITION);
+			GroupParent child_c = (GroupParent) manager.componentFor(e, GroupParent.class);
+			Position pos_c = (Position) manager.componentFor(e, Position.class);
 			int parent = child_c.getParent();
-			Position group_pos_c = (Position) manager.componentFor(parent, ComponentID.POSITION);
+			Position group_pos_c = (Position) manager.componentFor(parent, Position.class);
 			if (group_pos_c != null) {
 				pos_c.getPos().set(child_c.getOffset().cpy().add(group_pos_c.getPos()));
 			}

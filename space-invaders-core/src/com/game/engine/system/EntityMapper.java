@@ -1,10 +1,10 @@
 package com.game.engine.system;
 
-import java.util.EnumSet;
+import java.util.Set;
 import com.badlogic.gdx.utils.IntSet;
 import com.badlogic.gdx.utils.IntSet.IntSetIterator;
 import com.game.engine.entity.EntityManager;
-import com.game.engine.entity.Component.ComponentID;
+import com.game.engine.entity.Component;
 import com.game.engine.system.event.EventSystem;
 import com.game.engine.system.event.EventSystem.EventListener;
 import com.game.engine.system.event.types.ActorDeletedEvent;
@@ -15,9 +15,9 @@ public class EntityMapper {
 	private IntSet group;
 	private EventSystem eventManager;
 	private EntityManager manager;
-	private EnumSet<ComponentID> components;
+	private Set<Class<? extends Component>> components;
 	
-	public EntityMapper(EntityManager manager, EventSystem eventManager, EnumSet<ComponentID> components) {
+	public EntityMapper(EntityManager manager, EventSystem eventManager, Set<Class<? extends Component>> components) {
 		group = new IntSet();
 		this.eventManager = eventManager;
 		this.manager = manager;
@@ -26,8 +26,8 @@ public class EntityMapper {
 	}
 	private boolean checkEntity(int entity) {
 		boolean match = true;
-		for (ComponentID actorComponentID : components) {
-			if(manager.componentFor(entity, actorComponentID) == null) {
+		for (Class<? extends Component> clazz : components) {
+			if(manager.componentFor(entity, clazz) == null) {
 				match = false;
 				break;
 			}
