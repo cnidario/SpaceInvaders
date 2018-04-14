@@ -7,14 +7,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.game.engine.entity.Component;
 import com.game.engine.entity.EntityManager;
 import com.game.engine.entity.component.Collision;
-import com.game.engine.entity.component.Collision.CollisionGroup;
 import com.game.engine.entity.component.Position;
 import com.game.engine.system.EntityMapper;
 import com.game.engine.system.event.EventSystem;
 import com.game.engine.system.event.types.CollisionEvent;
 import com.game.engine.system.process.AbstractProcess;
 
-public class CollisionSystem extends AbstractProcess {
+public class CollisionSystem<E extends Enum<E>> extends AbstractProcess {
 	private EntityMapper managedEntities;
 	private EntityManager manager;
 	private EventSystem eventManager;
@@ -34,16 +33,17 @@ public class CollisionSystem extends AbstractProcess {
 				(bPos.y > aPos.y && bPos.y < aPos.y + a.getHeight());
 		return horizontal_overlap && vertical_overlap;
 	}
-	private static boolean collides(Vector2 p1, Vector2 p2, BoundingBox bb1, BoundingBox bb2, EnumSet<CollisionGroup> cwith, EnumSet<CollisionGroup> ccategories) {
-		for(CollisionGroup with : cwith) {
+	private boolean collides(Vector2 p1, Vector2 p2, BoundingBox bb1, BoundingBox bb2, EnumSet<E> cwith, EnumSet<E> ccategories) {
+		for(E with : cwith) {
 			if(ccategories.contains(with))
 				return test(p1, bb1, p2, bb2);
 		}
 		return false;
 	}
+	@SuppressWarnings("unchecked")
 	private boolean collides(int e1, int e2) {
-		Collision col1 = (Collision) manager.componentFor(e1, Collision.class);
-		Collision col2 = (Collision) manager.componentFor(e2, Collision.class);
+		Collision<E> col1 = (Collision<E>) manager.componentFor(e1, Collision.class);
+		Collision<E> col2 = (Collision<E>) manager.componentFor(e2, Collision.class);
 		Position p1 = (Position) manager.componentFor(e1, Position.class);
 		Position p2 = (Position) manager.componentFor(e2, Position.class);
 		return collides(p1.getPos(), p2.getPos(), col1.getBoundingBox(), col2.getBoundingBox(), col1.getCollidesWith(), col2.getCollisionCategories());

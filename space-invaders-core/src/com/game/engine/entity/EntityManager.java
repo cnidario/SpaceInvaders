@@ -7,7 +7,7 @@ import java.util.Set;
 import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.IntSet;
 import com.game.engine.system.event.EventSystem;
-import com.game.engine.system.event.types.ActorDeletedEvent;
+import com.game.engine.system.event.types.EntityRemovedEvent;
 import com.game.engine.system.event.types.ComponentAddedEvent;
 import com.game.engine.system.event.types.ComponentRemovedEvent;
 
@@ -37,7 +37,7 @@ public class EntityManager {
 		eventManager.queueEvent(new ComponentAddedEvent(entity, component));
 	}
 	public void markEntityForRemove(int entity) {
-		eventManager.queueEvent(new ActorDeletedEvent(entity));
+		eventManager.queueEvent(new EntityRemovedEvent(entity));
 	}
 	public void markComponentForRemove(int entity, Component component) {
 		eventManager.queueEvent(new ComponentRemovedEvent(entity, component));

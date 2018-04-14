@@ -1,16 +1,15 @@
 package com.game.engine.entity.component;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.game.engine.entity.AbstractComponent;
+import com.game.engine.entity.Component;
 
-public class Animation extends AbstractComponent {
+public class Animation implements Component {
 	private float duration;
 	private boolean loop;
 	private TextureRegion[] sprites;
 	private float elapsed;
 	
 	public Animation(TextureRegion[] sprites, float duration, boolean loop) {
-		super(ComponentID.ANIMATION);
 		this.duration = duration;
 		this.sprites = sprites;
 		this.loop = loop;

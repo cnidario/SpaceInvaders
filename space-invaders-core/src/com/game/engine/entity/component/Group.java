@@ -1,9 +1,6 @@
 package com.game.engine.entity.component;
 
-import com.game.engine.entity.AbstractComponent;
+import com.game.engine.entity.Component;
 
-public class Group extends AbstractComponent {
-	public Group() {
-		super(ComponentID.GROUP);
-	}
+public class Group implements Component {
 }

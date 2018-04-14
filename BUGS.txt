@@ -1,4 +1,12 @@
- - Hay algunas condiciones en que AnimationSystem coge el componente Animation a null
+ + Hay algunas condiciones en que AnimationSystem coge el componente Animation a null
    Necesito una especificación más precisa del ciclo de vida de componentes y entidades
    Dónde y cuando se crean y destruyen, quien posee y modifica (leer todos), cómo se propagan los cambios
+   (SOLUCIONADO - llamada ilegal desde el sistema de render a removeComponent, en lugar de markForRemove)
    
+ + Hay un eventual NullPointerException en AnimationSystem debido quizá a EntityMapper no filtrando una entidad borrada.
+   Mi actual hipótesis es que es procesado primero el evento de borrar entidad, pero luego el de borrar componente, como
+   no ha sido recolectada aún, vuelve a añadirse a la lista, luego es borrada.
+   SOLUCIONADO:
+   El problema es que EntityMapper recogía un evento de borrar componente Animation, pero comprobaba a través de checkEntity
+   si debía dejar de manejar la entidad, dado que el componente no se había borrado aún (se hace posteriormente en diferente fase)
+   Se producía la excepción al no eliminarlo de los observados del AnimationSystem 

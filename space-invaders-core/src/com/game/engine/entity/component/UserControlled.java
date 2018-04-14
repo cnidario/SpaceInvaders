@@ -1,9 +1,6 @@
 package com.game.engine.entity.component;
 
-import com.game.engine.entity.AbstractComponent;
+import com.game.engine.entity.Component;
 
-public class UserControlled extends AbstractComponent {	
-	public UserControlled() {
-		super(ComponentID.USER_CONTROLLED);
-	}
+public class UserControlled implements Component {
 }

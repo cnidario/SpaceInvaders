@@ -1,34 +1,32 @@
 package com.game.invaders.system.player;
 
-import java.util.EnumSet;
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 import com.game.engine.entity.Component;
 import com.game.engine.entity.EntityManager;
-import com.game.engine.entity.component.Collision;
 import com.game.engine.entity.component.Motion;
 import com.game.engine.entity.component.Position;
-import com.game.engine.entity.component.Renderable;
-import com.game.engine.entity.component.Collision.CollisionGroup;
 import com.game.engine.system.EntityMapper;
 import com.game.engine.system.event.EventSystem;
 import com.game.engine.system.process.AbstractProcess;
 import com.game.invaders.component.PlayerShip;
 import com.game.invaders.data.GameConfigData;
 import com.game.invaders.data.GameResources;
-import com.badlogic.gdx.audio.Sound;
+import com.game.invaders.factory.ShootFactory;
 import com.badlogic.gdx.math.Vector2;
 
 public class PlayerBehaviourSystem extends AbstractProcess {
 	private EventSystem eventManager;
 	private EntityMapper managedEntities;
 	private EntityManager manager;
+	private ShootFactory shootFactory;
 	
-	public PlayerBehaviourSystem(EntityManager manager, EventSystem eventManager) {
+	public PlayerBehaviourSystem(EntityManager manager, EventSystem eventManager, ShootFactory shootFactory) {
 		super();
 		this.eventManager = eventManager;
 		this.manager = manager;
+		this.shootFactory = shootFactory;
+		
 		Set<Class<? extends Component>> cs = new HashSet<Class<? extends Component>>();
 		cs.add(Motion.class);
 		cs.add(PlayerShip.class);
@@ -36,19 +34,13 @@ public class PlayerBehaviourSystem extends AbstractProcess {
 		managedEntities = new EntityMapper(manager, eventManager, cs); 
 	}
 	private void fire() {
-		int shoot = manager.createEntity();
 		int player = managedEntities.one();
 		if(player == -1) 
 			return;
 		Position pos_c = (Position) manager.componentFor(player, Position.class);
 		Vector2 shootp = pos_c.getPos().cpy();
 		shootp.x += GameResources.PLAYER.IMAGE.getWidth() / 2 - GameResources.PLAYER.SHOOT_IMG.getWidth() / 2;
-		manager.addComponent(shoot, new Position(shootp));
-		manager.addComponent(shoot, new Collision(GameResources.PLAYER.SHOOT_BBOX, EnumSet.of(CollisionGroup.INVADER), EnumSet.of(CollisionGroup.PLAYER_SHOOT)));
-		manager.addComponent(shoot, new Renderable(GameResources.PLAYER.SHOOT));
-		manager.addComponent(shoot, new Motion(new Vector2(0, GameConfigData.PLAYER.SHOOT_SPEED)));
-		Sound sound = GameResources.GAME.SHOOTS[new Random().nextInt(GameResources.GAME.SHOOTS.length)];
-		sound.play(1f);
+		shootFactory.create(shootp);
 	}
 	@Override
 	public void update(float dt) {

@@ -2,9 +2,9 @@ package com.game.engine.system.event.types;
 
 import com.game.engine.system.event.Event;
 
-public class ActorAddedEvent implements Event {
+public class EntityAddedEvent implements Event {
 	private int entity;
-	public ActorAddedEvent(int entity) {
+	public EntityAddedEvent(int entity) {
 		this.entity = entity;
 	}
 	public int getEntity() {

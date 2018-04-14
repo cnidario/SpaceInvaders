@@ -1,13 +1,12 @@
 package com.game.engine.entity.component;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.game.engine.entity.AbstractComponent;
+import com.game.engine.entity.Component;
 
-public class Renderable extends AbstractComponent {
+public class Renderable implements Component {
 	private TextureRegion tex;
 	
 	public Renderable(TextureRegion tex) {
-		super(ComponentID.RENDERABLE);
 		this.tex = tex;
 	}
 	public TextureRegion getTex() {

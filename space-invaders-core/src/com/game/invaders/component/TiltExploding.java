@@ -1,14 +1,13 @@
 package com.game.invaders.component;
 
-import com.game.engine.entity.AbstractComponent;
+import com.game.engine.entity.Component;
 
-public class TiltExploding extends AbstractComponent {
+public class TiltExploding implements Component {
 	private float tilt;
 	private float period;
 	private float elapsed;
 	
 	public TiltExploding(float tilt, float period) {
-		super(ComponentID.TILT_EXPLODING);
 		this.tilt = tilt;
 		this.period = period;
 		this.elapsed = 0;

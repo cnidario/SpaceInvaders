@@ -1,14 +1,13 @@
 package com.game.engine.entity.component;
 
 import com.badlogic.gdx.math.Vector2;
-import com.game.engine.entity.AbstractComponent;
+import com.game.engine.entity.Component;
 
-public class GroupParent extends AbstractComponent {
+public class GroupParent implements Component {
 	private Vector2 offset;
 	private int parent;
 	
 	public GroupParent(Vector2 offset, int parent) {
-		super(ComponentID.GROUP_PARENT);
 		this.offset = offset;
 		this.parent = parent;
 	}

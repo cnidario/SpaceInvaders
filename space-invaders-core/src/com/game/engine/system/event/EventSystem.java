@@ -39,7 +39,7 @@ public class EventSystem extends AbstractProcess {
 	}
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void processEvents() {
-		List<Event> queueCopy = queue;
+		List<Event> queueCopy = new ArrayList<Event>(queue);
 		queue = new ArrayList<Event>();
 		for(Event e : queueCopy) {
 			List<EventListener> listeners = handlers.get(e.getClass());

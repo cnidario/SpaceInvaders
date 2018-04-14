@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.IntArray;
 import com.game.engine.entity.EntityManager;
 import com.game.engine.system.event.EventSystem;
 import com.game.engine.system.event.EventSystem.EventListener;
-import com.game.engine.system.event.types.ActorDeletedEvent;
+import com.game.engine.system.event.types.EntityRemovedEvent;
 import com.game.engine.system.event.types.ComponentRemovedEvent;
 import com.game.engine.system.process.AbstractProcess;
 
@@ -32,15 +32,17 @@ public class EntityLifeCycleSystem extends AbstractProcess {
 		for(ComponentRemovedEvent e : toDeleteComps) {
 			manager.removeComponent(e.getEntity(), e.getComponent());
 		}
+		toDelete.clear();
+		toDeleteComps.clear();
 	}
 	@Override
 	public void init() {
-		eventManager.registerHandler(new EventListener<ActorDeletedEvent>() {
+		eventManager.registerHandler(new EventListener<EntityRemovedEvent>() {
 			@Override
-			public void handle(ActorDeletedEvent ev) {
+			public void handle(EntityRemovedEvent ev) {
 				toDelete.add(ev.getEntity());
 			}
-		}, ActorDeletedEvent.class);
+		}, EntityRemovedEvent.class);
 		eventManager.registerHandler(new EventListener<ComponentRemovedEvent>() {
 			@Override
 			public void handle(ComponentRemovedEvent e) {

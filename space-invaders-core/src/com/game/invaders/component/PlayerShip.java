@@ -1,8 +1,8 @@
 package com.game.invaders.component;
 
-import com.game.engine.entity.AbstractComponent;
+import com.game.engine.entity.Component;
 
-public class PlayerShip extends AbstractComponent {
+public class PlayerShip implements Component {
 	public enum PlayerState {
 		STOPPED,
 		MOVING_LEFT,
@@ -14,7 +14,6 @@ public class PlayerShip extends AbstractComponent {
 	private float shootDelay;
 
 	public PlayerShip(PlayerState state, float shootDelay) {
-		super(ComponentID.PLAYER_SHIP);
 		this.state = state;
 		this.shootDelay = shootDelay;
 		firing = false;

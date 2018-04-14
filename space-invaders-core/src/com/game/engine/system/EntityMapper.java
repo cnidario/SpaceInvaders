@@ -7,7 +7,7 @@ import com.game.engine.entity.EntityManager;
 import com.game.engine.entity.Component;
 import com.game.engine.system.event.EventSystem;
 import com.game.engine.system.event.EventSystem.EventListener;
-import com.game.engine.system.event.types.ActorDeletedEvent;
+import com.game.engine.system.event.types.EntityRemovedEvent;
 import com.game.engine.system.event.types.ComponentAddedEvent;
 import com.game.engine.system.event.types.ComponentRemovedEvent;
 
@@ -25,14 +25,10 @@ public class EntityMapper {
 		init();
 	}
 	private boolean checkEntity(int entity) {
-		boolean match = true;
-		for (Class<? extends Component> clazz : components) {
-			if(manager.componentFor(entity, clazz) == null) {
-				match = false;
-				break;
-			}
-		}
-		return match;
+		for (Class<? extends Component> clazz : components)
+			if(manager.componentFor(entity, clazz) == null)
+				return false;
+		return true;
 	}
 	private void load() {
 		for(IntSetIterator iter = manager.getEntities().iterator(); iter.hasNext;) {
@@ -47,29 +43,26 @@ public class EntityMapper {
 			@Override
 			public void handle(ComponentAddedEvent e) {
 				int entity = e.getEntity();
-				if(checkEntity(entity))
+				if(!group.contains(entity) && checkEntity(entity))
 					group.add(entity);
-				else
-					group.remove(entity);
 			}
 		}, ComponentAddedEvent.class);
 		eventManager.registerHandler(new EventListener<ComponentRemovedEvent>() {
 			@Override
 			public void handle(ComponentRemovedEvent e) {
 				int entity = e.getEntity();
-				if(checkEntity(entity))
-					group.add(entity);
-				else
+				if(group.contains(entity) && components.contains(e.getComponent().getClass()))
 					group.remove(entity);
 			}
 		}, ComponentRemovedEvent.class);
-		eventManager.registerHandler(new EventListener<ActorDeletedEvent>() {
+		eventManager.registerHandler(new EventListener<EntityRemovedEvent>() {
 			@Override
-			public void handle(ActorDeletedEvent e) {
+			public void handle(EntityRemovedEvent e) {
 				int entity = e.getEntity();
-				group.remove(entity);
+				if(group.contains(entity))
+					group.remove(entity);
 			}
-		}, ActorDeletedEvent.class);
+		}, EntityRemovedEvent.class);
 	}
 	public IntSet getGroup() {
 		return group;

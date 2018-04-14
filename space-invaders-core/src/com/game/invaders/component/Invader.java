@@ -1,8 +1,8 @@
 package com.game.invaders.component;
 
-import com.game.engine.entity.AbstractComponent;
+import com.game.engine.entity.Component;
 
-public class Invader extends AbstractComponent {
+public class Invader implements Component {
 	public enum InvaderStateID {
 		ALIVE, DYING
 	}
@@ -11,7 +11,6 @@ public class Invader extends AbstractComponent {
 	private float dyingTime;
 	
 	public Invader(InvaderStateID stateID) {
-		super(ComponentID.INVADER);
 		this.stateID = stateID;
 		dyingTime = 0; //XXX?
 	}
