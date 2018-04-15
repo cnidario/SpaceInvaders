@@ -23,8 +23,6 @@ import com.game.invaders.component.PlayerShip;
 import com.game.invaders.component.TiltExploding;
 import com.game.invaders.component.Invader.InvaderStateID;
 import com.game.invaders.component.PlayerShip.PlayerState;
-import com.game.invaders.data.GameResources;
-import com.game.invaders.system.impact.CollisionGroup;
 
 public class EntityBuilder {
 	private Map<Class<? extends Component>, Component> comps;
@@ -32,15 +30,6 @@ public class EntityBuilder {
 	public EntityBuilder() {
 		comps = new HashMap<Class<? extends Component>, Component>();
 	}
-	public EntityBuilder baseInvader() {
-		return 	renderable(GameResources.INVADER.INVADERS[0][0])
-				.collision(GameResources.INVADER.BBOX, 
-						EnumSet.of(CollisionGroup.PLAYER_SHOOT),
-						EnumSet.of(CollisionGroup.INVADER))
-				.position(new Vector2())
-				.invader(InvaderStateID.ALIVE);
-	}
-	
 	public EntityBuilder animation(TextureRegion[] sprites, float duration, boolean loop) {
 		comps.put(Animation.class, new Animation(sprites, duration, loop));
 		return this;

@@ -51,7 +51,7 @@ public class EntityMapper {
 			@Override
 			public void handle(ComponentRemovedEvent e) {
 				int entity = e.getEntity();
-				if(group.contains(entity) && components.contains(e.getComponent().getClass()))
+				if(group.contains(entity) && components.contains(e.getComponent()))
 					group.remove(entity);
 			}
 		}, ComponentRemovedEvent.class);

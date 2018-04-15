@@ -5,16 +5,16 @@ import com.game.engine.system.event.Event;
 
 public class ComponentRemovedEvent implements Event {
 	private int entity;
-	private Component component;
+	private Class<? extends Component> component;
 	
-	public ComponentRemovedEvent(int entity, Component component) {
+	public ComponentRemovedEvent(int entity, Class<? extends Component> component) {
 		this.entity = entity;
 		this.component = component;
 	}
-	public Component getComponent() {
+	public Class<? extends Component> getComponent() {
 		return component;
 	}
-	public void setComponent(Component component) {
+	public void setComponent(Class<? extends Component> component) {
 		this.component = component;
 	}
 	public int getEntity() {

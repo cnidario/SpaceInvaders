@@ -3,24 +3,25 @@ package com.game.invaders;
 import com.badlogic.gdx.math.Vector2;
 import com.game.engine.entity.EntityManager;
 import com.game.engine.system.event.EventSystem;
-import com.game.invaders.component.PlayerShip.PlayerState;
-import com.game.invaders.data.GameConfigData;
 import com.game.invaders.data.GameResources;
 import com.game.invaders.factory.InvaderFactory;
 import com.game.invaders.factory.InvaderGroupFactory;
+import com.game.invaders.factory.PlayerShipFactory;
 
 public class GameWorld {
-	private EventSystem eventManager;
+	private EventSystem eventSystem;
 	private EntityManager entityManager;
 	private InvaderFactory invaderFactory;
 	private InvaderGroupFactory invaderGroupFactory;
+	private PlayerShipFactory playerShipFactory;
 	
-	public GameWorld(EventSystem eventManager, EntityManager entityManager, InvaderFactory invaderFactory, InvaderGroupFactory invaderGroupFactory) {
+	public GameWorld(EventSystem eventManager, EntityManager entityManager, InvaderFactory invaderFactory, InvaderGroupFactory invaderGroupFactory, PlayerShipFactory playerShipFactory) {
 		super();
-		this.eventManager = eventManager;
+		this.eventSystem = eventManager;
 		this.entityManager = entityManager;
 		this.invaderFactory = invaderFactory;
 		this.invaderGroupFactory = invaderGroupFactory;
+		this.playerShipFactory = playerShipFactory;
 	}
 	public void init() {
 		createInvaders();
@@ -36,12 +37,6 @@ public class GameWorld {
 		}
 	}
 	private int createPlayer() {
-		return new EntityBuilder()
-					.position(new Vector2())
-					.motion(new Vector2())
-					.userControlled()
-					.playerShip(PlayerState.STOPPED, GameConfigData.PLAYER.SHOOT_DELAY)
-					.renderable(GameResources.PLAYER.PLAYER)
-					.build(entityManager, eventManager);
+		return playerShipFactory.create();
 	}
 }

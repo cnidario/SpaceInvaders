@@ -5,7 +5,6 @@ import com.game.engine.system.event.EventSystem;
 import com.game.engine.system.event.EventSystem.EventListener;
 import com.game.engine.system.event.types.CollisionEvent;
 import com.game.engine.system.process.AbstractProcess;
-import com.game.invaders.component.Invader;
 import com.game.invaders.factory.ImpactEventFactory;
 
 public class ImpactDetectionSystem extends AbstractProcess {
@@ -24,15 +23,8 @@ public class ImpactDetectionSystem extends AbstractProcess {
 		eventManager.registerHandler(new EventListener<CollisionEvent>() {
 			@Override
 			public void handle(CollisionEvent ev) {
-				int e1 = ev.getEntity1();
-				int e2 = ev.getEntity2();
-				int invader = e1, shoot = e2;
-				Invader invader_c = (Invader) manager.componentFor(e1, Invader.class);
-				if(invader_c == null) {
-					invader_c = (Invader) manager.componentFor(e2, Invader.class);
-					invader = e2;
-					shoot = e1;
-				}
+				int shoot = ev.getEntity1();
+				int invader = ev.getEntity2();
 				impactFactory.create(invader, shoot);
 			}
 		}, CollisionEvent.class);

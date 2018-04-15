@@ -33,20 +33,30 @@ public class CollisionSystem<E extends Enum<E>> extends AbstractProcess {
 				(bPos.y > aPos.y && bPos.y < aPos.y + a.getHeight());
 		return horizontal_overlap && vertical_overlap;
 	}
-	private boolean collides(Vector2 p1, Vector2 p2, BoundingBox bb1, BoundingBox bb2, EnumSet<E> cwith, EnumSet<E> ccategories) {
-		for(E with : cwith) {
-			if(ccategories.contains(with))
-				return test(p1, bb1, p2, bb2);
-		}
-		return false;
+	private enum CollisionType {
+		COLLISION,
+		REVERSE_COLLISION,
+		NO_COLLISION
 	}
 	@SuppressWarnings("unchecked")
-	private boolean collides(int e1, int e2) {
+	private CollisionType collides(int e1, int e2) {
 		Collision<E> col1 = (Collision<E>) manager.componentFor(e1, Collision.class);
 		Collision<E> col2 = (Collision<E>) manager.componentFor(e2, Collision.class);
 		Position p1 = (Position) manager.componentFor(e1, Position.class);
 		Position p2 = (Position) manager.componentFor(e2, Position.class);
-		return collides(p1.getPos(), p2.getPos(), col1.getBoundingBox(), col2.getBoundingBox(), col1.getCollidesWith(), col2.getCollisionCategories());
+		EnumSet<E> cwith1 = col1.getCollidesWith().clone();
+		EnumSet<E> ccats2 = col2.getCollisionCategories();
+		cwith1.retainAll(ccats2);
+		if(!cwith1.isEmpty())
+			if(test(p1.getPos(), col1.getBoundingBox(), p2.getPos(), col2.getBoundingBox()))
+				return CollisionType.COLLISION;
+		EnumSet<E> cwith2 = col2.getCollidesWith().clone();
+		EnumSet<E> ccats1 = col1.getCollisionCategories();
+		cwith2.retainAll(ccats1);
+		if(!cwith2.isEmpty())
+			if(test(p2.getPos(), col2.getBoundingBox(), p1.getPos(), col1.getBoundingBox()))
+				return CollisionType.REVERSE_COLLISION;
+		return CollisionType.NO_COLLISION;
 	}
 	private void processCollisions() {
 		int[] entities = managedEntities.getGroup().iterator().toArray().items;
@@ -54,8 +64,14 @@ public class CollisionSystem<E extends Enum<E>> extends AbstractProcess {
 			int e1 = entities[i];
 			for(int j = i; j < entities.length; j++) {
 				int e2 = entities[j];
-				if(collides(e1, e2)) {
+				switch(collides(e1, e2)) {
+				case COLLISION:
 					emitCollision(e1, e2);
+					break;
+				case REVERSE_COLLISION:
+					emitCollision(e2, e1);
+					break;
+				case NO_COLLISION:
 					break;
 				}
 			}

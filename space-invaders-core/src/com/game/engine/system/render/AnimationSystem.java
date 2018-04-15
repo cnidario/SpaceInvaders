@@ -37,7 +37,7 @@ public class AnimationSystem extends AbstractProcess {
 				if(anim_c.isLoop()) {
 					anim_c.setElapsed(elapsed - anim_c.getDuration());
 				} else {
-					manager.markComponentForRemove(e, anim_c);
+					manager.markComponentForRemove(e, Animation.class);
 				}
 			} else {
 				int ix = (int) Math.floor((elapsed / anim_c.getDuration()) * anim_c.getSprites().length);

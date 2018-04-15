@@ -92,3 +92,5 @@ No colabora
 ----
 Se sirve de EventManager para controlar cambios en entidades y componentes.
 
+
+(Sistemas de eventos sobran en arquitectura ECS?)[https://www.reddit.com/r/gamedev/comments/6dsrzy/ecs_and_event_handling_how_to_handle_events/]

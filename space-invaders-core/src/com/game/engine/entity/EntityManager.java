@@ -28,28 +28,27 @@ public class EntityManager {
 	public int createEntity() {
 		entities.add(++lastId);
 		components.put(lastId, new HashMap<Class<? extends Component>, Component>());
-		// XXX eventManager.queueEvent(new ActorAddedEvent(lastId)); <- ahora mismo en builder
 		return lastId;
 	}
 	public void addComponent(int entity, Component component) {
 		Map<Class<? extends Component>, Component> entityComps = components.get(entity);
 		entityComps.put(component.getClass(), component);
-		eventManager.queueEvent(new ComponentAddedEvent(entity, component));
+		eventManager.queueEvent(new ComponentAddedEvent(entity, component.getClass()));
 	}
 	public void markEntityForRemove(int entity) {
 		eventManager.queueEvent(new EntityRemovedEvent(entity));
 	}
-	public void markComponentForRemove(int entity, Component component) {
+	public void markComponentForRemove(int entity, Class<? extends Component> component) {
 		eventManager.queueEvent(new ComponentRemovedEvent(entity, component));
 	}
 	public void removeEntity(int entity) {
 		entities.remove(entity);
 		components.remove(entity);
 	}
-	public void removeComponent(int entity, Component component) {
+	public void removeComponent(int entity, Class<? extends Component> component) {
 		Map<Class<? extends Component>, Component> entityComps = components.get(entity);
 		if(entityComps != null)
-			entityComps.remove(component.getClass());
+			entityComps.remove(component);
 	}
 	public IntSet getEntities() {
 		return entities;

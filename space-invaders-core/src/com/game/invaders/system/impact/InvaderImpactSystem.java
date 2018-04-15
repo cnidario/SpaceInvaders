@@ -32,15 +32,12 @@ public class InvaderImpactSystem extends AbstractProcess {
 				invader_c.setDyingTime(GameConfigData.INVADER.EXPLOSION_DELAY);
 				TiltExploding explo_c = new TiltExploding(6, GameConfigData.INVADER.EXPLOSION_DELAY/5);
 				manager.addComponent(invader, explo_c);
-				Animation anim_c = (Animation) manager.componentFor(invader, Animation.class);
-				if(anim_c != null)
-					manager.markComponentForRemove(invader, anim_c);
+				manager.markComponentForRemove(invader, Animation.class);
 				manager.markEntityForRemove(shoot);
 			}
 		}, InvaderImpactedEvent.class);
 	}
 	@Override
 	public void update(float dt) {
-		
 	}
 }
