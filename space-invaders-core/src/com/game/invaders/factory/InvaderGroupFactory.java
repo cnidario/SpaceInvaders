@@ -1,25 +1,20 @@
 package com.game.invaders.factory;
 
 import com.badlogic.gdx.math.Vector2;
-import com.game.engine.entity.EntityManager;
-import com.game.engine.system.event.EventSystem;
-import com.game.invaders.EntityBuilder;
+import com.game.engine.factory.EntityBuilderFactory;
 import com.game.invaders.data.GameConfigData;
 
 public class InvaderGroupFactory {
-	private EntityManager manager;
-	private EventSystem eventSystem;
-	
-	public InvaderGroupFactory(EntityManager manager, EventSystem eventSystem) {
+	private EntityBuilderFactory entityBuilderFactory;
+	public InvaderGroupFactory(EntityBuilderFactory entityBuilderFactory) {
 		super();
-		this.manager = manager;
-		this.eventSystem = eventSystem;
+		this.entityBuilderFactory = entityBuilderFactory;
 	}
 	public int create() {
-		return new EntityBuilder()
+		return entityBuilderFactory.create()
 				.group()
 				.position(new Vector2(GameConfigData.INVADER.MINX, 800))
 				.motion(new Vector2(GameConfigData.INVADER.MINSPEED, 0))
-				.build(manager, eventSystem);
+				.build();
 	}
 }

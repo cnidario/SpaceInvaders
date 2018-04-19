@@ -94,3 +94,8 @@ Se sirve de EventManager para controlar cambios en entidades y componentes.
 
 
 (Sistemas de eventos sobran en arquitectura ECS?)[https://www.reddit.com/r/gamedev/comments/6dsrzy/ecs_and_event_handling_how_to_handle_events/]
+3 alternativas:
+	- Componente collision que se añade (múltiplemente). Actualmente no viable en mi implementación, sólo un componente de cada tipo
+	- Componente que tiene lista de "componentes" colisión
+	- Entidad que hace referencia a las entidades de la colisión <- interesante
+De todos modos en el fondo el sistema de registro a cambios de componentes se tiene que hacer con un sistema de eventos, en mi caso (EntityMapper se subscribe a ComponentAdded, ComponentRemoved, etc.)

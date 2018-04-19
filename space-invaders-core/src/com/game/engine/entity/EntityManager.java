@@ -16,6 +16,7 @@ public class EntityManager {
 	private int lastId;
 	private IntSet entities;
 	private IntMap<Map<Class<? extends Component>, Component>> components;
+	private EntitySubscribers subscribers = new EntitySubscribers();
 
 	public EntityManager(EventSystem eventManager) {
 		super();

@@ -18,3 +18,4 @@ Leyenda:
 **Más allá incluso**: EntityManager es un sistema
 Spaces? 'GameObject' pertenece a un space. 'SystemObject' pertenece a un space. Sistemas estáticos sólo está el SpaceSystem, que extrae los sistemas y ejecuta. Otra vuelta de tuerca. Más versátil, como siempre.  
 - `[IDE]` - Abstracción que sistemas procesen nodos, no componentes ni entidades directamente.
+- EntityMapper puede abrirse a extensión. Cadena de filtros, aceptar por componentes, aceptar por otras restricciones más fuertes, registrarse a Cambios en datos de ciertos componentes. 
