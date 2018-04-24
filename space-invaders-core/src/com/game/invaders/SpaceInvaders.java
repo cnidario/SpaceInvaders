@@ -5,9 +5,9 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.game.engine.entity.EntityManager;
 import com.game.engine.factory.EntityBuilderFactory;
 import com.game.engine.factory.EntityMapperFactory;
-import com.game.engine.system.base.EntityLifeCycleSystem;
 import com.game.engine.system.collision.CollisionSystem;
 import com.game.engine.system.controller.ControllerSystem;
+import com.game.engine.system.entity.lifecycle.EntityLifeCycleSyystem;
 import com.game.engine.system.event.EventSystem;
 import com.game.engine.system.input.InputSystem;
 import com.game.engine.system.motion.MotionSystem;
@@ -84,7 +84,7 @@ public class SpaceInvaders extends ApplicationAdapter {
 		processManager.addProcess(new AnimationSystem(entityManager, eventSystem));
 		processManager.addProcess(new ExplodingTiltSystem(entityManager, eventSystem));
 		processManager.addProcess(soundSystem);
-		processManager.addProcess(new EntityLifeCycleSystem(entityManager, eventSystem));
+		processManager.addProcess(new EntityLifeCycleSyystem(entityManager, eventSystem));
 		processManager.addProcess(eventSystem);
 		
 		processManager.init();

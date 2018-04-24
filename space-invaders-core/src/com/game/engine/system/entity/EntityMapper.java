@@ -1,10 +1,10 @@
-package com.game.engine.system;
+package com.game.engine.system.entity;
 
 import java.util.Set;
 import com.badlogic.gdx.utils.IntSet;
 import com.badlogic.gdx.utils.IntSet.IntSetIterator;
-import com.game.engine.entity.EntityManager;
 import com.game.engine.entity.Component;
+import com.game.engine.entity.EntityManager;
 import com.game.engine.system.event.EventSystem;
 import com.game.engine.system.event.EventSystem.EventListener;
 import com.game.engine.system.event.types.EntityRemovedEvent;

@@ -1,4 +1,4 @@
-package com.game.engine.system.base;
+package com.game.engine.system.entity.lifecycle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +11,13 @@ import com.game.engine.system.event.types.EntityRemovedEvent;
 import com.game.engine.system.event.types.ComponentRemovedEvent;
 import com.game.engine.system.process.AbstractProcess;
 
-public class EntityLifeCycleSystem extends AbstractProcess {
+public class EntityLifeCycleSyystem extends AbstractProcess {
 	private EntityManager manager;
 	private EventSystem eventManager;
 	private IntArray toDelete;
 	private List<ComponentRemovedEvent> toDeleteComps;
 	
-	public EntityLifeCycleSystem(EntityManager manager, EventSystem eventManager) {
+	public EntityLifeCycleSyystem(EntityManager manager, EventSystem eventManager) {
 		super();
 		this.manager = manager;
 		this.eventManager = eventManager;

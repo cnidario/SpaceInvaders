@@ -7,7 +7,7 @@ import com.game.engine.entity.component.Collision;
 import com.game.engine.entity.component.Position;
 import com.game.engine.factory.EntityBuilderFactory;
 import com.game.engine.factory.EntityMapperFactory;
-import com.game.engine.system.EntityMapper;
+import com.game.engine.system.entity.EntityMapper;
 import com.game.engine.system.process.AbstractProcess;
 
 public class CollisionSystem<E extends Enum<E>> extends AbstractProcess {

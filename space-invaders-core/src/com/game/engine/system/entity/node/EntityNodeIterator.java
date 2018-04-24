@@ -1,4 +1,4 @@
-package com.game.engine.entity.node;
+package com.game.engine.system.entity.node;
 
 import java.util.Iterator;
 

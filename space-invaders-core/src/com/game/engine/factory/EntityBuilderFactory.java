@@ -1,7 +1,7 @@
 package com.game.engine.factory;
 
-import com.game.engine.entity.EntityBuilder;
 import com.game.engine.entity.EntityManager;
+import com.game.engine.system.entity.EntityBuilder;
 import com.game.engine.system.event.EventSystem;
 
 public class EntityBuilderFactory {

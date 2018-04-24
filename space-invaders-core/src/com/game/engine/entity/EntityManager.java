@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.IntSet;
+import com.game.engine.system.entity.EntityNotifierImpl;
 import com.game.engine.system.event.EventSystem;
 import com.game.engine.system.event.types.EntityRemovedEvent;
 import com.game.engine.system.event.types.ComponentAddedEvent;
@@ -16,7 +17,7 @@ public class EntityManager {
 	private int lastId;
 	private IntSet entities;
 	private IntMap<Map<Class<? extends Component>, Component>> components;
-	private EntitySubscribers subscribers = new EntitySubscribers();
+	private EntityNotifierImpl subscribers = new EntityNotifierImpl();
 
 	public EntityManager(EventSystem eventManager) {
 		super();

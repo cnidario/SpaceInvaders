@@ -1,10 +1,12 @@
-package com.game.engine.entity;
+package com.game.engine.system.entity;
 
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.game.engine.entity.Component;
+import com.game.engine.entity.EntityManager;
 import com.game.engine.entity.component.Animation;
 import com.game.engine.entity.component.Collision;
 import com.game.engine.entity.component.Group;

@@ -2,8 +2,8 @@ package com.game.invaders.factory;
 
 import java.util.EnumSet;
 import com.badlogic.gdx.math.Vector2;
-import com.game.engine.entity.EntityBuilder;
 import com.game.engine.factory.EntityBuilderFactory;
+import com.game.engine.system.entity.EntityBuilder;
 import com.game.invaders.component.Invader.InvaderStateID;
 import com.game.invaders.data.GameConfigData;
 import com.game.invaders.data.GameResources;

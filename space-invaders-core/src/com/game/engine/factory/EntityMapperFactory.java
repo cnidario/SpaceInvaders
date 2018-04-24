@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import com.game.engine.entity.Component;
 import com.game.engine.entity.EntityManager;
-import com.game.engine.system.EntityMapper;
+import com.game.engine.system.entity.EntityMapper;
 import com.game.engine.system.event.EventSystem;
 
 public class EntityMapperFactory {

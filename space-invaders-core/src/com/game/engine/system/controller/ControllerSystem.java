@@ -5,7 +5,7 @@ import java.util.Set;
 import com.game.engine.entity.Component;
 import com.game.engine.entity.EntityManager;
 import com.game.engine.entity.component.UserControlled;
-import com.game.engine.system.EntityMapper;
+import com.game.engine.system.entity.EntityMapper;
 import com.game.engine.system.event.EventSystem;
 import com.game.engine.system.event.EventSystem.EventListener;
 import com.game.engine.system.event.types.InputControlEvent;

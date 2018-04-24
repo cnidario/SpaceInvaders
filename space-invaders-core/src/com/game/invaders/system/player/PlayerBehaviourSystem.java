@@ -6,7 +6,7 @@ import com.game.engine.entity.Component;
 import com.game.engine.entity.EntityManager;
 import com.game.engine.entity.component.Motion;
 import com.game.engine.entity.component.Position;
-import com.game.engine.system.EntityMapper;
+import com.game.engine.system.entity.EntityMapper;
 import com.game.engine.system.event.EventSystem;
 import com.game.engine.system.process.AbstractProcess;
 import com.game.invaders.component.PlayerShip;
