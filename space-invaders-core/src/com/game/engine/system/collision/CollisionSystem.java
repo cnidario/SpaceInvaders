@@ -6,20 +6,21 @@ import com.game.engine.entity.EntityManager;
 import com.game.engine.entity.component.Collision;
 import com.game.engine.entity.component.Position;
 import com.game.engine.factory.EntityBuilderFactory;
-import com.game.engine.factory.EntityMapperFactory;
-import com.game.engine.system.entity.EntityMapper;
+import com.game.engine.system.entity.node.EntityNodeSetFactory;
+import com.game.engine.system.entity.node.Node;
+import com.game.engine.system.entity.node.NodeSet;
 import com.game.engine.system.process.AbstractProcess;
 
 public class CollisionSystem<E extends Enum<E>> extends AbstractProcess {
-	private EntityMapper managedEntities;
+	private NodeSet nodeSet;
 	private EntityManager manager;
 	private EntityBuilderFactory entityBuilderFactory;
 	
 	@SuppressWarnings("unchecked")
-	public CollisionSystem(EntityManager manager, EntityBuilderFactory entityBuilderFactory, EntityMapperFactory entityMapperFactory) {
+	public CollisionSystem(EntityManager manager, EntityBuilderFactory entityBuilderFactory, EntityNodeSetFactory entityNodeSetFactory) {
 		this.manager = manager;
 		this.entityBuilderFactory = entityBuilderFactory;
-		managedEntities = entityMapperFactory.create(Collision.class, Position.class);
+		nodeSet = entityNodeSetFactory.create(Collision.class, Position.class);
 	}
 	public static boolean test(Vector2 aPos, BoundingBox a, Vector2 bPos, BoundingBox b) {
 		boolean horizontal_overlap = (aPos.x > bPos.x && aPos.x < bPos.x + b.getWidth()) ||
@@ -52,6 +53,9 @@ public class CollisionSystem<E extends Enum<E>> extends AbstractProcess {
 			}
 	}
 	private void processCollisions() {
+		for (Node node : nodeSet) {
+			//FIXME
+		}
 		int[] entities = managedEntities.getGroup().iterator().toArray().items;
 		for(int i = 0; i < entities.length; i++) {
 			int e1 = entities[i];

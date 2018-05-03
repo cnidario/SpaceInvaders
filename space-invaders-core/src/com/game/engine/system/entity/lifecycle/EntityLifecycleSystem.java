@@ -22,7 +22,7 @@ public class EntityLifecycleSystem extends AbstractProcess implements EntityLife
 	@Override
 	public void update(float dt) {
 		for (EntityLifecycleCommand entityLifecycleCommand : commands) {
-			entityLifecycleCommand.execute(entityDao);
+			entityLifecycleCommand.execute(entityDao, notifier);
 		}
 		commands.clear();
 	}

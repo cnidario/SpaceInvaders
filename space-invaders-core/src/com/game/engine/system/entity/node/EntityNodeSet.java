@@ -1,31 +1,97 @@
 package com.game.engine.system.entity.node;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
+
+import com.badlogic.gdx.utils.IntSet;
+import com.badlogic.gdx.utils.IntSet.IntSetIterator;
+import com.game.engine.entity.Component;
 
 public class EntityNodeSet implements NodeSet {
+	private Set<Class<? extends Component>> interestedComponents;
+	private IntSet set;
+	private boolean changed;
+	private EntityNodeFactory entityNodeFactory;
 	
-	public void notifyAddedNode() {
-		
+	public EntityNodeSet(Set<Class<? extends Component>> interestedComponents, EntityNodeFactory entityNodeFactory) {
+		super();
+		this.interestedComponents = interestedComponents;
+		set = new IntSet();
+		changed = false;
+		this.entityNodeFactory = entityNodeFactory;
+	}
+	private boolean componentMatches(Set<Component> components) {
+		Set<Class<? extends Component>> classes = new HashSet<Class<? extends Component>>();
+		for (Component c : components) {
+			classes.add(c.getClass());
+		}
+		return classes.containsAll(interestedComponents);
+	}
+	private void addEntity(int entity) {
+		set.add(entity);
+		changed = true;
+	}
+	private void removeEntity(int entity) {
+		set.remove(entity);
+		changed = true;
+	}
+	protected boolean acceptsEntity(int entity, Set<Component> components) {
+		return true;
 	}
 	@Override
 	public Iterator<Node> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		final IntSetIterator iter = set.iterator();
+		return new Iterator<Node>() {
+			@Override
+			public boolean hasNext() {
+				return iter.hasNext;
+			}
+			@Override
+			public Node next() {
+				return entityNodeFactory.create(iter.next());
+			}
+		};
 	}
 	@Override
-	public boolean has(int entity) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean contains(int entity) {
+		return set.contains(entity);
 	}
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return set.size == 0;
 	}
 	@Override
 	public boolean changed() {
-		// TODO Auto-generated method stub
-		return false;
+		return changed;
 	}
-
+	@Override
+	public Set<Class<? extends Component>> getInterestedComponents() {
+		return interestedComponents;
+	}
+	@Override
+	public void entityAdded(int entity) {
+	}
+	@Override
+	public void entityDeleted(int entity) {
+		if(set.contains(entity)) {
+			removeEntity(entity);
+		}
+	}
+	@Override
+	public void componentAdded(int entity, Set<Component> components, Component component) {
+		if(!set.contains(entity) && componentMatches(components) && acceptsEntity(entity, components)) {
+			addEntity(entity);
+		}
+	}
+	@Override
+	public void componentUpdated(int entity, Component component) {
+		//
+	}
+	@Override
+	public void componentDeleted(int entity, Class<? extends Component> component) {
+		if(set.contains(entity) && interestedComponents.contains(component)) {
+			removeEntity(entity);
+		}
+	}
 }
