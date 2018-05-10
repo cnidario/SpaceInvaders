@@ -1,43 +1,32 @@
 package com.game.engine.system.render;
 
-import java.util.HashSet;
-import java.util.Set;
-import com.badlogic.gdx.utils.IntSet.IntSetIterator;
-import com.game.engine.entity.Component;
-import com.game.engine.entity.EntityManager;
 import com.game.engine.entity.component.Animation;
 import com.game.engine.entity.component.Renderable;
-import com.game.engine.system.entity.EntityMapper;
-import com.game.engine.system.event.EventSystem;
+import com.game.engine.system.entity.node.EntityNodeSetFactory;
+import com.game.engine.system.entity.node.Node;
+import com.game.engine.system.entity.node.NodeSet;
 import com.game.engine.system.process.AbstractProcess;
 
 public class AnimationSystem extends AbstractProcess {
-	private EntityManager manager;
-	private EntityMapper managedEntities;
-	private EventSystem eventManager;
+	private NodeSet nodeSet;
 	
-	public AnimationSystem(EntityManager manager, EventSystem eventManager) {
+	@SuppressWarnings("unchecked")
+	public AnimationSystem(EntityNodeSetFactory entityNodeSetFactory) {
 		super();
-		this.manager = manager;
-		this.eventManager = eventManager;
-		Set<Class<? extends Component>> cs = new HashSet<Class<? extends Component>>();
-		cs.add(Animation.class);
-		cs.add(Renderable.class);
-		managedEntities = new EntityMapper(manager, eventManager, cs);
+		nodeSet = entityNodeSetFactory.create(Animation.class, Renderable.class);
 	}
 	@Override
 	public void update(float dt) {
-		for(IntSetIterator iter = managedEntities.getGroup().iterator(); iter.hasNext; ) {
-			int e = iter.next();
-			Animation anim_c = (Animation) manager.componentFor(e, Animation.class);
-			Renderable render_c = (Renderable) manager.componentFor(e, Renderable.class);
+		for (Node node : nodeSet) {
+			Animation anim_c = (Animation) node.component(Animation.class);
+			Renderable render_c = (Renderable) node.component(Renderable.class);
 			float elapsed = anim_c.getElapsed() + dt;
 			anim_c.setElapsed(elapsed);
 			if(elapsed >= anim_c.getDuration()) {
 				if(anim_c.isLoop()) {
 					anim_c.setElapsed(elapsed - anim_c.getDuration());
 				} else {
-					manager.markComponentForRemove(e, Animation.class);
+					node.deleteComponent(Animation.class);
 				}
 			} else {
 				int ix = (int) Math.floor((elapsed / anim_c.getDuration()) * anim_c.getSprites().length);

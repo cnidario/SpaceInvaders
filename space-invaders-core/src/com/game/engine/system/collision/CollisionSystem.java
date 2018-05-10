@@ -1,8 +1,10 @@
 package com.game.engine.system.collision;
 
 import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 import com.badlogic.gdx.math.Vector2;
-import com.game.engine.entity.EntityManager;
 import com.game.engine.entity.component.Collision;
 import com.game.engine.entity.component.Position;
 import com.game.engine.factory.EntityBuilderFactory;
@@ -13,12 +15,10 @@ import com.game.engine.system.process.AbstractProcess;
 
 public class CollisionSystem<E extends Enum<E>> extends AbstractProcess {
 	private NodeSet nodeSet;
-	private EntityManager manager;
 	private EntityBuilderFactory entityBuilderFactory;
 	
 	@SuppressWarnings("unchecked")
-	public CollisionSystem(EntityManager manager, EntityBuilderFactory entityBuilderFactory, EntityNodeSetFactory entityNodeSetFactory) {
-		this.manager = manager;
+	public CollisionSystem(EntityBuilderFactory entityBuilderFactory, EntityNodeSetFactory entityNodeSetFactory) {
 		this.entityBuilderFactory = entityBuilderFactory;
 		nodeSet = entityNodeSetFactory.create(Collision.class, Position.class);
 	}
@@ -30,11 +30,11 @@ public class CollisionSystem<E extends Enum<E>> extends AbstractProcess {
 		return horizontal_overlap && vertical_overlap;
 	}
 	@SuppressWarnings("unchecked")
-	private void checkCollides(int e1, int e2) {
-		Collision<E> col1 = (Collision<E>) manager.componentFor(e1, Collision.class);
-		Collision<E> col2 = (Collision<E>) manager.componentFor(e2, Collision.class);
-		Position p1 = (Position) manager.componentFor(e1, Position.class);
-		Position p2 = (Position) manager.componentFor(e2, Position.class);
+	private void checkCollides(Node e1, Node e2) {
+		Collision<E> col1 = (Collision<E>) e1.component(Collision.class);
+		Collision<E> col2 = (Collision<E>) e2.component(Collision.class);
+		Position p1 = (Position) e1.component(Position.class);
+		Position p2 = (Position) e2.component(Position.class);
 		EnumSet<E> cwith1 = col1.getCollidesWith().clone();
 		EnumSet<E> ccats2 = col2.getCollisionCategories();
 		cwith1.retainAll(ccats2);
@@ -53,19 +53,19 @@ public class CollisionSystem<E extends Enum<E>> extends AbstractProcess {
 			}
 	}
 	private void processCollisions() {
-		for (Node node : nodeSet) {
-			//FIXME
-		}
-		int[] entities = managedEntities.getGroup().iterator().toArray().items;
-		for(int i = 0; i < entities.length; i++) {
-			int e1 = entities[i];
-			for(int j = i; j < entities.length; j++) {
-				int e2 = entities[j];
-				checkCollides(e1, e2);
+		Iterator<Node> i = nodeSet.iterator();
+		Set<Node> processed = new HashSet<Node>();
+		while(i.hasNext()) {
+			Node ni = i.next();
+			if(!processed.contains(ni)) {
+				for (Node nj : processed) {
+					checkCollides(nj, ni);
+				}
+				processed.add(ni);
 			}
 		}
 	}
-	private void emitCollision(int e1, int e2, Vector2 pos) {
+	private void emitCollision(Node e1, Node e2, Vector2 pos) {
 		entityBuilderFactory.create()
 			.position(pos.cpy())
 			.impact(e1, e2)

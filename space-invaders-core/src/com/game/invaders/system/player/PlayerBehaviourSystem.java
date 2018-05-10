@@ -1,13 +1,10 @@
 package com.game.invaders.system.player;
 
-import java.util.HashSet;
-import java.util.Set;
-import com.game.engine.entity.Component;
-import com.game.engine.entity.EntityManager;
 import com.game.engine.entity.component.Motion;
 import com.game.engine.entity.component.Position;
-import com.game.engine.system.entity.EntityMapper;
-import com.game.engine.system.event.EventSystem;
+import com.game.engine.system.entity.node.EntityNodeSetFactory;
+import com.game.engine.system.entity.node.Node;
+import com.game.engine.system.entity.node.NodeSet;
 import com.game.engine.system.process.AbstractProcess;
 import com.game.invaders.component.PlayerShip;
 import com.game.invaders.data.GameConfigData;
@@ -16,39 +13,31 @@ import com.game.invaders.factory.ShootFactory;
 import com.badlogic.gdx.math.Vector2;
 
 public class PlayerBehaviourSystem extends AbstractProcess {
-	private EventSystem eventManager;
-	private EntityMapper managedEntities;
-	private EntityManager manager;
+	private NodeSet nodeSet;
 	private ShootFactory shootFactory;
 	
-	public PlayerBehaviourSystem(EntityManager manager, EventSystem eventManager, ShootFactory shootFactory) {
+	@SuppressWarnings("unchecked")
+	public PlayerBehaviourSystem(EntityNodeSetFactory entityNodeSetFactory, ShootFactory shootFactory) {
 		super();
-		this.eventManager = eventManager;
-		this.manager = manager;
-		this.shootFactory = shootFactory;
-		
-		Set<Class<? extends Component>> cs = new HashSet<Class<? extends Component>>();
-		cs.add(Motion.class);
-		cs.add(PlayerShip.class);
-		cs.add(Position.class);
-		managedEntities = new EntityMapper(manager, eventManager, cs); 
+		this.shootFactory = shootFactory; 
+		nodeSet = entityNodeSetFactory.create(Motion.class, PlayerShip.class, Position.class);
 	}
 	private void fire() {
-		int player = managedEntities.one();
-		if(player == -1) 
+		Node player = nodeSet.one();
+		if(player == null) 
 			return;
-		Position pos_c = (Position) manager.componentFor(player, Position.class);
+		Position pos_c = (Position) player.component(Position.class);
 		Vector2 shootp = pos_c.getPos().cpy();
 		shootp.x += GameResources.PLAYER.IMAGE.getWidth() / 2 - GameResources.PLAYER.SHOOT_IMG.getWidth() / 2;
 		shootFactory.create(shootp);
 	}
 	@Override
 	public void update(float dt) {
-		int e = managedEntities.one();
-		if(e == -1)
+		Node node = nodeSet.one();
+		if(node == null)
 			return;
-		PlayerShip state_c = (PlayerShip) manager.componentFor(e, PlayerShip.class);
-		Motion physics_c = (Motion) manager.componentFor(e, Motion.class);
+		PlayerShip state_c = (PlayerShip) node.component(PlayerShip.class);
+		Motion physics_c = (Motion) node.component(Motion.class);
 		Vector2 speed = physics_c.getSpeed();
 		
 		float shoott = state_c.getShootDelay() - dt;

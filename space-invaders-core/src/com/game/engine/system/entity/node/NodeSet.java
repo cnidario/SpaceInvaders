@@ -8,5 +8,7 @@ public interface NodeSet extends Iterable<Node>, EntityObserver {
 	boolean contains(int entity);
 	boolean isEmpty();
 	boolean changed();
+	int count();
 	Set<Class<? extends Component>> getInterestedComponents();
+	Node one();
 }

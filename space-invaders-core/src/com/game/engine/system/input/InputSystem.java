@@ -2,30 +2,41 @@ package com.game.engine.system.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.game.engine.system.event.EventSystem;
-import com.game.engine.system.event.types.InputControlEvent;
+import com.game.engine.entity.component.ShipAction;
+import com.game.engine.system.entity.node.EntityNodeSetFactory;
+import com.game.engine.system.entity.node.Node;
+import com.game.engine.system.entity.node.NodeSet;
 import com.game.engine.system.process.AbstractProcess;
 
 public class InputSystem extends AbstractProcess {
-	private EventSystem event_manager;
+	private NodeSet nodeSet;
+	private Node rootSpace;
 
-	public InputSystem(EventSystem event_manager) {
+	@SuppressWarnings("unchecked")
+	public InputSystem(EntityNodeSetFactory entityNodeSetFactory, Node rootSpace) {
 		super();
-		this.event_manager = event_manager;
+		this.rootSpace = rootSpace;
+		nodeSet = entityNodeSetFactory.create(ShipAction.class);
 	}
 	private void processInput() {
+		Node inputNode = nodeSet.one();
+		ShipAction shipAction = (ShipAction) inputNode.component(ShipAction.class);
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			event_manager.queueEvent(new InputControlEvent(InputControlEvent.InputControlType.MOVE_LEFT));
+			shipAction.setMoveLeft(true);
 		} else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			event_manager.queueEvent(new InputControlEvent(InputControlEvent.InputControlType.MOVE_RIGHT));
+			shipAction.setMoveRight(true);
 		} else {
-			event_manager.queueEvent(new InputControlEvent(InputControlEvent.InputControlType.STOP_MOVE));
+			shipAction.setMoveLeft(false);
+			shipAction.setMoveRight(false);
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.SPACE))
-			event_manager.queueEvent(new InputControlEvent(InputControlEvent.InputControlType.SHOOT));
+			shipAction.setShoot(true);
+		else
+			shipAction.setShoot(false);
 	}
 	@Override
 	public void init() {
+		rootSpace.create(new ShipAction());
 	}
 	@Override
 	public void update(float dt) {

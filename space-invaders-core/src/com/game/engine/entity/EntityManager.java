@@ -26,7 +26,6 @@ public class EntityManager implements EntityDAO {
 	public int createEntity() {
 		entities.add(++lastId);
 		components.put(lastId, new HashMap<Class<? extends Component>, Component>());
-		notifier.entityAdded(lastId);
 		return lastId;
 	}
 	@Override

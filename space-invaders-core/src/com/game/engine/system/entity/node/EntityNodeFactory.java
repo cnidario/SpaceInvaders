@@ -1,13 +1,15 @@
 package com.game.engine.system.entity.node;
 
-public class EntityNodeFactory {
-	private EntityNodeMediator entityNodeMediator;
+import com.game.engine.system.entity.EntityDAO;
 
-	public EntityNodeFactory(EntityNodeMediator entityNodeMediator) {
+public class EntityNodeFactory {
+	private EntityDAO entityDAO;
+
+	public EntityNodeFactory(EntityDAO entityDAO) {
 		super();
-		this.entityNodeMediator = entityNodeMediator;
+		this.entityDAO = entityDAO;
 	}
 	public EntityNode create(int entity) {
-		return new EntityNode(entityNodeMediator, entity);
+		return new EntityNode(entityDAO, this, entity);
 	}
 }

@@ -1,37 +1,25 @@
 package com.game.invaders.system.invader;
 
-import java.util.HashSet;
-import java.util.Set;
-import com.badlogic.gdx.utils.IntSet.IntSetIterator;
-import com.game.engine.entity.Component;
-import com.game.engine.entity.EntityManager;
-import com.game.engine.system.entity.EntityMapper;
-import com.game.engine.system.event.EventSystem;
+import com.game.engine.entity.component.Destroyed;
+import com.game.engine.system.entity.node.EntityNodeSetFactory;
+import com.game.engine.system.entity.node.Node;
+import com.game.engine.system.entity.node.NodeSet;
 import com.game.engine.system.process.AbstractProcess;
 import com.game.invaders.component.Invader;
-import com.game.invaders.factory.InvaderDestroyedEventFactory;
 
 public class InvaderStateSystem extends AbstractProcess {
-	private EntityManager manager;
-	private EntityMapper managedEntities;
-	private EventSystem eventManager;
-	private InvaderDestroyedEventFactory invaderDestroyedFactory;
+	private NodeSet nodeSet;
 
-	public InvaderStateSystem(EntityManager manager, EventSystem eventManager,InvaderDestroyedEventFactory invaderDestroyedFactory) {
+	@SuppressWarnings("unchecked")
+	public InvaderStateSystem(EntityNodeSetFactory entityNodeSetFactory) {
 		super();
-		this.manager = manager;
-		this.eventManager = eventManager;
-		this.invaderDestroyedFactory = invaderDestroyedFactory;
-		Set<Class<? extends Component>> cs = new HashSet<Class<? extends Component>>();
-		cs.add(Invader.class);
-		managedEntities = new EntityMapper(manager, eventManager, cs);
+		nodeSet = entityNodeSetFactory.create(Invader.class);
 	}
 
 	@Override
 	public void update(float dt) {
-		for (IntSetIterator iter = managedEntities.getGroup().iterator(); iter.hasNext;) {
-			int e = iter.next();
-			Invader state_c = (Invader) manager.componentFor(e, Invader.class);
+		for (Node node : nodeSet) {
+			Invader state_c = (Invader) node.component(Invader.class);
 			switch (state_c.getStateID()) {
 			case ALIVE:
 				break;
@@ -39,8 +27,7 @@ public class InvaderStateSystem extends AbstractProcess {
 				float dtime = state_c.getDyingTime() - dt;
 				state_c.setDyingTime(dtime);
 				if (dtime <= 0) {
-					manager.markEntityForRemove(e);
-					invaderDestroyedFactory.create(e);
+					node.add(new Destroyed());
 				}
 				break;
 			}

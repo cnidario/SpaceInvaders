@@ -3,7 +3,6 @@ package com.game.engine.system.entity.node;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-
 import com.badlogic.gdx.utils.IntSet;
 import com.badlogic.gdx.utils.IntSet.IntSetIterator;
 import com.game.engine.entity.Component;
@@ -70,9 +69,6 @@ public class EntityNodeSet implements NodeSet {
 		return interestedComponents;
 	}
 	@Override
-	public void entityAdded(int entity) {
-	}
-	@Override
 	public void entityDeleted(int entity) {
 		if(set.contains(entity)) {
 			removeEntity(entity);
@@ -93,5 +89,13 @@ public class EntityNodeSet implements NodeSet {
 		if(set.contains(entity) && interestedComponents.contains(component)) {
 			removeEntity(entity);
 		}
+	}
+	@Override
+	public int count() {
+		return set.size;
+	}
+	@Override
+	public Node one() {
+		return iterator().next();
 	}
 }

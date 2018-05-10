@@ -18,12 +18,6 @@ public class EntityNotifier implements EntityObserver, EntitySubscriber {
 		observers.remove(o);
 	}
 	@Override
-	public void entityAdded(int entity) {
-		for (EntityObserver entityObserver : observers) {
-			entityObserver.entityAdded(entity);
-		}
-	}
-	@Override
 	public void entityDeleted(int entity) {
 		for (EntityObserver entityObserver : observers) {
 			entityObserver.entityDeleted(entity);

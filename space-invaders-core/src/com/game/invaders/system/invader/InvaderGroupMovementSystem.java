@@ -1,14 +1,10 @@
 package com.game.invaders.system.invader;
 
-import java.util.HashSet;
-import java.util.Set;
-import com.badlogic.gdx.utils.IntSet.IntSetIterator;
-import com.game.engine.entity.Component;
-import com.game.engine.entity.EntityManager;
 import com.game.engine.entity.component.GroupParent;
 import com.game.engine.entity.component.Position;
-import com.game.engine.system.entity.EntityMapper;
-import com.game.engine.system.event.EventSystem;
+import com.game.engine.system.entity.node.EntityNodeSetFactory;
+import com.game.engine.system.entity.node.Node;
+import com.game.engine.system.entity.node.NodeSet;
 import com.game.engine.system.process.AbstractProcess;
 
 /**
@@ -17,30 +13,22 @@ import com.game.engine.system.process.AbstractProcess;
  * del grupo Simplemente un movimiento relativo
  */
 public class InvaderGroupMovementSystem extends AbstractProcess {
-	private EventSystem eventManager;
-	private EntityMapper managedEntities;
-	private EntityManager manager;
+	private NodeSet nodeSet;
 
-	public InvaderGroupMovementSystem(EntityManager manager, EventSystem eventManager) {
+	@SuppressWarnings("unchecked")
+	public InvaderGroupMovementSystem(EntityNodeSetFactory entityNodeSetFactory) {
 		super();
-		this.manager = manager;
-		this.eventManager = eventManager;
-		Set<Class<? extends Component>> cs = new HashSet<Class<? extends Component>>();
-		cs.add(GroupParent.class);
-		cs.add(Position.class);
-		managedEntities = new EntityMapper(manager, eventManager, cs);
+		nodeSet = entityNodeSetFactory.create(GroupParent.class, Position.class);
 	}
 
 	@Override
 	public void update(float dt) {
-		for (IntSetIterator iter = managedEntities.getGroup().iterator(); iter.hasNext;) {
-			int e = iter.next();
-			// FIXME problema en esta estructura de árbol que no actualiza en orden de árbol
-			GroupParent child_c = (GroupParent) manager.componentFor(e, GroupParent.class);
-			Position pos_c = (Position) manager.componentFor(e, Position.class);
-			int parent = child_c.getParent();
-			Position group_pos_c = (Position) manager.componentFor(parent, Position.class);
-			if (group_pos_c != null) {
+		for (Node node : nodeSet) {
+			GroupParent child_c = (GroupParent) node.component(GroupParent.class);
+			Position pos_c = (Position) node.component(Position.class);
+			Node parent = node.asNode(child_c.getParent());
+			Position group_pos_c = (Position) parent.component(Position.class);
+			if (group_pos_c != null) { //XXX actualizar con posibilidad de aviso por evento? (updateComp)
 				pos_c.getPos().set(child_c.getOffset().cpy().add(group_pos_c.getPos()));
 			}
 		}

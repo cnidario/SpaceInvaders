@@ -2,20 +2,12 @@ package com.game.engine.system.entity.node.component;
 
 import com.game.engine.entity.Component;
 
-public class RemoveComponent implements Component {
-	private int entity;
+public class DeleteComponent implements Component {
 	private Class<? extends Component> clazz;
 	
-	public RemoveComponent(int entity, Class<? extends Component> clazz) {
+	public DeleteComponent(Class<? extends Component> clazz) {
 		super();
-		this.entity = entity;
 		this.clazz = clazz;
-	}
-	public int getEntity() {
-		return entity;
-	}
-	public void setEntity(int entity) {
-		this.entity = entity;
 	}
 	public Class<? extends Component> getClazz() {
 		return clazz;

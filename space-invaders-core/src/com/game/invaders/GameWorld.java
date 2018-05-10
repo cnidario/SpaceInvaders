@@ -2,22 +2,19 @@ package com.game.invaders;
 
 import com.badlogic.gdx.math.Vector2;
 import com.game.engine.entity.EntityManager;
-import com.game.engine.system.event.EventSystem;
 import com.game.invaders.data.GameResources;
 import com.game.invaders.factory.InvaderFactory;
 import com.game.invaders.factory.InvaderGroupFactory;
 import com.game.invaders.factory.PlayerShipFactory;
 
 public class GameWorld {
-	private EventSystem eventSystem;
 	private EntityManager entityManager;
 	private InvaderFactory invaderFactory;
 	private InvaderGroupFactory invaderGroupFactory;
 	private PlayerShipFactory playerShipFactory;
 	
-	public GameWorld(EventSystem eventManager, EntityManager entityManager, InvaderFactory invaderFactory, InvaderGroupFactory invaderGroupFactory, PlayerShipFactory playerShipFactory) {
+	public GameWorld(EntityManager entityManager, InvaderFactory invaderFactory, InvaderGroupFactory invaderGroupFactory, PlayerShipFactory playerShipFactory) {
 		super();
-		this.eventSystem = eventManager;
 		this.entityManager = entityManager;
 		this.invaderFactory = invaderFactory;
 		this.invaderGroupFactory = invaderGroupFactory;

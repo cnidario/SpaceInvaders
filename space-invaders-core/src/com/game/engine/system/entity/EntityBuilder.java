@@ -17,8 +17,7 @@ import com.game.engine.entity.component.Position;
 import com.game.engine.entity.component.Renderable;
 import com.game.engine.entity.component.UserControlled;
 import com.game.engine.system.collision.BoundingBox;
-import com.game.engine.system.event.EventSystem;
-import com.game.engine.system.event.types.EntityAddedEvent;
+import com.game.engine.system.entity.node.Node;
 import com.game.invaders.component.Invader;
 import com.game.invaders.component.PlayerShip;
 import com.game.invaders.component.TiltExploding;
@@ -28,13 +27,11 @@ import com.game.invaders.component.PlayerShip.PlayerState;
 
 public class EntityBuilder {
 	private EntityManager entityManager;
-	private EventSystem eventSystem;
 	private Map<Class<? extends Component>, Component> comps;
 	
-	public EntityBuilder(EntityManager entityManager, EventSystem eventSystem) {
+	public EntityBuilder(EntityManager entityManager) {
 		super();
 		this.entityManager = entityManager;
-		this.eventSystem = eventSystem;
 		comps = new HashMap<Class<? extends Component>, Component>();
 	}
 	public EntityBuilder animation(TextureRegion[] sprites, float duration, boolean loop) {
@@ -82,8 +79,8 @@ public class EntityBuilder {
 		comps.put(UserControlled.class, new UserControlled());
 		return this;
 	}
-	public EntityBuilder impact(int e1, int e2) {
-		comps.put(Impact.class, new Impact(e1, e2));
+	public EntityBuilder impact(Node e1, Node e2) {
+		comps.put(Impact.class, new Impact(e1.getId(), e2.getId()));
 		return this;
 	}
 	public EntityBuilder invaderImpact(int invader, float time) {
@@ -96,7 +93,6 @@ public class EntityBuilder {
 		for (Component c : comps.values()) {
 			entityManager.addComponent(entity, c);
 		}
-		eventSystem.queueEvent(new EntityAddedEvent(entity));
 		return entity;
 	}
 }
