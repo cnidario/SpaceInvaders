@@ -19,6 +19,7 @@ import com.game.engine.system.node.component.DeleteEntity;
 import com.game.engine.system.process.ProcessManager;
 import com.game.engine.system.render.AnimationSystem;
 import com.game.engine.system.render.RenderSystem;
+import com.game.engine.system.render.TextRenderSystem;
 import com.game.engine.system.util.ComponentMapperSystem;
 import com.game.invaders.component.InvaderExplosion;
 import com.game.invaders.component.InvaderImpact;
@@ -27,6 +28,7 @@ import com.game.invaders.data.GameResources;
 import com.game.invaders.factory.InvaderFactory;
 import com.game.invaders.factory.InvaderGroupFactory;
 import com.game.invaders.factory.PlayerShipFactory;
+import com.game.invaders.factory.ScoreFactory;
 import com.game.invaders.factory.ShootFactory;
 import com.game.invaders.system.impact.CollisionGroup;
 import com.game.invaders.system.impact.InvaderImpactSystem;
@@ -35,13 +37,13 @@ import com.game.invaders.system.invader.InvaderBehaviourSystem;
 import com.game.invaders.system.invader.InvaderGroupMovementSystem;
 import com.game.invaders.system.invader.InvaderStateSystem;
 import com.game.invaders.system.player.PlayerBehaviourSystem;
+import com.game.invaders.system.score.ScoreSystem;
 import com.game.invaders.system.sound.SoundResponseSystem;
 import com.game.invaders.system.sound.SoundSystem;
 
 public class SpaceInvaders extends ApplicationAdapter {
 	private EntityManager entityManager;
 	private ProcessManager processManager;
-	private RenderSystem renderSystem;
 	private GameWorld gameWorld;
 	private long lastTime;
 	
@@ -57,8 +59,9 @@ public class SpaceInvaders extends ApplicationAdapter {
 		InvaderFactory invaderFactory = new InvaderFactory();
 		InvaderGroupFactory invaderGroupFactory = new InvaderGroupFactory();
 		PlayerShipFactory playerShipFactory = new PlayerShipFactory();
-		
+		ScoreFactory scoreFactory = new ScoreFactory();
 		EntityNodeFactory entityNodeFactory = new EntityNodeFactory(entityManager);
+		
 		NodeSetManager nodeSetManager = new NodeSetManager();
 		entityNotifier.attach(nodeSetManager);
 		EntityNodeSetFactory entityNodeSetFactory = new EntityNodeSetFactory(entityNodeFactory, nodeSetManager);
@@ -67,7 +70,6 @@ public class SpaceInvaders extends ApplicationAdapter {
 		
 		processManager = new ProcessManager();
 		gameWorld = new GameWorld(rootNode, invaderFactory, invaderGroupFactory, playerShipFactory);
-		renderSystem = new RenderSystem(entityNodeSetFactory);
 		
 		SoundSystem soundSystem = new SoundSystem();
 		soundSystem.addSoundReponse(new SoundResponseSystem(entityNodeSetFactory, ShootEmitted.class, rnd, GameResources.GAME.SHOOTS));
@@ -86,15 +88,22 @@ public class SpaceInvaders extends ApplicationAdapter {
 		processManager.addProcess(new AnimationSystem(entityNodeSetFactory));
 		processManager.addProcess(new ExplodingTiltSystem(entityNodeSetFactory));
 		processManager.addProcess(soundSystem);
+		processManager.addProcess(new ScoreSystem(entityNodeSetFactory));
+		
 		ComponentMapperSystem componentMapperSystem = new ComponentMapperSystem(entityNodeSetFactory);
 		componentMapperSystem.addMapping(ShortLife.class, new DeleteEntity());
 		componentMapperSystem.addMapping(Destroyed.class, new DeleteEntity());
 		processManager.addProcess(componentMapperSystem);
 		processManager.addProcess(new LifecycleSystem(entityNodeSetFactory, entityManager, entityNotifier));
 		
-		processManager.init();
+		processManager.addProcess(new RenderSystem(entityNodeSetFactory));
+		processManager.addProcess(new TextRenderSystem(entityNodeSetFactory));
+		
+		/*Node scoreNode = */ scoreFactory.create(rootNode);
+		
 		gameWorld.init();
-		renderSystem.init();
+		processManager.init();
+		
 		GameResources.GAME.MAIN_SONG.play();
 	}
 	private void updatePhase() {
@@ -109,7 +118,6 @@ public class SpaceInvaders extends ApplicationAdapter {
 	@Override
 	public void render () {
 		updatePhase();
-		renderSystem.render();
 	}
 	@Override
 	public void dispose () {
