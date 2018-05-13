@@ -1,20 +1,21 @@
 package com.game.invaders.factory;
 
 import com.badlogic.gdx.math.Vector2;
-import com.game.engine.factory.EntityBuilderFactory;
+import com.game.engine.entity.component.Group;
+import com.game.engine.entity.component.Motion;
+import com.game.engine.entity.component.Position;
+import com.game.engine.system.node.Node;
 import com.game.invaders.data.GameConfigData;
 
 public class InvaderGroupFactory {
-	private EntityBuilderFactory entityBuilderFactory;
-	public InvaderGroupFactory(EntityBuilderFactory entityBuilderFactory) {
-		super();
-		this.entityBuilderFactory = entityBuilderFactory;
+	public InvaderGroupFactory() {
 	}
-	public int create() {
-		return entityBuilderFactory.create()
-				.group()
-				.position(new Vector2(GameConfigData.INVADER.MINX, 800))
-				.motion(new Vector2(GameConfigData.INVADER.MINSPEED, 0))
-				.build();
+	public Node create(Node space) {
+		Node group = space.create(
+				new Group(),
+				new Position(new Vector2(GameConfigData.INVADER.MINX, 800)),
+				new Motion(new Vector2(GameConfigData.INVADER.MINSPEED, 0))
+				);
+		return group;
 	}
 }

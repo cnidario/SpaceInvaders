@@ -1,9 +1,11 @@
-package com.game.engine.system.entity.node;
+package com.game.engine.factory;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import com.game.engine.entity.Component;
+import com.game.engine.system.node.NodeSetManager;
+import com.game.engine.system.node.impl.EntityNodeSet;
 
 public class EntityNodeSetFactory {
 	private EntityNodeFactory entityNodeFactory;
@@ -16,7 +18,7 @@ public class EntityNodeSetFactory {
 	}
 	public EntityNodeSet create(Class<? extends Component>... comps) {
 		Set<Class<? extends Component>> cs = new HashSet<Class<? extends Component>>();
-		for (Class<? extends Component> c : cs) {
+		for (Class<? extends Component> c : comps) {
 			cs.add(c);
 		}
 		return create(cs);

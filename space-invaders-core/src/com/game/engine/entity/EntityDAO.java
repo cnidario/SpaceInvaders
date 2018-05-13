@@ -1,8 +1,7 @@
-package com.game.engine.system.entity;
+package com.game.engine.entity;
 
 import java.util.Set;
 import com.badlogic.gdx.utils.IntSet;
-import com.game.engine.entity.Component;
 
 public interface EntityDAO {
 	int createEntity();

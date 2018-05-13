@@ -2,13 +2,12 @@ package com.game.invaders.system.player;
 
 import com.game.engine.entity.component.Motion;
 import com.game.engine.entity.component.Position;
-import com.game.engine.system.entity.node.EntityNodeSetFactory;
-import com.game.engine.system.entity.node.Node;
-import com.game.engine.system.entity.node.NodeSet;
+import com.game.engine.factory.EntityNodeSetFactory;
+import com.game.engine.system.node.Node;
+import com.game.engine.system.node.NodeSet;
 import com.game.engine.system.process.AbstractProcess;
 import com.game.invaders.component.PlayerShip;
 import com.game.invaders.data.GameConfigData;
-import com.game.invaders.data.GameResources;
 import com.game.invaders.factory.ShootFactory;
 import com.badlogic.gdx.math.Vector2;
 
@@ -26,10 +25,7 @@ public class PlayerBehaviourSystem extends AbstractProcess {
 		Node player = nodeSet.one();
 		if(player == null) 
 			return;
-		Position pos_c = (Position) player.component(Position.class);
-		Vector2 shootp = pos_c.getPos().cpy();
-		shootp.x += GameResources.PLAYER.IMAGE.getWidth() / 2 - GameResources.PLAYER.SHOOT_IMG.getWidth() / 2;
-		shootFactory.create(shootp);
+		shootFactory.create(player);
 	}
 	@Override
 	public void update(float dt) {

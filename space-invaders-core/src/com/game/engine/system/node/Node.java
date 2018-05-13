@@ -1,4 +1,4 @@
-package com.game.engine.system.entity.node;
+package com.game.engine.system.node;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ public interface Node extends Comparable<Node> {
 	void delete();
 	Component component(Class<? extends Component> component);
 	void add(Component component);
+	void add(Component... components);
 	void update(Component component);
 	void deleteComponent(Class<? extends Component> component);
 	Node create(List<Component> components);

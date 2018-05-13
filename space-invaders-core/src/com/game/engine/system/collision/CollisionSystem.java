@@ -6,20 +6,19 @@ import java.util.Iterator;
 import java.util.Set;
 import com.badlogic.gdx.math.Vector2;
 import com.game.engine.entity.component.Collision;
+import com.game.engine.entity.component.Impact;
 import com.game.engine.entity.component.Position;
-import com.game.engine.factory.EntityBuilderFactory;
-import com.game.engine.system.entity.node.EntityNodeSetFactory;
-import com.game.engine.system.entity.node.Node;
-import com.game.engine.system.entity.node.NodeSet;
+import com.game.engine.entity.component.ShortLife;
+import com.game.engine.factory.EntityNodeSetFactory;
+import com.game.engine.system.node.Node;
+import com.game.engine.system.node.NodeSet;
 import com.game.engine.system.process.AbstractProcess;
 
 public class CollisionSystem<E extends Enum<E>> extends AbstractProcess {
 	private NodeSet nodeSet;
-	private EntityBuilderFactory entityBuilderFactory;
 	
 	@SuppressWarnings("unchecked")
-	public CollisionSystem(EntityBuilderFactory entityBuilderFactory, EntityNodeSetFactory entityNodeSetFactory) {
-		this.entityBuilderFactory = entityBuilderFactory;
+	public CollisionSystem(EntityNodeSetFactory entityNodeSetFactory) {
 		nodeSet = entityNodeSetFactory.create(Collision.class, Position.class);
 	}
 	public static boolean test(Vector2 aPos, BoundingBox a, Vector2 bPos, BoundingBox b) {
@@ -66,10 +65,11 @@ public class CollisionSystem<E extends Enum<E>> extends AbstractProcess {
 		}
 	}
 	private void emitCollision(Node e1, Node e2, Vector2 pos) {
-		entityBuilderFactory.create()
-			.position(pos.cpy())
-			.impact(e1, e2)
-			.build();
+		e1.create(
+				new Position(pos.cpy()),
+				new Impact(e1.getId(), e2.getId()),
+				new ShortLife()
+				);
 	}
 	@Override
 	public void update(float dt) {

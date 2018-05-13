@@ -3,9 +3,9 @@ package com.game.engine.system.input;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.game.engine.entity.component.ShipAction;
-import com.game.engine.system.entity.node.EntityNodeSetFactory;
-import com.game.engine.system.entity.node.Node;
-import com.game.engine.system.entity.node.NodeSet;
+import com.game.engine.factory.EntityNodeSetFactory;
+import com.game.engine.system.node.Node;
+import com.game.engine.system.node.NodeSet;
 import com.game.engine.system.process.AbstractProcess;
 
 public class InputSystem extends AbstractProcess {

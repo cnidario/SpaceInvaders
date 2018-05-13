@@ -3,19 +3,19 @@ package com.game.invaders;
 import java.util.Random;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.game.engine.entity.EntityManager;
+import com.game.engine.entity.component.Destroyed;
 import com.game.engine.entity.component.ShortLife;
-import com.game.engine.factory.EntityBuilderFactory;
+import com.game.engine.entity.observer.EntityNotifier;
+import com.game.engine.factory.EntityNodeFactory;
+import com.game.engine.factory.EntityNodeSetFactory;
 import com.game.engine.system.collision.CollisionSystem;
 import com.game.engine.system.controller.ControllerSystem;
-import com.game.engine.system.entity.EntityNotifier;
-import com.game.engine.system.entity.node.EntityNodeFactory;
-import com.game.engine.system.entity.node.EntityNodeSetFactory;
-import com.game.engine.system.entity.node.Node;
-import com.game.engine.system.entity.node.NodeSetManager;
-import com.game.engine.system.entity.node.component.DeleteEntity;
 import com.game.engine.system.input.InputSystem;
 import com.game.engine.system.lifecycle.LifecycleSystem;
 import com.game.engine.system.motion.MotionSystem;
+import com.game.engine.system.node.Node;
+import com.game.engine.system.node.NodeSetManager;
+import com.game.engine.system.node.component.DeleteEntity;
 import com.game.engine.system.process.ProcessManager;
 import com.game.engine.system.render.AnimationSystem;
 import com.game.engine.system.render.RenderSystem;
@@ -26,7 +26,6 @@ import com.game.invaders.component.ShootEmitted;
 import com.game.invaders.data.GameResources;
 import com.game.invaders.factory.InvaderFactory;
 import com.game.invaders.factory.InvaderGroupFactory;
-import com.game.invaders.factory.InvaderImpactFactory;
 import com.game.invaders.factory.PlayerShipFactory;
 import com.game.invaders.factory.ShootFactory;
 import com.game.invaders.system.impact.CollisionGroup;
@@ -54,20 +53,20 @@ public class SpaceInvaders extends ApplicationAdapter {
 		EntityNotifier entityNotifier = new EntityNotifier();
 		entityManager = new EntityManager(entityNotifier);
 		
-		EntityBuilderFactory entityBuilderFactory = new EntityBuilderFactory(entityManager);
-		ShootFactory shootFactory = new ShootFactory(entityBuilderFactory);
-		InvaderFactory invaderFactory = new InvaderFactory(entityBuilderFactory);
-		InvaderGroupFactory invaderGroupFactory = new InvaderGroupFactory(entityBuilderFactory);
-		PlayerShipFactory playerShipFactory = new PlayerShipFactory(entityBuilderFactory);
-		InvaderImpactFactory invaderImpactFactory = new InvaderImpactFactory(entityBuilderFactory);
+		ShootFactory shootFactory = new ShootFactory();
+		InvaderFactory invaderFactory = new InvaderFactory();
+		InvaderGroupFactory invaderGroupFactory = new InvaderGroupFactory();
+		PlayerShipFactory playerShipFactory = new PlayerShipFactory();
 		
 		EntityNodeFactory entityNodeFactory = new EntityNodeFactory(entityManager);
 		NodeSetManager nodeSetManager = new NodeSetManager();
+		entityNotifier.attach(nodeSetManager);
 		EntityNodeSetFactory entityNodeSetFactory = new EntityNodeSetFactory(entityNodeFactory, nodeSetManager);
+		
 		Node rootNode = entityNodeFactory.create(entityManager.createEntity());
 		
 		processManager = new ProcessManager();
-		gameWorld = new GameWorld(entityManager, invaderFactory, invaderGroupFactory, playerShipFactory);
+		gameWorld = new GameWorld(rootNode, invaderFactory, invaderGroupFactory, playerShipFactory);
 		renderSystem = new RenderSystem(entityNodeSetFactory);
 		
 		SoundSystem soundSystem = new SoundSystem();
@@ -82,13 +81,14 @@ public class SpaceInvaders extends ApplicationAdapter {
 		processManager.addProcess(new InvaderGroupMovementSystem(entityNodeSetFactory));
 		processManager.addProcess(new InvaderStateSystem(entityNodeSetFactory));
 		processManager.addProcess(new MotionSystem(entityNodeSetFactory));
-		processManager.addProcess(new CollisionSystem<CollisionGroup>(entityBuilderFactory, entityNodeSetFactory));
+		processManager.addProcess(new CollisionSystem<CollisionGroup>(entityNodeSetFactory));
 		processManager.addProcess(new InvaderImpactSystem(entityNodeSetFactory));
 		processManager.addProcess(new AnimationSystem(entityNodeSetFactory));
 		processManager.addProcess(new ExplodingTiltSystem(entityNodeSetFactory));
 		processManager.addProcess(soundSystem);
 		ComponentMapperSystem componentMapperSystem = new ComponentMapperSystem(entityNodeSetFactory);
 		componentMapperSystem.addMapping(ShortLife.class, new DeleteEntity());
+		componentMapperSystem.addMapping(Destroyed.class, new DeleteEntity());
 		processManager.addProcess(componentMapperSystem);
 		processManager.addProcess(new LifecycleSystem(entityNodeSetFactory, entityManager, entityNotifier));
 		

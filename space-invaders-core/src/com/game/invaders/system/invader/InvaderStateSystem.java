@@ -1,11 +1,13 @@
 package com.game.invaders.system.invader;
 
 import com.game.engine.entity.component.Destroyed;
-import com.game.engine.system.entity.node.EntityNodeSetFactory;
-import com.game.engine.system.entity.node.Node;
-import com.game.engine.system.entity.node.NodeSet;
+import com.game.engine.entity.component.ShortLife;
+import com.game.engine.factory.EntityNodeSetFactory;
+import com.game.engine.system.node.Node;
+import com.game.engine.system.node.NodeSet;
 import com.game.engine.system.process.AbstractProcess;
 import com.game.invaders.component.Invader;
+import com.game.invaders.component.InvaderExplosion;
 
 public class InvaderStateSystem extends AbstractProcess {
 	private NodeSet nodeSet;
@@ -27,6 +29,7 @@ public class InvaderStateSystem extends AbstractProcess {
 				float dtime = state_c.getDyingTime() - dt;
 				state_c.setDyingTime(dtime);
 				if (dtime <= 0) {
+					node.create(new InvaderExplosion(), new ShortLife());
 					node.add(new Destroyed());
 				}
 				break;

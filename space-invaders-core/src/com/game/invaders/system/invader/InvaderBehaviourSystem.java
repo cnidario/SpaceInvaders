@@ -4,9 +4,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.game.engine.entity.component.Group;
 import com.game.engine.entity.component.Motion;
 import com.game.engine.entity.component.Position;
-import com.game.engine.system.entity.node.EntityNodeSetFactory;
-import com.game.engine.system.entity.node.Node;
-import com.game.engine.system.entity.node.NodeSet;
+import com.game.engine.factory.EntityNodeSetFactory;
+import com.game.engine.system.node.Node;
+import com.game.engine.system.node.NodeSet;
 import com.game.engine.system.process.AbstractProcess;
 import com.game.invaders.data.GameConfigData;
 

@@ -1,4 +1,4 @@
-package com.game.engine.system.entity.node;
+package com.game.engine.system.node.impl;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -6,6 +6,9 @@ import java.util.Set;
 import com.badlogic.gdx.utils.IntSet;
 import com.badlogic.gdx.utils.IntSet.IntSetIterator;
 import com.game.engine.entity.Component;
+import com.game.engine.factory.EntityNodeFactory;
+import com.game.engine.system.node.Node;
+import com.game.engine.system.node.NodeSet;
 
 public class EntityNodeSet implements NodeSet {
 	private Set<Class<? extends Component>> interestedComponents;

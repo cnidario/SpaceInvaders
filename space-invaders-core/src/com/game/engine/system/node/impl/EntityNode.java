@@ -1,12 +1,14 @@
-package com.game.engine.system.entity.node;
+package com.game.engine.system.node.impl;
 
 import java.util.Arrays;
 import java.util.List;
 
 import com.game.engine.entity.Component;
-import com.game.engine.system.entity.EntityDAO;
-import com.game.engine.system.entity.node.component.DeleteComponent;
-import com.game.engine.system.entity.node.component.DeleteEntity;
+import com.game.engine.entity.EntityDAO;
+import com.game.engine.factory.EntityNodeFactory;
+import com.game.engine.system.node.Node;
+import com.game.engine.system.node.component.DeleteComponent;
+import com.game.engine.system.node.component.DeleteEntity;
 
 public class EntityNode implements Node {
 	private EntityDAO entityDao;
@@ -40,10 +42,7 @@ public class EntityNode implements Node {
 	}
 	@Override
 	public int compareTo(Node o) {
-		if(o instanceof EntityNode)
-			return entity - ((EntityNode)o).entity;
-		else
-			return -1;
+		return entity - o.getId();
 	}
 	@Override
 	public int getId() {
@@ -68,5 +67,11 @@ public class EntityNode implements Node {
 	@Override
 	public Node asNode(int entity) {
 		return entityNodeFactory.create(entity);
+	}
+	@Override
+	public void add(Component... components) {
+		for (Component component : components) {
+			add(component);
+		}
 	}
 }

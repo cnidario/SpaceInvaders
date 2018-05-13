@@ -1,4 +1,4 @@
-package com.game.engine.system.entity;
+package com.game.engine.entity.observer;
 
 import java.util.Set;
 

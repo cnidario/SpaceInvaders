@@ -1,4 +1,4 @@
-package com.game.engine.system.entity.node.component;
+package com.game.engine.system.node.component;
 
 import com.game.engine.entity.Component;
 

@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import com.game.engine.entity.Component;
-import com.game.engine.system.entity.EntityDAO;
-import com.game.engine.system.entity.EntityObserver;
-import com.game.engine.system.entity.node.EntityNodeSetFactory;
-import com.game.engine.system.entity.node.Node;
-import com.game.engine.system.entity.node.NodeSet;
-import com.game.engine.system.entity.node.component.DeleteComponent;
-import com.game.engine.system.entity.node.component.DeleteEntity;
+import com.game.engine.entity.EntityDAO;
+import com.game.engine.entity.observer.EntityObserver;
+import com.game.engine.factory.EntityNodeSetFactory;
+import com.game.engine.system.node.Node;
+import com.game.engine.system.node.NodeSet;
+import com.game.engine.system.node.component.DeleteComponent;
+import com.game.engine.system.node.component.DeleteEntity;
 import com.game.engine.system.process.AbstractProcess;
 
 public class LifecycleSystem extends AbstractProcess {

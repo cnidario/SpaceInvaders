@@ -2,13 +2,15 @@ package com.game.invaders.system.impact;
 
 import com.game.engine.entity.component.Animation;
 import com.game.engine.entity.component.Impact;
-import com.game.engine.system.entity.node.EntityNodeSetFactory;
-import com.game.engine.system.entity.node.Node;
-import com.game.engine.system.entity.node.NodeSet;
+import com.game.engine.entity.component.ShortLife;
+import com.game.engine.factory.EntityNodeSetFactory;
+import com.game.engine.system.node.Node;
+import com.game.engine.system.node.NodeSet;
 import com.game.engine.system.process.AbstractProcess;
 import com.game.invaders.component.Invader;
 import com.game.invaders.component.TiltExploding;
 import com.game.invaders.component.Invader.InvaderStateID;
+import com.game.invaders.component.InvaderImpact;
 import com.game.invaders.data.GameConfigData;
 
 public class InvaderImpactSystem extends AbstractProcess {
@@ -19,7 +21,11 @@ public class InvaderImpactSystem extends AbstractProcess {
 		super();
 		nodeSet = entityNodeSetFactory.create(Impact.class);
 	}
-	private void handle() {
+	@Override
+	public void init() {
+	}
+	@Override
+	public void update(float dt) {
 		for (Node node : nodeSet) {
 			Impact impact_c = (Impact) node.component(Impact.class);
 			Node shoot = node.asNode(impact_c.getE1());
@@ -31,13 +37,7 @@ public class InvaderImpactSystem extends AbstractProcess {
 			invader.add(explo_c);
 			invader.deleteComponent(Animation.class);
 			shoot.delete();
+			node.create(new InvaderImpact(invader.getId(), 0), new ShortLife());
 		}
-	}
-	@Override
-	public void init() {
-	}
-	@Override
-	public void update(float dt) {
-		handle();
 	}
 }

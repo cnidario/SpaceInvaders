@@ -1,19 +1,17 @@
 package com.game.invaders.factory;
 
-import com.badlogic.gdx.math.Vector2;
-import com.game.engine.factory.EntityBuilderFactory;
+import com.game.engine.entity.component.Position;
+import com.game.engine.system.node.Node;
+import com.game.invaders.component.InvaderImpact;
 
 public class InvaderImpactFactory {
-	private EntityBuilderFactory entityBuilderFactory;
-	
-	public InvaderImpactFactory(EntityBuilderFactory entityBuilderFactory) {
-		super();
-		this.entityBuilderFactory = entityBuilderFactory;
+	public InvaderImpactFactory() {
 	}
-	public int create(Vector2 pos, int invader, float time) {
-		return entityBuilderFactory.create()
-			.position(pos)
-			.invaderImpact(invader, time)
-			.build();
+	public Node create(Node invader, float time) {
+		Node impact = invader.create(
+				new Position(((Position)invader.component(Position.class)).getPos().cpy()),
+				new InvaderImpact(invader.getId(), time)
+				);
+		return impact;
 	}
 }

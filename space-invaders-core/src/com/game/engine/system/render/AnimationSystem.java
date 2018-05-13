@@ -2,9 +2,9 @@ package com.game.engine.system.render;
 
 import com.game.engine.entity.component.Animation;
 import com.game.engine.entity.component.Renderable;
-import com.game.engine.system.entity.node.EntityNodeSetFactory;
-import com.game.engine.system.entity.node.Node;
-import com.game.engine.system.entity.node.NodeSet;
+import com.game.engine.factory.EntityNodeSetFactory;
+import com.game.engine.system.node.Node;
+import com.game.engine.system.node.NodeSet;
 import com.game.engine.system.process.AbstractProcess;
 
 public class AnimationSystem extends AbstractProcess {
