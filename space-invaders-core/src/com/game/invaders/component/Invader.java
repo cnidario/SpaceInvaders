@@ -1,6 +1,6 @@
 package com.game.invaders.component;
 
-import com.game.engine.entity.Component;
+import com.game.engine.component.Component;
 
 public class Invader implements Component {
 	public enum InvaderStateID {

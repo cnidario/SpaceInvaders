@@ -1,7 +1,7 @@
-package com.game.engine.entity.component;
+package com.game.engine.component;
 
 import java.util.EnumSet;
-import com.game.engine.entity.Component;
+
 import com.game.engine.system.collision.BoundingBox;
 
 public class Collision<T extends Enum<T>> implements Component {

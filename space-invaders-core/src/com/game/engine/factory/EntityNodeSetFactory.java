@@ -3,7 +3,7 @@ package com.game.engine.factory;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.game.engine.entity.Component;
+import com.game.engine.component.Component;
 import com.game.engine.system.node.NodeSetManager;
 import com.game.engine.system.node.impl.EntityNodeSet;
 

@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import com.badlogic.gdx.utils.IntSet;
-import com.game.engine.entity.Component;
+import com.game.engine.component.Component;
 import com.game.engine.entity.observer.EntityObserver;
 /**
  * Un NodeSet contiene un conjunto de entidades dinámico

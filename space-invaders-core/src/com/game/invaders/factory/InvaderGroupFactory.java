@@ -1,9 +1,9 @@
 package com.game.invaders.factory;
 
 import com.badlogic.gdx.math.Vector2;
-import com.game.engine.entity.component.Group;
-import com.game.engine.entity.component.Motion;
-import com.game.engine.entity.component.Position;
+import com.game.engine.component.Group;
+import com.game.engine.component.Motion;
+import com.game.engine.component.Position;
 import com.game.engine.system.node.Node;
 import com.game.invaders.data.GameConfigData;
 

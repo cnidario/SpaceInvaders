@@ -1,6 +1,6 @@
 package com.game.engine.system.node.component;
 
-import com.game.engine.entity.Component;
+import com.game.engine.component.Component;
 
 public class DeleteComponent implements Component {
 	private Class<? extends Component> clazz;

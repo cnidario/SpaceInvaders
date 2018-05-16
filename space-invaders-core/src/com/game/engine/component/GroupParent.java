@@ -1,7 +1,6 @@
-package com.game.engine.entity.component;
+package com.game.engine.component;
 
 import com.badlogic.gdx.math.Vector2;
-import com.game.engine.entity.Component;
 
 public class GroupParent implements Component {
 	private Vector2 offset;

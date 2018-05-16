@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.Set;
 import com.badlogic.gdx.utils.IntSet;
 import com.badlogic.gdx.utils.IntSet.IntSetIterator;
-import com.game.engine.entity.Component;
+import com.game.engine.component.Component;
 import com.game.engine.factory.EntityNodeFactory;
 import com.game.engine.system.node.Node;
 import com.game.engine.system.node.NodeSet;

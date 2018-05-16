@@ -3,7 +3,7 @@ package com.game.engine.system.node.impl;
 import java.util.Arrays;
 import java.util.List;
 
-import com.game.engine.entity.Component;
+import com.game.engine.component.Component;
 import com.game.engine.entity.EntityDAO;
 import com.game.engine.factory.EntityNodeFactory;
 import com.game.engine.system.node.Node;

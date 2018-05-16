@@ -2,7 +2,7 @@ package com.game.engine.system.node;
 
 import java.util.List;
 
-import com.game.engine.entity.Component;
+import com.game.engine.component.Component;
 
 public interface Node extends Comparable<Node> {
 	int getId();

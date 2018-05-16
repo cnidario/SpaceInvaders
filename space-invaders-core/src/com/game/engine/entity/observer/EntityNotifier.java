@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import com.game.engine.entity.Component;
+import com.game.engine.component.Component;
 
 public class EntityNotifier implements EntityObserver, EntitySubscriber {
 	private List<EntityObserver> observers = new ArrayList<EntityObserver>();

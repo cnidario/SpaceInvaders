@@ -1,6 +1,6 @@
 package com.game.engine.system.node.component;
 
-import com.game.engine.entity.Component;
+import com.game.engine.component.Component;
 
 public class SceneNode implements Component {
 	public static final int ABSOLUTE_ROOT = -1;

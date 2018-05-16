@@ -1,7 +1,7 @@
 package com.game.invaders.system.invader;
 
-import com.game.engine.entity.component.GroupParent;
-import com.game.engine.entity.component.Position;
+import com.game.engine.component.GroupParent;
+import com.game.engine.component.Position;
 import com.game.engine.factory.EntityNodeSetFactory;
 import com.game.engine.system.node.Node;
 import com.game.engine.system.node.NodeSet;

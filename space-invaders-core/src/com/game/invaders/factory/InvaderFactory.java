@@ -2,11 +2,11 @@ package com.game.invaders.factory;
 
 import java.util.EnumSet;
 import com.badlogic.gdx.math.Vector2;
-import com.game.engine.entity.component.Animation;
-import com.game.engine.entity.component.Collision;
-import com.game.engine.entity.component.GroupParent;
-import com.game.engine.entity.component.Position;
-import com.game.engine.entity.component.Renderable;
+import com.game.engine.component.Animation;
+import com.game.engine.component.Collision;
+import com.game.engine.component.GroupParent;
+import com.game.engine.component.Position;
+import com.game.engine.component.Renderable;
 import com.game.engine.system.node.Node;
 import com.game.invaders.component.Invader;
 import com.game.invaders.component.Invader.InvaderStateID;

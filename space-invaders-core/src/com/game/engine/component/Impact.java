@@ -1,6 +1,4 @@
-package com.game.engine.entity.component;
-
-import com.game.engine.entity.Component;
+package com.game.engine.component;
 
 public class Impact implements Component {
 	private int e1, e2;

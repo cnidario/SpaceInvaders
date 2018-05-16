@@ -1,7 +1,6 @@
-package com.game.engine.entity.component;
+package com.game.engine.component;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.game.engine.entity.Component;
 
 public class Animation implements Component {
 	private float duration;

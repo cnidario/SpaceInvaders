@@ -2,9 +2,9 @@ package com.game.invaders;
 
 import java.util.Random;
 import com.badlogic.gdx.ApplicationAdapter;
+import com.game.engine.component.Destroyed;
+import com.game.engine.component.ShortLife;
 import com.game.engine.entity.EntityManager;
-import com.game.engine.entity.component.Destroyed;
-import com.game.engine.entity.component.ShortLife;
 import com.game.engine.entity.observer.EntityNotifier;
 import com.game.engine.factory.EntityNodeFactory;
 import com.game.engine.factory.EntityNodeSetFactory;
@@ -36,6 +36,7 @@ import com.game.invaders.system.invader.ExplodingTiltSystem;
 import com.game.invaders.system.invader.InvaderBehaviourSystem;
 import com.game.invaders.system.invader.InvaderGroupMovementSystem;
 import com.game.invaders.system.invader.InvaderStateSystem;
+import com.game.invaders.system.player.FiringBehaviourSystem;
 import com.game.invaders.system.player.PlayerBehaviourSystem;
 import com.game.invaders.system.score.ScoreSystem;
 import com.game.invaders.system.sound.SoundResponseSystem;
@@ -78,7 +79,8 @@ public class SpaceInvaders extends ApplicationAdapter {
 		
 		processManager.addProcess(new InputSystem(entityNodeSetFactory, rootNode));
 		processManager.addProcess(new ControllerSystem(entityNodeSetFactory));
-		processManager.addProcess(new PlayerBehaviourSystem(entityNodeSetFactory, shootFactory));
+		processManager.addProcess(new PlayerBehaviourSystem(entityNodeSetFactory));
+		processManager.addProcess(new FiringBehaviourSystem(entityNodeSetFactory, shootFactory));
 		processManager.addProcess(new InvaderBehaviourSystem(entityNodeSetFactory));
 		processManager.addProcess(new InvaderGroupMovementSystem(entityNodeSetFactory));
 		processManager.addProcess(new InvaderStateSystem(entityNodeSetFactory));

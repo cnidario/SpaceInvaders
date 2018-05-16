@@ -1,7 +1,8 @@
 package com.game.engine.system.node;
 
 import java.util.Set;
-import com.game.engine.entity.Component;
+
+import com.game.engine.component.Component;
 import com.game.engine.entity.observer.EntityObserver;
 
 public interface NodeSet extends Iterable<Node>, EntityObserver {

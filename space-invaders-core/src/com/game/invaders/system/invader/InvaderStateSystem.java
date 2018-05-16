@@ -1,7 +1,7 @@
 package com.game.invaders.system.invader;
 
-import com.game.engine.entity.component.Destroyed;
-import com.game.engine.entity.component.ShortLife;
+import com.game.engine.component.Destroyed;
+import com.game.engine.component.ShortLife;
 import com.game.engine.factory.EntityNodeSetFactory;
 import com.game.engine.system.node.Node;
 import com.game.engine.system.node.NodeSet;

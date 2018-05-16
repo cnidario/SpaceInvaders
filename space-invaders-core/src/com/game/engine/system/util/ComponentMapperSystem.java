@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.game.engine.entity.Component;
+
+import com.game.engine.component.Component;
 import com.game.engine.factory.EntityNodeSetFactory;
 import com.game.engine.system.node.Node;
 import com.game.engine.system.node.NodeSet;

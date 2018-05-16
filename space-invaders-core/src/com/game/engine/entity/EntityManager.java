@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.IntSet;
+import com.game.engine.component.Component;
 import com.game.engine.entity.observer.EntityNotifier;
 
 public class EntityManager implements EntityDAO {

@@ -1,6 +1,5 @@
-package com.game.engine.entity.component;
+package com.game.engine.component;
 
-import com.game.engine.entity.Component;
 /**
  * Componente que es una simple etiqueta para entidades que sólo duran un ciclo (eventos de consumo instantáneo etc)
  */
