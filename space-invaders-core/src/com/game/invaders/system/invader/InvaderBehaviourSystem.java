@@ -5,8 +5,8 @@ import com.game.engine.component.Group;
 import com.game.engine.component.Motion;
 import com.game.engine.component.Position;
 import com.game.engine.factory.EntityNodeSetFactory;
-import com.game.engine.system.node.Node;
-import com.game.engine.system.node.NodeSet;
+import com.game.engine.node.Node;
+import com.game.engine.node.NodeSet;
 import com.game.engine.system.process.AbstractProcess;
 import com.game.invaders.data.GameConfigData;
 

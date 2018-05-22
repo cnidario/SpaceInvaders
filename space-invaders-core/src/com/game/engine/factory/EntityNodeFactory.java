@@ -1,7 +1,7 @@
 package com.game.engine.factory;
 
 import com.game.engine.entity.EntityDAO;
-import com.game.engine.system.node.impl.EntityNode;
+import com.game.engine.node.impl.EntityNode;
 
 public class EntityNodeFactory {
 	private EntityDAO entityDAO;

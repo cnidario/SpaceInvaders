@@ -4,18 +4,18 @@ import java.util.Random;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.game.engine.component.Destroyed;
 import com.game.engine.component.ShortLife;
+import com.game.engine.component.node.DeleteEntity;
 import com.game.engine.entity.EntityManager;
 import com.game.engine.entity.observer.EntityNotifier;
 import com.game.engine.factory.EntityNodeFactory;
 import com.game.engine.factory.EntityNodeSetFactory;
+import com.game.engine.node.Node;
+import com.game.engine.node.NodeSetManager;
 import com.game.engine.system.collision.CollisionSystem;
 import com.game.engine.system.controller.ControllerSystem;
 import com.game.engine.system.input.InputSystem;
 import com.game.engine.system.lifecycle.LifecycleSystem;
 import com.game.engine.system.motion.MotionSystem;
-import com.game.engine.system.node.Node;
-import com.game.engine.system.node.NodeSetManager;
-import com.game.engine.system.node.component.DeleteEntity;
 import com.game.engine.system.process.ProcessManager;
 import com.game.engine.system.render.AnimationSystem;
 import com.game.engine.system.render.RenderSystem;
@@ -63,7 +63,7 @@ public class SpaceInvaders extends ApplicationAdapter {
 		ScoreFactory scoreFactory = new ScoreFactory();
 		EntityNodeFactory entityNodeFactory = new EntityNodeFactory(entityManager);
 		
-		NodeSetManager nodeSetManager = new NodeSetManager();
+		NodeSetManager nodeSetManager = new NodeSetManager(entityManager);
 		entityNotifier.attach(nodeSetManager);
 		EntityNodeSetFactory entityNodeSetFactory = new EntityNodeSetFactory(entityNodeFactory, nodeSetManager);
 		
@@ -96,7 +96,7 @@ public class SpaceInvaders extends ApplicationAdapter {
 		componentMapperSystem.addMapping(ShortLife.class, new DeleteEntity());
 		componentMapperSystem.addMapping(Destroyed.class, new DeleteEntity());
 		processManager.addProcess(componentMapperSystem);
-		processManager.addProcess(new LifecycleSystem(entityNodeSetFactory, entityManager, entityNotifier));
+		processManager.addProcess(new LifecycleSystem(entityNodeSetFactory, entityManager));
 		
 		processManager.addProcess(new RenderSystem(entityNodeSetFactory));
 		processManager.addProcess(new TextRenderSystem(entityNodeSetFactory));

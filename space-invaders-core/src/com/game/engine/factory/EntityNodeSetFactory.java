@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.game.engine.component.Component;
-import com.game.engine.system.node.NodeSetManager;
-import com.game.engine.system.node.impl.EntityNodeSet;
+import com.game.engine.node.NodeSetManager;
+import com.game.engine.node.impl.EntityNodeSet;
 
 public class EntityNodeSetFactory {
 	private EntityNodeFactory entityNodeFactory;
@@ -25,7 +25,7 @@ public class EntityNodeSetFactory {
 	}
 	public EntityNodeSet create(Set<Class<? extends Component>> interestedComponents) {
 		EntityNodeSet entityNodeSet = new EntityNodeSet(interestedComponents, entityNodeFactory);
-		nodeSetManager.registerNodeSet(entityNodeSet, interestedComponents);
+		nodeSetManager.registerNodeSet(entityNodeSet);
 		return entityNodeSet;
 	}
 }

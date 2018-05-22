@@ -1,8 +1,8 @@
-package com.game.engine.system.node.spaces;
+package com.game.engine.node.spaces;
 
-import com.game.engine.system.node.Node;
-import com.game.engine.system.node.component.Space;
-import com.game.engine.system.node.impl.NodeDecorator;
+import com.game.engine.component.node.Space;
+import com.game.engine.node.Node;
+import com.game.engine.node.impl.NodeDecorator;
 
 public class SpacedNode extends NodeDecorator {
 	public SpacedNode(Node delegate) {

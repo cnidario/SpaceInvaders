@@ -2,8 +2,6 @@ package com.game.engine.entity.observer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
 import com.game.engine.component.Component;
 
 public class EntityNotifier implements EntityObserver, EntitySubscriber {
@@ -24,9 +22,9 @@ public class EntityNotifier implements EntityObserver, EntitySubscriber {
 		}
 	}
 	@Override
-	public void componentAdded(int entity, Set<Component> components, Component component) {
+	public void componentAdded(int entity, Component component) {
 		for (EntityObserver entityObserver : observers) {
-			entityObserver.componentAdded(entity, components, component);
+			entityObserver.componentAdded(entity, component);
 		}
 	}
 	@Override

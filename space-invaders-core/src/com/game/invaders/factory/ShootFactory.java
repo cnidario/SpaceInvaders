@@ -7,7 +7,7 @@ import com.game.engine.component.Motion;
 import com.game.engine.component.Position;
 import com.game.engine.component.Renderable;
 import com.game.engine.component.ShortLife;
-import com.game.engine.system.node.Node;
+import com.game.engine.node.Node;
 import com.game.invaders.component.ShootEmitted;
 import com.game.invaders.data.GameConfigData;
 import com.game.invaders.data.GameResources;

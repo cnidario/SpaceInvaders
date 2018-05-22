@@ -1,4 +1,4 @@
-package com.game.engine.system.node;
+package com.game.engine.node;
 
 import java.util.List;
 

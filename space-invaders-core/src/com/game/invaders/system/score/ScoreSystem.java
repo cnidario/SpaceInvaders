@@ -2,8 +2,8 @@ package com.game.invaders.system.score;
 
 import com.game.engine.component.TextRenderable;
 import com.game.engine.factory.EntityNodeSetFactory;
-import com.game.engine.system.node.Node;
-import com.game.engine.system.node.NodeSet;
+import com.game.engine.node.Node;
+import com.game.engine.node.NodeSet;
 import com.game.engine.system.process.AbstractProcess;
 import com.game.invaders.component.InvaderExplosion;
 import com.game.invaders.component.Score;

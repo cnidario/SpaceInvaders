@@ -4,7 +4,7 @@ import java.util.Random;
 import com.badlogic.gdx.audio.Sound;
 import com.game.engine.component.Component;
 import com.game.engine.factory.EntityNodeSetFactory;
-import com.game.engine.system.node.NodeSet;
+import com.game.engine.node.NodeSet;
 import com.game.engine.system.process.AbstractProcess;
 
 public class SoundResponseSystem extends AbstractProcess {

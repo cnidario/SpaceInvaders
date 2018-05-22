@@ -32,7 +32,7 @@ public class EntityManager implements EntityDAO {
 	public void addComponent(int entity, Component component) {
 		Map<Class<? extends Component>, Component> entityComps = components.get(entity);
 		entityComps.put(component.getClass(), component);
-		notifier.componentAdded(entity, componentsFor(entity), component);
+		notifier.componentAdded(entity, component);
 	}
 	@Override
 	public Set<Component> componentsFor(int entity) {

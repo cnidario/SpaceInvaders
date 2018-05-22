@@ -1,7 +1,7 @@
 package com.game.invaders.factory;
 
 import com.game.engine.component.Position;
-import com.game.engine.system.node.Node;
+import com.game.engine.node.Node;
 import com.game.invaders.component.InvaderImpact;
 
 public class InvaderImpactFactory {

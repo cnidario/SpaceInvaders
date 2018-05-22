@@ -10,8 +10,8 @@ import com.game.engine.component.Impact;
 import com.game.engine.component.Position;
 import com.game.engine.component.ShortLife;
 import com.game.engine.factory.EntityNodeSetFactory;
-import com.game.engine.system.node.Node;
-import com.game.engine.system.node.NodeSet;
+import com.game.engine.node.Node;
+import com.game.engine.node.NodeSet;
 import com.game.engine.system.process.AbstractProcess;
 
 public class CollisionSystem<E extends Enum<E>> extends AbstractProcess {

@@ -1,14 +1,14 @@
-package com.game.engine.system.node.impl;
+package com.game.engine.node.impl;
 
 import java.util.Arrays;
 import java.util.List;
 
 import com.game.engine.component.Component;
+import com.game.engine.component.node.DeleteComponent;
+import com.game.engine.component.node.DeleteEntity;
 import com.game.engine.entity.EntityDAO;
 import com.game.engine.factory.EntityNodeFactory;
-import com.game.engine.system.node.Node;
-import com.game.engine.system.node.component.DeleteComponent;
-import com.game.engine.system.node.component.DeleteEntity;
+import com.game.engine.node.Node;
 
 public class EntityNode implements Node {
 	private EntityDAO entityDao;

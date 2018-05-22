@@ -6,7 +6,7 @@ import com.game.engine.component.Motion;
 import com.game.engine.component.Position;
 import com.game.engine.component.Renderable;
 import com.game.engine.component.UserControlled;
-import com.game.engine.system.node.Node;
+import com.game.engine.node.Node;
 import com.game.invaders.component.FiringBehaviour;
 import com.game.invaders.component.PlayerShip;
 import com.game.invaders.component.PlayerShip.PlayerState;

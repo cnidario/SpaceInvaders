@@ -1,7 +1,7 @@
 package com.game.invaders;
 
 import com.badlogic.gdx.math.Vector2;
-import com.game.engine.system.node.Node;
+import com.game.engine.node.Node;
 import com.game.invaders.data.GameResources;
 import com.game.invaders.factory.InvaderFactory;
 import com.game.invaders.factory.InvaderGroupFactory;

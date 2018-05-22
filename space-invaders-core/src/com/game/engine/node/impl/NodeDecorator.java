@@ -1,9 +1,9 @@
-package com.game.engine.system.node.impl;
+package com.game.engine.node.impl;
 
 import java.util.List;
 
 import com.game.engine.component.Component;
-import com.game.engine.system.node.Node;
+import com.game.engine.node.Node;
 
 public abstract class NodeDecorator implements Node {
 	protected Node delegate;

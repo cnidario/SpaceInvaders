@@ -7,7 +7,7 @@ import com.game.engine.component.Collision;
 import com.game.engine.component.GroupParent;
 import com.game.engine.component.Position;
 import com.game.engine.component.Renderable;
-import com.game.engine.system.node.Node;
+import com.game.engine.node.Node;
 import com.game.invaders.component.Invader;
 import com.game.invaders.component.Invader.InvaderStateID;
 import com.game.invaders.data.GameConfigData;
