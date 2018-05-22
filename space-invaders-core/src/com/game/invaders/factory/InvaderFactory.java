@@ -2,20 +2,22 @@ package com.game.invaders.factory;
 
 import java.util.EnumSet;
 import com.badlogic.gdx.math.Vector2;
-import com.game.engine.component.Animation;
 import com.game.engine.component.Collision;
 import com.game.engine.component.GroupParent;
 import com.game.engine.component.Position;
 import com.game.engine.component.Renderable;
+import com.game.engine.factory.AnimationFactory;
 import com.game.engine.node.Node;
 import com.game.invaders.component.Invader;
 import com.game.invaders.component.Invader.InvaderStateID;
-import com.game.invaders.data.GameConfigData;
 import com.game.invaders.data.GameResources;
 import com.game.invaders.system.impact.CollisionGroup;
 
 public class InvaderFactory {
-	public InvaderFactory() {
+	private AnimationFactory animationFactory;
+	
+	public InvaderFactory(AnimationFactory animationFactory) {
+		this.animationFactory= animationFactory;
 	}
 	private Node baseInvader(Node group) {
 		Node base = group.create(
@@ -29,13 +31,10 @@ public class InvaderFactory {
 				);
 		return base;
 	}
-	public Node create(Node invaderGroup, Vector2 pos, int type) {
+	public Node create(Node invaderGroup, Node animation, Vector2 pos, int type) {
 		Node invader = baseInvader(invaderGroup);
 		invader.add(
-				new Animation(
-						GameResources.INVADER.INVADERS[type],
-						GameConfigData.INVADER.ANIM_TIME,
-						true),
+				animationFactory.newInstance(animation),
 				new GroupParent(pos, invaderGroup.getId())
 				);
 		return invader;

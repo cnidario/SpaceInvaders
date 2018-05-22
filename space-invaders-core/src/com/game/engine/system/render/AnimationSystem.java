@@ -1,6 +1,7 @@
 package com.game.engine.system.render;
 
 import com.game.engine.component.Animation;
+import com.game.engine.component.AnimationInstance;
 import com.game.engine.component.Renderable;
 import com.game.engine.factory.EntityNodeSetFactory;
 import com.game.engine.node.Node;
@@ -13,20 +14,21 @@ public class AnimationSystem extends AbstractProcess {
 	@SuppressWarnings("unchecked")
 	public AnimationSystem(EntityNodeSetFactory entityNodeSetFactory) {
 		super();
-		nodeSet = entityNodeSetFactory.create(Animation.class, Renderable.class);
+		nodeSet = entityNodeSetFactory.create(AnimationInstance.class, Renderable.class);
 	}
 	@Override
 	public void update(float dt) {
 		for (Node node : nodeSet) {
-			Animation anim_c = (Animation) node.component(Animation.class);
+			AnimationInstance animInstance_c = (AnimationInstance) node.component(AnimationInstance.class);
+			Animation anim_c = (Animation) node.asNode(animInstance_c.getParent()).component(Animation.class);
 			Renderable render_c = (Renderable) node.component(Renderable.class);
-			float elapsed = anim_c.getElapsed() + dt;
-			anim_c.setElapsed(elapsed);
+			float elapsed = animInstance_c.getElapsed() + dt;
+			animInstance_c.setElapsed(elapsed);
 			if(elapsed >= anim_c.getDuration()) {
 				if(anim_c.isLoop()) {
-					anim_c.setElapsed(elapsed - anim_c.getDuration());
+					animInstance_c.setElapsed(elapsed - anim_c.getDuration());
 				} else {
-					node.deleteComponent(Animation.class);
+					node.deleteComponent(AnimationInstance.class);
 				}
 			} else {
 				int ix = (int) Math.floor((elapsed / anim_c.getDuration()) * anim_c.getSprites().length);

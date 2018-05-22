@@ -1,6 +1,6 @@
 package com.game.invaders.system.impact;
 
-import com.game.engine.component.Animation;
+import com.game.engine.component.AnimationInstance;
 import com.game.engine.component.Impact;
 import com.game.engine.component.ShortLife;
 import com.game.engine.factory.EntityNodeSetFactory;
@@ -35,7 +35,7 @@ public class InvaderImpactSystem extends AbstractProcess {
 			invader_c.setDyingTime(GameConfigData.INVADER.EXPLOSION_DELAY);
 			TiltExploding explo_c = new TiltExploding(6, GameConfigData.INVADER.EXPLOSION_DELAY/5);
 			invader.add(explo_c);
-			invader.deleteComponent(Animation.class);
+			invader.deleteComponent(AnimationInstance.class);
 			shoot.delete();
 			node.create(new InvaderImpact(invader.getId(), 0), new ShortLife());
 		}

@@ -6,13 +6,11 @@ public class Animation implements Component {
 	private float duration;
 	private boolean loop;
 	private TextureRegion[] sprites;
-	private float elapsed;
 	
 	public Animation(TextureRegion[] sprites, float duration, boolean loop) {
 		this.duration = duration;
 		this.sprites = sprites;
 		this.loop = loop;
-		elapsed = 0;
 	}
 	public TextureRegion[] getSprites() {
 		return sprites;
@@ -31,11 +29,5 @@ public class Animation implements Component {
 	}
 	public void setLoop(boolean loop) {
 		this.loop = loop;
-	}
-	public float getElapsed() {
-		return elapsed;
-	}
-	public void setElapsed(float elapsed) {
-		this.elapsed = elapsed;
 	}
 }

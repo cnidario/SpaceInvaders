@@ -7,6 +7,7 @@ import com.game.engine.component.ShortLife;
 import com.game.engine.component.node.DeleteEntity;
 import com.game.engine.entity.EntityManager;
 import com.game.engine.entity.observer.EntityNotifier;
+import com.game.engine.factory.AnimationFactory;
 import com.game.engine.factory.EntityNodeFactory;
 import com.game.engine.factory.EntityNodeSetFactory;
 import com.game.engine.node.Node;
@@ -57,7 +58,8 @@ public class SpaceInvaders extends ApplicationAdapter {
 		entityManager = new EntityManager(entityNotifier);
 		
 		ShootFactory shootFactory = new ShootFactory();
-		InvaderFactory invaderFactory = new InvaderFactory();
+		AnimationFactory animationFactory = new AnimationFactory();
+		InvaderFactory invaderFactory = new InvaderFactory(animationFactory);
 		InvaderGroupFactory invaderGroupFactory = new InvaderGroupFactory();
 		PlayerShipFactory playerShipFactory = new PlayerShipFactory();
 		ScoreFactory scoreFactory = new ScoreFactory();
@@ -70,7 +72,7 @@ public class SpaceInvaders extends ApplicationAdapter {
 		Node rootNode = entityNodeFactory.create(entityManager.createEntity());
 		
 		processManager = new ProcessManager();
-		gameWorld = new GameWorld(rootNode, invaderFactory, invaderGroupFactory, playerShipFactory);
+		gameWorld = new GameWorld(rootNode, invaderFactory, invaderGroupFactory, playerShipFactory, animationFactory);
 		
 		SoundSystem soundSystem = new SoundSystem();
 		soundSystem.addSoundReponse(new SoundResponseSystem(entityNodeSetFactory, ShootEmitted.class, rnd, GameResources.GAME.SHOOTS));
